@@ -1,0 +1,43 @@
+# Nexus — the whole product from images, the way a deployment runs it.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d --build
+#   docker compose -f docker-compose.yml -f docker-compose.deploy.yml run --rm api npx prisma migrate deploy
+#
+# API on :8000, UI on :3000, both against the Postgres of docker-compose.yml.
+# The secrets below are development placeholders; a real deployment supplies
+# them from its own secret store.
+services:
+  api:
+    build: ./backend
+    image: nexus-api:local
+    container_name: nexus-api
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      DATABASE_URL: postgresql://nexus:nexus_dev@postgres:5432/nexus
+      REDIS_URL: redis://redis:6379
+      # env.validation.ts requires at least 32 characters for both
+      JWT_ACCESS_SECRET: local-access-secret-not-a-real-key-and-long-enough
+      JWT_REFRESH_SECRET: local-refresh-secret-not-a-real-key-and-long-enough
+      FRONTEND_ORIGIN: http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - '8000:8000'
+
+  web:
+    build:
+      context: ./frontend
+      args:
+        # Inlined into the browser bundle at build time, so it must be the URL
+        # the browser can reach — not the service name on the compose network
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    image: nexus-web:local
+    container_name: nexus-web
+    depends_on:
+      - api
+    ports:
+      - '3000:3000'

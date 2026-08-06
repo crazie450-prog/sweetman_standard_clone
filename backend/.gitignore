@@ -1,0 +1,19 @@
+# build
+dist/
+coverage/
+*.tsbuildinfo
+
+# env — only .env.example is committed
+.env
+.env.*
+!.env.example
+
+# generated Prisma client (Prisma 7 emits it into src/generated)
+src/generated/
+
+# misc
+node_modules/
+*.log
+
+# Local document storage (used when no S3 bucket is configured)
+/.storage/

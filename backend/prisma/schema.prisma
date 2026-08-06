@@ -1,0 +1,678 @@
+// Nexus domain schema.
+//
+// Tenancy hierarchy: Organization → Location → operational data.
+// Rules that hold across the whole schema:
+//   - every operational table carries organizationId; a nullable locationId
+//     means "shared across the organization"
+//   - every unique constraint includes organizationId, except the global email
+//   - ids are cuid strings
+//   - RecipeSection is a section inside a recipe; RecipeComponent is a nested
+//     recipe (a self-relation on Recipe)
+//
+// The datasource URL is supplied by prisma.config.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================================
+// Tenancy: organizations, locations, users and invitations
+// ============================================================================
+
+enum SubscriptionStatus {
+  trial
+  active
+  past_due
+  canceled
+}
+
+model Organization {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  subscriptionStatus SubscriptionStatus @default(trial)
+  trialEndsAt        DateTime?
+  stripeCustomerId   String?            @unique
+
+  ownerName  String?
+  ownerEmail String  @unique
+  phone      String?
+  address    String?
+  city       String?
+  state      String?
+  zipCode    String?
+  country    String  @default("US")
+  timezone   String  @default("America/New_York")
+  currency   String  @default("USD")
+  dateFormat String  @default("MM/DD/YYYY")
+
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  locations    Location[]
+  users        User[]
+  invitations  Invitation[]
+  vendors      Vendor[]
+  categories   Category[]
+  ingredients  Ingredient[]
+  recipes      Recipe[]
+  menuItems    MenuItem[]
+  sales        Sale[]
+  productions  Production[]
+  wasteEntries WasteEntry[]
+  transactions InventoryTransaction[]
+  priceHistory IngredientPriceHistory[]
+  invoices     Invoice[]
+
+  @@index([subscriptionStatus])
+}
+
+model Location {
+  id             String  @id @default(cuid())
+  organizationId String
+  name           String
+  address        String?
+  phone          String?
+  isActive       Boolean @default(true)
+  isDefault      Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  userAccess   UserLocation[]
+  pricing      IngredientLocationPricing[]
+  stock        IngredientLocationStock[]
+  priceHistory IngredientPriceHistory[]
+  recipes      Recipe[]
+  menuItems    MenuItem[]
+  sales        Sale[]
+  productions  Production[]
+  wasteEntries WasteEntry[]
+  transactions InventoryTransaction[]
+  invoices     Invoice[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+}
+
+enum Role {
+  viewer
+  staff
+  manager
+  admin
+  owner
+}
+
+model User {
+  id             String @id @default(cuid())
+  organizationId String
+
+  email          String  @unique
+  hashedPassword String
+  fullName       String
+  phone          String?
+
+  role            Role    @default(viewer)
+  isPlatformAdmin Boolean @default(false)
+
+  isActive      Boolean @default(true)
+  emailVerified Boolean @default(false)
+
+  failedLoginAttempts Int       @default(0)
+  lockoutUntil        DateTime?
+
+  passwordResetToken   String?   @unique
+  passwordResetExpires DateTime?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  lastLoginAt DateTime?
+
+  organization    Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  locationAccess  UserLocation[]
+  sentInvitations Invitation[]
+  sessions        UserSession[]
+
+  @@index([organizationId])
+}
+
+model UserSession {
+  id     String @id @default(cuid())
+  userId String
+
+  refreshTokenHash String   @unique
+  previousTokenHash String? @unique
+  userAgent        String?
+  createdAt        DateTime @default(now())
+  lastUsedAt       DateTime @default(now())
+  expiresAt        DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model UserLocation {
+  id         String @id @default(cuid())
+  userId     String
+  locationId String
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, locationId])
+  @@index([locationId])
+}
+
+enum InvitationStatus {
+  pending
+  accepted
+  expired
+  revoked
+}
+
+model Invitation {
+  id             String @id @default(cuid())
+  organizationId String
+
+  email       String
+  role        Role             @default(viewer)
+  token       String           @unique
+  status      InvitationStatus @default(pending)
+  expiresAt   DateTime
+  locationIds Json             @default("[]")
+
+  invitedById String?
+  invitedBy   User?   @relation(fields: [invitedById], references: [id], onDelete: SetNull)
+
+  createdAt  DateTime  @default(now())
+  acceptedAt DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, email])
+}
+
+// ============================================================================
+// Reference data: vendors and categories
+// ============================================================================
+
+enum VendorStatus {
+  active
+  inactive
+}
+
+model Vendor {
+  id             String @id @default(cuid())
+  organizationId String
+
+  name    String
+  contact String?
+  phone   String?
+  status  VendorStatus @default(active)
+  notes   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredients  Ingredient[]
+  priceHistory IngredientPriceHistory[]
+  invoices     Invoice[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+}
+
+model Category {
+  id             String @id @default(cuid())
+  organizationId String
+
+  name String
+  kind CategoryKind @default(ingredient)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredients  Ingredient[]
+  recipes      Recipe[]
+  menuItems    MenuItem[]
+
+  @@unique([organizationId, name, kind])
+  @@index([organizationId])
+}
+
+enum CategoryKind {
+  ingredient
+  recipe
+  menu
+}
+
+// ============================================================================
+// Ingredients, stock and per-location pricing
+// ============================================================================
+
+model Ingredient {
+  id             String @id @default(cuid())
+  organizationId String
+
+  name        String
+  unit        String
+  costPerUnit Decimal @default(0) @db.Decimal(12, 4)
+  sku         String?
+  notes       String?
+
+  onHand       Decimal @default(0) @db.Decimal(12, 3)
+  reorderLevel Decimal @default(0) @db.Decimal(12, 3)
+  reorderQty   Decimal @default(0) @db.Decimal(12, 3)
+
+  categoryId String?
+  vendorId   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  category     Category?                   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  vendor       Vendor?                     @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  pricing      IngredientLocationPricing[]
+  stock        IngredientLocationStock[]
+  priceHistory IngredientPriceHistory[]
+  usedIn       RecipeIngredient[]
+  transactions InventoryTransaction[]
+  wasteEntries WasteEntry[]
+  invoiceItems InvoiceItem[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId])
+  @@index([organizationId, vendorId])
+}
+
+model IngredientLocationPricing {
+  id           String @id @default(cuid())
+  ingredientId String
+  locationId   String
+
+  costPerUnit Decimal @db.Decimal(12, 4)
+
+  updatedAt DateTime @updatedAt
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  location   Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([ingredientId, locationId])
+  @@index([locationId])
+}
+
+model IngredientLocationStock {
+  id           String @id @default(cuid())
+  ingredientId String
+  locationId   String
+
+  onHand Decimal @default(0) @db.Decimal(12, 3)
+
+  updatedAt DateTime @updatedAt
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  location   Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([ingredientId, locationId])
+  @@index([locationId])
+}
+
+model IngredientPriceHistory {
+  id             String  @id @default(cuid())
+  organizationId String
+  ingredientId   String
+  vendorId       String?
+  locationId     String?
+
+  costPerUnit Decimal  @db.Decimal(12, 4)
+  source      String // 'manual' | 'receipt'
+  recordedAt  DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  vendor       Vendor?      @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, ingredientId, recordedAt])
+  @@index([organizationId, vendorId])
+}
+
+enum TxType {
+  RECEIVE
+  USE
+  ADJUST
+  WASTE
+  COUNT
+  SALE
+}
+
+model InventoryTransaction {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  ingredientId String
+  type         TxType
+  quantity     Decimal @db.Decimal(12, 3)
+  unit         String
+  cost         Decimal @default(0) @db.Decimal(12, 2)
+  notes        String?
+  wasteReason  String?
+
+  createdAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, locationId, createdAt])
+  @@index([ingredientId])
+}
+
+// ============================================================================
+// Recipes: ingredients, sections, nested recipes and instructions
+// ============================================================================
+
+enum RecipeStatus {
+  draft
+  published
+  archived
+}
+
+model Recipe {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  name        String
+  description String?
+  status      RecipeStatus @default(published)
+
+  portions        Int      @default(1)
+  yieldAmount     Decimal? @db.Decimal(12, 3)
+  yieldUnit       String?
+  prepTimeMinutes Int?
+  cookTimeMinutes Int?
+  notes           String?
+
+  totalCost         Decimal  @default(0) @db.Decimal(12, 4)
+  targetFoodCostPct Decimal? @db.Decimal(5, 2)
+
+  categoryId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  category     Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  ingredients  RecipeIngredient[]
+  sections     RecipeSection[]
+  instructions Instruction[]
+  components   RecipeComponent[]  @relation("parent")
+  usedIn       RecipeComponent[]  @relation("component")
+  menuUsage    MenuItemRecipe[]
+  productions  Production[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId, locationId])
+}
+
+model RecipeSection {
+  id       String @id @default(cuid())
+  recipeId String
+  name     String
+  order    Int    @default(0)
+
+  recipe       Recipe             @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredients  RecipeIngredient[]
+  instructions Instruction[]
+
+  @@index([recipeId])
+}
+
+model RecipeIngredient {
+  id           String  @id @default(cuid())
+  recipeId     String
+  sectionId    String?
+  ingredientId String
+
+  quantity Decimal @db.Decimal(12, 3)
+  unit     String
+  prepNote String? // "diced", "thinly sliced"
+  order    Int     @default(0)
+
+  recipe     Recipe         @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  section    RecipeSection? @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  ingredient Ingredient     @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@index([recipeId])
+  @@index([ingredientId])
+}
+
+model RecipeComponent {
+  id          String @id @default(cuid())
+  parentId    String
+  componentId String
+
+  quantity Decimal @db.Decimal(12, 3)
+  unit     String
+  prepNote String?
+  order    Int     @default(0)
+
+  createdAt DateTime @default(now())
+
+  parent    Recipe @relation("parent", fields: [parentId], references: [id], onDelete: Cascade)
+  component Recipe @relation("component", fields: [componentId], references: [id], onDelete: Restrict)
+
+  @@unique([parentId, componentId])
+  @@index([componentId])
+}
+
+model Instruction {
+  id        String  @id @default(cuid())
+  recipeId  String
+  sectionId String?
+
+  stepNumber Int
+  text       String
+
+  recipe  Recipe         @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  section RecipeSection? @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@unique([recipeId, sectionId, stepNumber])
+}
+
+// ============================================================================
+// Menu: composite items built from recipes and portions
+// ============================================================================
+
+model MenuItem {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  name     String
+  price    Decimal @db.Decimal(12, 2)
+  isActive Boolean @default(true)
+
+  cost Decimal @default(0) @db.Decimal(12, 4)
+
+  categoryId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?        @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  category     Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  recipes      MenuItemRecipe[]
+  saleItems    SaleItem[]
+
+  @@unique([organizationId, name])
+  @@index([organizationId, locationId])
+}
+
+model MenuItemRecipe {
+  id         String @id @default(cuid())
+  menuItemId String
+  recipeId   String
+
+  portions Decimal @default(1) @db.Decimal(8, 3)
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Restrict)
+
+  @@unique([menuItemId, recipeId])
+  @@index([recipeId])
+}
+
+// ============================================================================
+// Vendor invoices: the record AI extraction fills in during Sprint 3
+// ============================================================================
+
+enum InvoiceStatus {
+  draft
+  confirmed
+}
+
+model Invoice {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+  vendorId       String?
+
+  number      String?
+  invoiceDate DateTime
+  dueDate     DateTime?
+
+  status   InvoiceStatus @default(draft)
+  subtotal Decimal       @default(0) @db.Decimal(12, 2)
+  tax      Decimal       @default(0) @db.Decimal(12, 2)
+  total    Decimal       @default(0) @db.Decimal(12, 2)
+
+  documentKey String?
+  notes       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?     @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  vendor       Vendor?       @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  items        InvoiceItem[]
+
+  @@unique([organizationId, vendorId, number])
+  @@index([organizationId, locationId, invoiceDate])
+  @@index([vendorId])
+}
+
+model InvoiceItem {
+  id        String @id @default(cuid())
+  invoiceId String
+
+  ingredientId String?
+  description  String
+  quantity     Decimal @db.Decimal(12, 3)
+  unit         String
+  unitPrice    Decimal @db.Decimal(12, 4)
+  lineTotal    Decimal @db.Decimal(12, 2)
+
+  invoice    Invoice     @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  ingredient Ingredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+
+  @@index([invoiceId])
+  @@index([ingredientId])
+}
+
+// ============================================================================
+// Operations: sales, production and waste
+// ============================================================================
+
+model Sale {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  date  DateTime
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  items        SaleItem[]
+
+  @@index([organizationId, locationId, date])
+}
+
+model SaleItem {
+  id         String @id @default(cuid())
+  saleId     String
+  menuItemId String
+
+  quantity  Int
+  unitPrice Decimal @db.Decimal(12, 2)
+  unitCost  Decimal @default(0) @db.Decimal(12, 4)
+
+  sale     Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Restrict)
+
+  @@index([saleId])
+  @@index([menuItemId])
+}
+
+model Production {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  recipeId String
+  quantity Decimal  @db.Decimal(12, 3)
+  unit     String
+  cost     Decimal  @default(0) @db.Decimal(12, 4)
+  madeBy   String?
+  date     DateTime
+
+  createdAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  recipe       Recipe       @relation(fields: [recipeId], references: [id], onDelete: Restrict)
+
+  @@index([organizationId, locationId, date])
+}
+
+model WasteEntry {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  ingredientId String
+  quantity     Decimal  @db.Decimal(12, 3)
+  unit         String
+  reason       String // spoilage | overproduction | trim | expired | other
+  value        Decimal  @default(0) @db.Decimal(12, 2)
+  date         DateTime
+  notes        String?
+
+  createdAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@index([organizationId, locationId, date])
+}

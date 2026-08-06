@@ -1,0 +1,29 @@
+# Demo material (video, screenshots) is kept out of the repository
+/demo/
+
+# Internal design research and working notes
+/reference/
+/docs/
+
+# Root-level dependencies: there are no workspaces here yet, but a stray
+# `npm install` at the root would otherwise drag a whole tree into git
+/node_modules/
+
+# Secrets — deliberately duplicated in backend/ and frontend/ so the rule also
+# covers a file dropped at the root
+.env
+.env.*
+!.env.example
+
+# Browser test artefacts
+/test-results/
+/playwright-report/
+/blob-report/
+.playwright/
+
+# Logs and OS/editor noise
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
