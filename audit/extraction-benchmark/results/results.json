@@ -185,45 +185,15 @@
    "arm": "final-claude_claude-haiku-5-5",
    "label": "Recommended pipeline + Claude Haiku 5.5",
    "kind": "rec",
-   "recall": 89.11051212938006,
-   "unflagged": 0,
-   "flagged": 11,
-   "clean": 81.17647058823529,
-   "identical": 11,
-   "cases": 17,
-   "p50": 8.261,
-   "p95": 59.781,
-   "cost": 0.0025050529411764703,
-   "errors": 0,
-   "trap_pass": 10,
-   "trap_jobs": 10,
-   "inv_correct": 50,
-   "inv_required": 50,
-   "fee_as_item": 0,
-   "hw_correct": 179,
-   "hw_required": 190,
-   "ok_flagged": 229,
-   "models": [
-    "claude-haiku-5-5"
-   ],
-   "lines": 1784,
-   "cost_inv": 0.0009786,
-   "cost_notext": 0.00184035,
-   "p95_inv": 5.731
-  },
-  {
-   "arm": "final-claude_claude-sonnet-5-5",
-   "label": "Recommended pipeline + Claude Sonnet 5.5",
-   "kind": "rec",
-   "recall": 80.53908355795149,
+   "recall": 93.8544474393531,
    "unflagged": 0,
    "flagged": 10,
-   "clean": 85.88235294117646,
-   "identical": 13,
+   "clean": 83.52941176470588,
+   "identical": 12,
    "cases": 17,
-   "p50": 5.632,
-   "p95": 72.387,
-   "cost": 0.03119729411764706,
+   "p50": 8.097,
+   "p95": 62.97,
+   "cost": 0.002628305882352941,
    "errors": 0,
    "trap_pass": 10,
    "trap_jobs": 10,
@@ -232,18 +202,48 @@
    "fee_as_item": 0,
    "hw_correct": 180,
    "hw_required": 190,
-   "ok_flagged": 252,
+   "ok_flagged": 248,
+   "models": [
+    "claude-haiku-5-5"
+   ],
+   "lines": 1924,
+   "cost_inv": 0.0009819,
+   "cost_notext": 0.0017647,
+   "p95_inv": 5.187
+  },
+  {
+   "arm": "final-claude_claude-sonnet-5-5",
+   "label": "Recommended pipeline + Claude Sonnet 5.5",
+   "kind": "rec",
+   "recall": 83.61185983827494,
+   "unflagged": 0,
+   "flagged": 10,
+   "clean": 84.70588235294117,
+   "identical": 13,
+   "cases": 17,
+   "p50": 6.19,
+   "p95": 63.606,
+   "cost": 0.03193364705882353,
+   "errors": 0,
+   "trap_pass": 10,
+   "trap_jobs": 10,
+   "inv_correct": 50,
+   "inv_required": 50,
+   "fee_as_item": 0,
+   "hw_correct": 180,
+   "hw_required": 190,
+   "ok_flagged": 226,
    "models": [
     "claude-sonnet-5-5"
    ],
-   "lines": 1568,
-   "cost_inv": 0.017044666666666666,
-   "cost_notext": 0.0215095,
-   "p95_inv": 7.004
+   "lines": 1625,
+   "cost_inv": 0.01704,
+   "cost_notext": 0.021506499999999998,
+   "p95_inv": 6.822
   }
  ],
  "agree": {
-  "final-claude_claude-haiku-5-5": "green lines 188 (errors among them 0) | amber lines 12 (errors 0) | review share 6%",
+  "final-claude_claude-haiku-5-5": "green lines 189 (errors among them 0) | amber lines 11 (errors 0) | review share 6%",
   "final-claude_claude-sonnet-5-5": "green lines 186 (errors among them 0) | amber lines 14 (errors 0) | review share 7%",
   "stress_v1_vs_sonnet": "green lines 162 (errors among them 2) | amber lines 28 (errors 18) | review share 15%"
  },
@@ -326,6 +326,6 @@
    "invented": 0
   }
  },
- "calls": 1861,
- "spend": 18.687879400000064
+ "calls": 2071,
+ "spend": 21.698711900000042
 }
