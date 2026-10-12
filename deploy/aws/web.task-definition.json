@@ -1,0 +1,37 @@
+{
+  "family": "nexus-${ENVIRONMENT}-web",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/nexus-${ENVIRONMENT}-execution",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/nexus-web:${IMAGE_TAG}",
+      "essential": true,
+      "portMappings": [{ "containerPort": 3000, "protocol": "tcp" }],
+      "healthCheck": {
+        "command": [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/login').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 30
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/nexus/${ENVIRONMENT}/web",
+          "awslogs-region": "${AWS_REGION}",
+          "awslogs-stream-prefix": "web"
+        }
+      }
+    }
+  ]
+}

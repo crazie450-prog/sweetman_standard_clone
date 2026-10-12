@@ -12,11 +12,16 @@ const PASSWORD = 'Nexus_dev1'
 
 async function main() {
   console.log('— resetting database…')
+  await prisma.purchaseDraftLine.deleteMany()
+  await prisma.purchaseDraft.deleteMany()
   await prisma.saleItem.deleteMany()
   await prisma.sale.deleteMany()
   await prisma.production.deleteMany()
   await prisma.wasteEntry.deleteMany()
   await prisma.inventoryTransaction.deleteMany()
+  await prisma.menuItemOnMenu.deleteMany()
+  await prisma.menuOnLocation.deleteMany()
+  await prisma.menu.deleteMany()
   await prisma.menuItemRecipe.deleteMany()
   await prisma.menuItem.deleteMany()
   await prisma.recipeComponent.deleteMany()
@@ -27,7 +32,7 @@ async function main() {
   await prisma.invoiceItem.deleteMany()
   await prisma.invoice.deleteMany()
   await prisma.ingredientPriceHistory.deleteMany()
-  await prisma.ingredientLocationPricing.deleteMany()
+  await prisma.ingredientLocationSettings.deleteMany()
   await prisma.ingredientLocationStock.deleteMany()
   await prisma.ingredient.deleteMany()
   await prisma.category.deleteMany()
@@ -48,7 +53,7 @@ async function main() {
       ownerName: 'Alex Morgan',
       ownerEmail: 'owner@goldenfork.com',
       subscriptionStatus: 'trial',
-      trialEndsAt: new Date(Date.now() + 29 * 24 * 3600 * 1000),
+      trialEndsAt: new Date(Date.now() + 365 * 24 * 3600 * 1000),
       city: 'San Francisco',
       state: 'CA',
       country: 'US',
@@ -178,8 +183,48 @@ async function main() {
   const butter = await ing('Unsalted Butter', 'kg', 9.5, 10, 4, 'Dairy', 2)
   const eggs = await ing('Eggs', 'ea', 0.35, 120, 48, 'Dairy', 2)
 
-  await prisma.ingredientLocationPricing.create({
-    data: { ingredientId: beef.id, locationId: airport.id, costPerUnit: 41.2 },
+  await prisma.vendorProduct.createMany({
+    data: [
+      {
+        organizationId: orgA.id,
+        vendorId: vendorsA[2].id,
+        ingredientId: butter.id,
+        name: 'DD BUTTER UNSALTED 1LB',
+        sku: 'DD-1147',
+      },
+      {
+        organizationId: orgA.id,
+        vendorId: vendorsA[2].id,
+        ingredientId: cream.id,
+        name: 'DD CREAM HEAVY 33% QT',
+        sku: 'DD-2210',
+      },
+      {
+        organizationId: orgA.id,
+        vendorId: vendorsA[0].id,
+        ingredientId: beef.id,
+        name: 'PM TENDERLOIN PSMO',
+        sku: 'PM-441',
+      },
+      {
+        organizationId: orgA.id,
+        vendorId: vendorsA[1].id,
+        name: 'MED OLIO EXTRA VERGINE 5L',
+        sku: 'MED-77',
+      },
+    ],
+  })
+
+  // One shared ingredient, bought on its own terms at one of the locations.
+  await prisma.ingredientLocationSettings.create({
+    data: {
+      ingredientId: beef.id,
+      locationId: airport.id,
+      costPerUnit: 41.2,
+      reorderLevel: 5,
+      vendorId: vendorsA[1].id,
+      vendorSku: 'AIR-BEEF-01',
+    },
   })
 
   const stock = (ingredientId: string, parts: [string, number][]) =>
@@ -258,6 +303,7 @@ async function main() {
     cat: string,
     portions: number,
     locationId: string | null = null,
+    yields: { yieldAmount: number; yieldUnit: string } | null = null,
   ) =>
     prisma.recipe.create({
       data: {
@@ -267,12 +313,13 @@ async function main() {
         portions,
         categoryId: catsA.get(`recipe:${cat}`),
         targetFoodCostPct: 30,
+        ...(yields ?? {}),
       },
     })
 
   const marinara = await rec('Marinara Sauce', 'Components', 12)
-  const duxelles = await rec('Duxelles', 'Components', 8)
-  const crepes = await rec('Crêpes', 'Components', 24)
+  const duxelles = await rec('Duxelles', 'Components', 8, null, { yieldAmount: 2.7, yieldUnit: 'kg' })
+  const crepes = await rec('Crêpes', 'Components', 24, null, { yieldAmount: 24, yieldUnit: 'ea' })
   const wellington = await rec('Beef Wellington', 'Mains', 4)
   const steakFrites = await rec('Steak Frites', 'Mains', 2)
   const bruleee = await rec('Crème Brûlée', 'Desserts', 6)
@@ -362,6 +409,39 @@ async function main() {
         organizationId: orgA.id,
         locationId: downtown.id,
         ingredientId: cream.id,
+        type: 'WASTE',
+        quantity: -1.5,
+        unit: 'l',
+        cost: 5.4,
+        wasteReason: 'expired',
+        createdAt: day(1),
+      },
+      {
+        organizationId: orgA.id,
+        locationId: downtown.id,
+        ingredientId: mushrooms.id,
+        type: 'WASTE',
+        quantity: -0.8,
+        unit: 'kg',
+        cost: 5.12,
+        wasteReason: 'spoilage',
+        createdAt: day(2),
+      },
+      {
+        organizationId: orgA.id,
+        locationId: riverside.id,
+        ingredientId: beef.id,
+        type: 'WASTE',
+        quantity: -0.3,
+        unit: 'kg',
+        cost: 11.55,
+        wasteReason: 'trim',
+        createdAt: day(3),
+      },
+      {
+        organizationId: orgA.id,
+        locationId: downtown.id,
+        ingredientId: cream.id,
         type: 'USE',
         quantity: -2,
         unit: 'l',
@@ -373,6 +453,17 @@ async function main() {
 
   await prisma.wasteEntry.createMany({
     data: [
+      {
+        organizationId: orgA.id,
+        locationId: riverside.id,
+        ingredientId: tomatoes.id,
+        quantity: 4.2,
+        unit: 'kg',
+        reason: 'spoilage',
+        value: 20.16,
+        date: new Date(),
+        notes: 'Spoilage — walk-in cooler',
+      },
       {
         organizationId: orgA.id,
         locationId: downtown.id,
@@ -413,8 +504,8 @@ async function main() {
         locationId: downtown.id,
         recipeId: marinara.id,
         quantity: 12,
-        unit: 'l',
-        cost: 25.2,
+        unit: 'portion',
+        cost: 33.4,
         madeBy: 'Ken Tanaka',
         date: day(1),
       },
@@ -423,8 +514,8 @@ async function main() {
         locationId: downtown.id,
         recipeId: duxelles.id,
         quantity: 4,
-        unit: 'kg',
-        cost: 13.4,
+        unit: 'portion',
+        cost: 9.11,
         madeBy: 'Ken Tanaka',
         date: day(2),
       },
@@ -456,42 +547,73 @@ async function main() {
     const date = day(d)
     const factor = (1 - d * 0.008) * WEEKDAY_PROFILE[date.getDay()]
 
-    const sale = await prisma.sale.create({
-      data: { organizationId: orgA.id, locationId: downtown.id, date },
-    })
-    await prisma.saleItem.createMany({
-      data: [
-        {
-          saleId: sale.id,
-          menuItemId: miSteak.id,
-          quantity: portions(11, factor),
-          unitPrice: 34,
-          unitCost: costSteak,
-        },
-        {
-          saleId: sale.id,
-          menuItemId: miPasta.id,
-          quantity: portions(15, factor),
-          unitPrice: 18,
-          unitCost: costPasta,
-        },
-        {
-          saleId: sale.id,
-          menuItemId: miWelly.id,
-          quantity: portions(3, factor),
-          unitPrice: 62,
-          unitCost: costWelly,
-        },
-        {
-          saleId: sale.id,
-          menuItemId: miBrulee.id,
-          quantity: portions(7, factor),
-          unitPrice: 12,
-          unitCost: costBrulee,
-        },
-      ],
-    })
+    for (const [locationId, share] of [
+      [downtown.id, 1],
+      [riverside.id, 0.55],
+    ] as const) {
+      const sale = await prisma.sale.create({
+        data: { organizationId: orgA.id, locationId, date },
+      })
+      await prisma.saleItem.createMany({
+        data: [
+          {
+            saleId: sale.id,
+            menuItemId: miSteak.id,
+            quantity: portions(11 * share, factor),
+            unitPrice: 34,
+            unitCost: costSteak,
+          },
+          {
+            saleId: sale.id,
+            menuItemId: miPasta.id,
+            quantity: portions(15 * share, factor),
+            unitPrice: 18,
+            unitCost: costPasta,
+          },
+          {
+            saleId: sale.id,
+            menuItemId: miWelly.id,
+            quantity: portions(3 * share, factor),
+            unitPrice: 62,
+            unitCost: costWelly,
+          },
+          {
+            saleId: sale.id,
+            menuItemId: miBrulee.id,
+            quantity: portions(7 * share, factor),
+            unitPrice: 12,
+            unitCost: costBrulee,
+          },
+        ],
+      })
+    }
   }
+
+  await prisma.invoice.create({
+    data: {
+      organizationId: orgA.id,
+      locationId: downtown.id,
+      vendorId: vendorsA[0].id,
+      number: 'INV-2231',
+      invoiceDate: day(0),
+      status: 'confirmed',
+      subtotal: 924,
+      tax: 0,
+      total: 924,
+      items: {
+        create: [
+          {
+            ingredientId: beef.id,
+            description: 'Beef Tenderloin',
+            quantity: 24,
+            unit: 'kg',
+            unitPrice: 38.5,
+            lineTotal: 924,
+          },
+        ],
+      },
+    },
+  })
 
   const invoiceLines = [
     { ingredientId: tomatoes.id, description: 'San Marzano Tomatoes', quantity: 20, unit: 'kg', unitPrice: 4.8 },
@@ -523,7 +645,7 @@ async function main() {
       ownerName: 'Sofia Ricci',
       ownerEmail: 'owner@bellacucina.com',
       subscriptionStatus: 'trial',
-      trialEndsAt: new Date(Date.now() + 14 * 24 * 3600 * 1000),
+      trialEndsAt: new Date(Date.now() + 365 * 24 * 3600 * 1000),
     },
   })
   const mainB = await prisma.location.create({
@@ -565,14 +687,57 @@ async function main() {
       vendorId: vendorB.id,
     },
   })
+  await prisma.vendorProduct.create({
+    data: {
+      organizationId: orgB.id,
+      vendorId: vendorB.id,
+      ingredientId: beefB.id,
+      name: 'PM TENDERLOIN PSMO',
+      sku: 'PM-441',
+    },
+  })
+
   const recB = await prisma.recipe.create({
     data: { organizationId: orgB.id, name: 'Marinara Sauce', portions: 10 },
   })
   await prisma.recipeIngredient.create({
     data: { recipeId: recB.id, ingredientId: beefB.id, quantity: 0.2, unit: 'kg' },
   })
-  await prisma.menuItem.create({
+  const miPastaB = await prisma.menuItem.create({
     data: { organizationId: orgB.id, locationId: mainB.id, name: 'Pasta Marinara', price: 15 },
+  })
+  await prisma.menu.create({
+    data: {
+      organizationId: orgB.id,
+      name: 'All Day',
+      locations: { create: [{ locationId: mainB.id }] },
+      items: { create: [{ menuItemId: miPastaB.id, sortOrder: 0 }] },
+    },
+  })
+
+  await prisma.menu.create({
+    data: {
+      organizationId: orgA.id,
+      name: 'Dinner',
+      description: 'Evening service across the group',
+      locations: { create: [{ locationId: downtown.id }, { locationId: riverside.id }] },
+      items: {
+        create: [
+          { menuItemId: miSteak.id, sortOrder: 0 },
+          { menuItemId: miWelly.id, sortOrder: 1 },
+          { menuItemId: miPasta.id, sortOrder: 2 },
+          { menuItemId: miBrulee.id, sortOrder: 3 },
+        ],
+      },
+    },
+  })
+  await prisma.menu.create({
+    data: {
+      organizationId: orgA.id,
+      name: 'Lunch',
+      locations: { create: [{ locationId: downtown.id }] },
+      items: { create: [{ menuItemId: miPasta.id, sortOrder: 0 }] },
+    },
   })
 
   const changedA = await recalcOrganizationWith(prisma as never, orgA.id)
@@ -587,6 +752,8 @@ async function main() {
     ingredients: await prisma.ingredient.count(),
     recipes: await prisma.recipe.count(),
     menuItems: await prisma.menuItem.count(),
+    menus: await prisma.menu.count(),
+    vendorProducts: await prisma.vendorProduct.count(),
     sales: await prisma.sale.count(),
     invoices: await prisma.invoice.count(),
   }

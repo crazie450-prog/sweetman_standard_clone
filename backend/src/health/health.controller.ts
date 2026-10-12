@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Res } from '@nestjs/common'
+import type { Response } from 'express'
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'
 import { PrismaService } from '../prisma/prisma.service'
 import { Public } from '../common/decorators/public.decorator'
@@ -16,13 +17,14 @@ export class HealthController {
       example: { status: 'ok', database: 'up', timestamp: '2026-07-22T12:00:00.000Z' },
     },
   })
-  async check() {
+  async check(@Res({ passthrough: true }) res: Response) {
     let database: 'up' | 'down' = 'up'
     try {
       await this.prisma.client.$queryRaw`SELECT 1`
     } catch {
       database = 'down'
     }
+    res.status(database === 'up' ? 200 : 503)
     return {
       status: database === 'up' ? 'ok' : 'degraded',
       database,

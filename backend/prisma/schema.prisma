@@ -4,7 +4,9 @@
 // Rules that hold across the whole schema:
 //   - every operational table carries organizationId; a nullable locationId
 //     means "shared across the organization"
-//   - every unique constraint includes organizationId, except the global email
+//   - a unique name or number is unique within its organization; global keys
+//     are the ones that identify an account, a session, an invitation or a
+//     billing record (email, slug, tokens, Stripe ids)
 //   - ids are cuid strings
 //   - RecipeSection is a section inside a recipe; RecipeComponent is a nested
 //     recipe (a self-relation on Recipe)
@@ -36,9 +38,13 @@ model Organization {
   name String
   slug String @unique
 
-  subscriptionStatus SubscriptionStatus @default(trial)
-  trialEndsAt        DateTime?
-  stripeCustomerId   String?            @unique
+  subscriptionStatus   SubscriptionStatus @default(trial)
+  trialEndsAt          DateTime?
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  planId               String?
+  currentPeriodEnd     DateTime?
+  billingSeats         Int?
 
   ownerName  String?
   ownerEmail String  @unique
@@ -52,24 +58,35 @@ model Organization {
   currency   String  @default("USD")
   dateFormat String  @default("MM/DD/YYYY")
 
+  foodCostTargetPct Decimal @default(30) @db.Decimal(5, 2)
+
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  locations    Location[]
-  users        User[]
-  invitations  Invitation[]
-  vendors      Vendor[]
-  categories   Category[]
-  ingredients  Ingredient[]
-  recipes      Recipe[]
-  menuItems    MenuItem[]
-  sales        Sale[]
-  productions  Production[]
-  wasteEntries WasteEntry[]
-  transactions InventoryTransaction[]
-  priceHistory IngredientPriceHistory[]
-  invoices     Invoice[]
+  locations         Location[]
+  users             User[]
+  invitations       Invitation[]
+  vendors           Vendor[]
+  categories        Category[]
+  ingredients       Ingredient[]
+  recipes           Recipe[]
+  menuItems         MenuItem[]
+  menus             Menu[]
+  sales             Sale[]
+  productions       Production[]
+  wasteEntries      WasteEntry[]
+  transactions      InventoryTransaction[]
+  priceHistory      IngredientPriceHistory[]
+  invoices          Invoice[]
+  documents         Document[]
+  extractions       Extraction[]
+  ingredientAliases IngredientAlias[]
+  menuItemAliases   MenuItemAlias[]
+  unitConversions   UnitConversion[]
+  vendorProducts    VendorProduct[]
+  purchaseDrafts    PurchaseDraft[]
+  billingEvents     BillingEvent[]
 
   @@index([subscriptionStatus])
 }
@@ -88,17 +105,21 @@ model Location {
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
-  userAccess   UserLocation[]
-  pricing      IngredientLocationPricing[]
-  stock        IngredientLocationStock[]
-  priceHistory IngredientPriceHistory[]
-  recipes      Recipe[]
-  menuItems    MenuItem[]
-  sales        Sale[]
-  productions  Production[]
-  wasteEntries WasteEntry[]
-  transactions InventoryTransaction[]
-  invoices     Invoice[]
+  userAccess      UserLocation[]
+  perLocation     IngredientLocationSettings[]
+  stock           IngredientLocationStock[]
+  priceHistory    IngredientPriceHistory[]
+  recipes         Recipe[]
+  menuItems       MenuItem[]
+  menus           MenuOnLocation[]
+  sales           Sale[]
+  productions     Production[]
+  purchaseDrafts  PurchaseDraft[]
+  wasteEntries    WasteEntry[]
+  transactions    InventoryTransaction[]
+  invoices        Invoice[]
+  documents       Document[]
+  menuItemAliases MenuItemAlias[]
 
   @@unique([organizationId, name])
   @@index([organizationId])
@@ -149,12 +170,12 @@ model UserSession {
   id     String @id @default(cuid())
   userId String
 
-  refreshTokenHash String   @unique
-  previousTokenHash String? @unique
-  userAgent        String?
-  createdAt        DateTime @default(now())
-  lastUsedAt       DateTime @default(now())
-  expiresAt        DateTime
+  refreshTokenHash  String   @unique
+  previousTokenHash String?  @unique
+  userAgent         String?
+  createdAt         DateTime @default(now())
+  lastUsedAt        DateTime @default(now())
+  expiresAt         DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -225,10 +246,13 @@ model Vendor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  organization Organization             @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  ingredients  Ingredient[]
-  priceHistory IngredientPriceHistory[]
-  invoices     Invoice[]
+  organization   Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredients    Ingredient[]
+  perLocation    IngredientLocationSettings[]
+  priceHistory   IngredientPriceHistory[]
+  invoices       Invoice[]
+  products       VendorProduct[]
+  purchaseDrafts PurchaseDraft[]
 
   @@unique([organizationId, name])
   @@index([organizationId])
@@ -274,42 +298,53 @@ model Ingredient {
   reorderLevel Decimal @default(0) @db.Decimal(12, 3)
   reorderQty   Decimal @default(0) @db.Decimal(12, 3)
 
+  isActive Boolean @default(true)
+
   categoryId String?
   vendorId   String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  organization Organization                @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  category     Category?                   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  vendor       Vendor?                     @relation(fields: [vendorId], references: [id], onDelete: SetNull)
-  pricing      IngredientLocationPricing[]
-  stock        IngredientLocationStock[]
-  priceHistory IngredientPriceHistory[]
-  usedIn       RecipeIngredient[]
-  transactions InventoryTransaction[]
-  wasteEntries WasteEntry[]
-  invoiceItems InvoiceItem[]
+  organization   Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  category       Category?                    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  vendor         Vendor?                      @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  perLocation    IngredientLocationSettings[]
+  stock          IngredientLocationStock[]
+  priceHistory   IngredientPriceHistory[]
+  usedIn         RecipeIngredient[]
+  draftLines     PurchaseDraftLine[]
+  transactions   InventoryTransaction[]
+  wasteEntries   WasteEntry[]
+  invoiceItems   InvoiceItem[]
+  aliases        IngredientAlias[]
+  conversions    UnitConversion[]
+  vendorProducts VendorProduct[]
 
   @@unique([organizationId, name])
   @@index([organizationId])
   @@index([organizationId, vendorId])
 }
 
-model IngredientLocationPricing {
+model IngredientLocationSettings {
   id           String @id @default(cuid())
   ingredientId String
   locationId   String
 
-  costPerUnit Decimal @db.Decimal(12, 4)
+  costPerUnit  Decimal? @db.Decimal(12, 4)
+  reorderLevel Decimal? @db.Decimal(12, 3)
+  vendorId     String?
+  vendorSku    String?
 
   updatedAt DateTime @updatedAt
 
   ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
   location   Location   @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  vendor     Vendor?    @relation(fields: [vendorId], references: [id], onDelete: SetNull)
 
   @@unique([ingredientId, locationId])
   @@index([locationId])
+  @@index([vendorId])
 }
 
 model IngredientLocationStock {
@@ -425,8 +460,9 @@ model Recipe {
   usedIn       RecipeComponent[]  @relation("component")
   menuUsage    MenuItemRecipe[]
   productions  Production[]
+  conversions  UnitConversion[]
 
-  @@unique([organizationId, name])
+  @@unique([organizationId, locationId, name])
   @@index([organizationId, locationId])
 }
 
@@ -520,9 +556,56 @@ model MenuItem {
   category     Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   recipes      MenuItemRecipe[]
   saleItems    SaleItem[]
+  aliases      MenuItemAlias[]
+  onMenus      MenuItemOnMenu[]
+
+  @@unique([organizationId, locationId, name])
+  @@index([organizationId, locationId])
+}
+
+model Menu {
+  id             String @id @default(cuid())
+  organizationId String
+
+  name        String
+  description String?
+  isActive    Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  items        MenuItemOnMenu[]
+  locations    MenuOnLocation[]
 
   @@unique([organizationId, name])
-  @@index([organizationId, locationId])
+  @@index([organizationId])
+}
+
+model MenuItemOnMenu {
+  id         String @id @default(cuid())
+  menuId     String
+  menuItemId String
+
+  sortOrder Int @default(0)
+
+  menu     Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@unique([menuId, menuItemId])
+  @@index([menuId])
+}
+
+model MenuOnLocation {
+  id         String @id @default(cuid())
+  menuId     String
+  locationId String
+
+  menu     Menu     @relation(fields: [menuId], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+
+  @@unique([menuId, locationId])
+  @@index([locationId])
 }
 
 model MenuItemRecipe {
@@ -540,7 +623,7 @@ model MenuItemRecipe {
 }
 
 // ============================================================================
-// Vendor invoices: the record AI extraction fills in during Sprint 3
+// Vendor invoices: written by hand or by confirming an extracted document
 // ============================================================================
 
 enum InvoiceStatus {
@@ -553,6 +636,7 @@ model Invoice {
   organizationId String
   locationId     String?
   vendorId       String?
+  vendorName     String?
 
   number      String?
   invoiceDate DateTime
@@ -675,4 +759,225 @@ model WasteEntry {
   ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
 
   @@index([organizationId, locationId, date])
+}
+
+// ============================================================================
+// Document ingestion: uploads, background extraction and review/confirm
+// ============================================================================
+
+enum DocumentType {
+  invoice
+  recipe
+  menu
+  sales
+}
+
+enum DocumentStatus {
+  queued
+  processing
+  requires_review
+  confirmed
+  partially_processed
+  failed
+}
+
+model Document {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+
+  type     DocumentType
+  fileKey  String
+  fileName String
+  mimeType String
+  size     Int
+
+  status DocumentStatus @default(queued)
+  error  String?
+  jobId  String?
+
+  uploadedById String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  extractions  Extraction[]
+
+  @@index([organizationId, locationId, createdAt])
+  @@index([organizationId, status])
+}
+
+model Extraction {
+  id             String @id @default(cuid())
+  organizationId String
+  documentId     String
+
+  payload    Json
+  confidence Float?
+
+  createdAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  document     Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, documentId])
+}
+
+model IngredientAlias {
+  id             String  @id @default(cuid())
+  organizationId String
+  ingredientId   String?
+
+  rawName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient?  @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, rawName])
+  @@index([organizationId, ingredientId])
+}
+
+model VendorProduct {
+  id             String  @id @default(cuid())
+  organizationId String
+  vendorId       String
+  ingredientId   String?
+
+  name     String
+  sku      String?
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  vendor       Vendor       @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient?  @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, vendorId, name])
+  @@index([organizationId, ingredientId])
+  @@index([vendorId])
+}
+
+model MenuItemAlias {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String?
+  menuItemId     String?
+
+  rawName String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location?    @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  menuItem     MenuItem?    @relation(fields: [menuItemId], references: [id], onDelete: SetNull)
+
+  @@unique([organizationId, locationId, rawName])
+  @@index([organizationId, menuItemId])
+  @@index([locationId])
+}
+
+// ============================================================================
+// Billing: what the payment provider told us, once
+// ============================================================================
+
+model BillingEvent {
+  id             String @id
+  organizationId String
+
+  type       String
+  occurredAt DateTime @default(now())
+  receivedAt DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, receivedAt])
+  @@index([organizationId, occurredAt])
+}
+
+// ============================================================================
+// Purchasing: a recommendation becomes a draft order a person reviews and approves
+// ============================================================================
+
+enum PurchaseDraftStatus {
+  draft
+  approved
+}
+
+model PurchaseDraft {
+  id             String  @id @default(cuid())
+  organizationId String
+  locationId     String
+  vendorId       String?
+
+  status  PurchaseDraftStatus @default(draft)
+  note    String?
+  days    Int
+  horizon Int
+
+  createdById  String?
+  approvedById String?
+  approvedAt   DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  location     Location            @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  vendor       Vendor?             @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  lines        PurchaseDraftLine[]
+
+  @@index([organizationId, locationId, status])
+  @@index([vendorId])
+}
+
+model PurchaseDraftLine {
+  id           String @id @default(cuid())
+  draftId      String
+  ingredientId String
+
+  quantity  Decimal  @db.Decimal(12, 3)
+  unit      String
+  unitPrice Decimal? @db.Decimal(12, 4)
+  suggested Decimal  @default(0) @db.Decimal(12, 3)
+  onHand    Decimal  @default(0) @db.Decimal(12, 3)
+
+  draft      PurchaseDraft @relation(fields: [draftId], references: [id], onDelete: Cascade)
+  ingredient Ingredient    @relation(fields: [ingredientId], references: [id], onDelete: Restrict)
+
+  @@unique([draftId, ingredientId])
+  @@index([ingredientId])
+}
+
+// ============================================================================
+// Unit conversion: bridging a recipe's unit to the unit its ingredient is priced in
+// ============================================================================
+
+model UnitConversion {
+  id             String  @id @default(cuid())
+  organizationId String
+  ingredientId   String?
+  recipeId       String?
+
+  fromUnit String
+  toUnit   String
+  factor   Decimal @db.Decimal(18, 8)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  ingredient   Ingredient?  @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  recipe       Recipe?      @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, recipeId, ingredientId, fromUnit, toUnit])
+  @@index([organizationId, ingredientId])
+  @@index([recipeId])
 }

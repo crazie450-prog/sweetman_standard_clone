@@ -1,69 +1,61 @@
 'use client'
 
 import { useState } from 'react'
-import { BarsH, Button, Card, KpiCard, PageHeader, TextField, useToast } from '@/components/ui'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { analyticsService } from '@/lib/api/services'
+import {
+  BarsH,
+  Button,
+  Card,
+  KpiCard,
+  PageHeader,
+  TextField,
+  useToast,
+  BackwardsPeriod,
+  Icon,
+} from '@/components/ui'
+import { useQuery } from '@tanstack/react-query'
 import { formatMoney, formatPercent } from '@/lib/utils/format'
-
-const I = (d: string) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-6"
-    aria-hidden
-  >
-    <path d={d} />
-  </svg>
-)
-const icons = {
-  dollar: I(
-    'M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5s2 3 5 3.3 5 1.4 5 3.2-2.2 3.5-5 3.5-5-1.4-5-3.3'
-  ),
-  clipboard: I(
-    'M9 4h6M9 4a2 2 0 0 0-2 2H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1a2 2 0 0 0-2-2'
-  ),
-  chart: I('M4 20V10M10 20V4M16 20v-7M20 20H3'),
-  trend: I('M3 17l6-6 4 4 8-8M15 7h6v6'),
-}
-
-function toISODate(d: Date) {
-  return d.toISOString().slice(0, 10)
-}
+import { percentOf } from '@/lib/utils/money'
+import { lastDays, endsBeforeBegins } from '@/lib/utils/date-range'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 export default function FoodCostAnalysisPage() {
-  const { data: costByCategory = [] } = useQuery({
-    queryKey: ['cost-by-category'],
-    queryFn: analyticsService.costByCategory,
-  })
-  const { data: wasteBreakdown = [] } = useQuery({
-    queryKey: ['waste-breakdown'],
-    queryFn: analyticsService.wasteBreakdown,
-  })
-  const totalWaste = wasteBreakdown.reduce((sum, w) => sum + w.cost, 0)
-  const { data: revenueTrend = [] } = useQuery({
-    queryKey: ['revenue-trend'],
-    queryFn: analyticsService.revenueTrend,
-  })
   const toast = useToast()
-  const queryClient = useQueryClient()
-  const [from, setFrom] = useState(() => toISODate(new Date(Date.now() - 7 * 86400000)))
-  const [to, setTo] = useState(() => toISODate(new Date()))
+  const invalidate = useInvalidate()
+  const [from, setFrom] = useState(() => lastDays(7).from)
+  const [to, setTo] = useState(() => lastDays(7).to)
 
-  const inRange = revenueTrend.filter((d) => d.date >= from && d.date <= to)
+  const backwards = endsBeforeBegins({ from, to })
+
+  const { data: salesByDay = [] } = useQuery({
+    ...queries.salesDaily(from, to),
+    enabled: !backwards,
+  })
+
+  const { data: variance } = useQuery({
+    ...queries.foodCostVariance(from, to),
+    enabled: !backwards,
+  })
+
+  const { data: wasteRows = [] } = useQuery({
+    ...queries.wasteBreakdown(from, to),
+    enabled: !backwards,
+  })
+  const wasteBreakdown = backwards ? [] : wasteRows
+  const totalWaste = wasteBreakdown.reduce((sum, w) => sum + w.cost, 0)
+
+  const shown = backwards ? undefined : variance
+  const inRange = backwards
+    ? []
+    : salesByDay.filter((d) => (!from || d.date >= from) && (!to || d.date <= to))
   const totalSales = inRange.reduce((s, d) => s + d.revenue, 0)
-  const actualCost = inRange.reduce((s, d) => s + d.cost, 0)
-  const actualPct = totalSales > 0 ? (actualCost / totalSales) * 100 : 0
+  const actualPct = shown ? percentOf(shown.actualCost, totalSales) : null
 
   return (
     <>
       <PageHeader
         title="Food Cost Analysis"
-        subtitle="Track theoretical vs actual food costs to identify profit leaks"
+        subtitle="Track theoretical vs actual food costs, both on the organization's shared ingredient prices"
       />
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -88,9 +80,7 @@ export default function FoodCostAnalysisPage() {
         <Button
           variant="secondary"
           onClick={async () => {
-            await queryClient.invalidateQueries({ queryKey: ['cost-by-category'] })
-            await queryClient.invalidateQueries({ queryKey: ['waste-breakdown'] })
-            await queryClient.invalidateQueries({ queryKey: ['revenue-trend'] })
+            await invalidate('reports')
             toast('success', 'Food cost data refreshed')
           }}
         >
@@ -98,53 +88,152 @@ export default function FoodCostAnalysisPage() {
         </Button>
       </div>
 
+      <BackwardsPeriod from={from} to={to} className="mb-6" />
+
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <KpiCard
           label="Total Sales"
           value={formatMoney(totalSales)}
           hint={`${inRange.length} day${inRange.length === 1 ? '' : 's'} in range`}
           tone="primary"
-          icon={icons.dollar}
+          icon={<Icon name="dollar" />}
         />
         <KpiCard
           label="Theoretical Cost"
-          value="—"
-          hint="Not available yet"
+          value={shown ? formatMoney(shown.theoreticalCost) : '—'}
+          hint="Implied by recipes and sales"
           tone="info"
-          icon={icons.clipboard}
+          icon={<Icon name="clipboard" />}
         />
         <KpiCard
           label="Actual Cost"
-          value={formatPercent(actualPct)}
-          hint={formatMoney(actualCost)}
+          value={shown ? formatMoney(shown.actualCost) : '—'}
+          hint={
+            actualPct === null ? 'Recorded usage and waste' : `${formatPercent(actualPct)} of sales`
+          }
           tone="warning"
-          icon={icons.chart}
+          icon={<Icon name="chart" />}
         />
         <KpiCard
           label="Variance"
-          value="—"
-          hint="needs theoretical cost"
-          tone="slate"
-          icon={icons.trend}
+          value={shown ? formatMoney(shown.variance) : '—'}
+          hint={
+            shown && shown.variancePct !== null
+              ? `${formatPercent(shown.variancePct)} vs theoretical · ${formatMoney(shown.wasteCost)} wasted`
+              : 'actual − theoretical'
+          }
+          tone={shown && shown.variance > 0 ? 'danger' : 'slate'}
+          icon={<Icon name="trend" />}
         />
       </div>
 
-      <div className="mb-6 rounded-lg border-l-4 border-info bg-info-100 p-4 text-info-700 dark:bg-info-900/40 dark:text-info-100">
-        <p className="font-semibold">Variance analysis arrives with the costing engine</p>
-        <p className="mt-1 text-sm">
-          Actual cost above is calculated from recorded sales. Theoretical cost — what the food
-          should have cost according to recipes and portions — is not available yet, and neither is
-          the variance between them.
+      <Card className="mb-6">
+        <h2 className="section-title mb-4 text-base font-semibold">Variance by Category</h2>
+        {shown && shown.byCategory.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-text-muted">
+                  <th className="whitespace-nowrap px-2 pb-2 font-medium">Category</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">
+                    Theoretical
+                  </th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Actual</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Variance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {shown.byCategory.map((row) => (
+                  <tr key={row.category} className="border-t border-border">
+                    <td className="whitespace-nowrap px-2 py-2">{row.category}</td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {formatMoney(row.theoretical)}
+                    </td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {formatMoney(row.actual)}
+                    </td>
+                    <td
+                      className={`whitespace-nowrap px-2 py-2 text-right font-medium ${row.variance > 0 ? 'text-danger-700 dark:text-danger-100' : 'text-success-700 dark:text-success-100'}`}
+                    >
+                      {formatMoney(row.variance)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-sm text-text-muted">
+            No sales or inventory movement in this range, so there is nothing to compare yet.
+          </p>
+        )}
+      </Card>
+
+      <Card className="mb-6">
+        <h2 className="section-title mb-1 text-base font-semibold">Variance by Dish</h2>
+        <p className="mb-4 text-[13px] text-text-muted">
+          Standard cost is what the recipes say a dish should cost. Actual cost and waste are
+          recorded per ingredient, so each dish carries the share its recipes account for.
         </p>
-      </div>
+        {shown && shown.byDish.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-text-muted">
+                  <th className="whitespace-nowrap px-2 pb-2 font-medium">Dish</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Sold</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Standard</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Actual</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Waste</th>
+                  <th className="whitespace-nowrap px-2 pb-2 text-right font-medium">Variance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {shown.byDish.map((row) => (
+                  <tr key={row.menuItemId} className="border-t border-border">
+                    <td className="whitespace-nowrap px-2 py-2">{row.name}</td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right tabular-nums">
+                      {row.quantity}
+                    </td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {formatMoney(row.standardCost)}
+                    </td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {formatMoney(row.actualCost)}
+                    </td>
+                    <td className="whitespace-nowrap px-2 py-2 text-right">
+                      {formatMoney(row.wasteCost)}
+                    </td>
+                    <td
+                      className={`whitespace-nowrap px-2 py-2 text-right font-medium ${row.variance > 0 ? 'text-danger-700 dark:text-danger-100' : 'text-success-700 dark:text-success-100'}`}
+                    >
+                      {formatMoney(row.variance)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="text-sm text-text-muted">
+            Nothing was sold in this range, so no dish has a cost to compare yet.
+          </p>
+        )}
+      </Card>
 
       <div className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <h2 className="section-title mb-5 text-base font-semibold">Actual Cost by Category</h2>
-          <BarsH
-            data={costByCategory.map((row) => ({ label: row.category, value: row.cost }))}
-            format="money"
-          />
+          {shown && shown.byCategory.some((row) => row.actual > 0) ? (
+            <BarsH
+              data={shown.byCategory
+                .filter((row) => row.actual > 0)
+                .map((row) => ({ label: row.category, value: row.actual }))}
+              format="money"
+            />
+          ) : (
+            <p className="text-sm text-text-muted">No usage or waste was recorded in this range.</p>
+          )}
         </Card>
 
         <Card>
@@ -153,10 +242,14 @@ export default function FoodCostAnalysisPage() {
             {formatMoney(totalWaste)}
           </p>
           <p className="mb-5 text-xs text-text-muted">Total Waste Cost</p>
-          <BarsH
-            data={wasteBreakdown.map((row) => ({ label: row.reason, value: row.cost }))}
-            format="money"
-          />
+          {wasteBreakdown.length > 0 ? (
+            <BarsH
+              data={wasteBreakdown.map((row) => ({ label: row.reason, value: row.cost }))}
+              format="money"
+            />
+          ) : (
+            <p className="text-sm text-text-muted">No waste was recorded in this range.</p>
+          )}
         </Card>
       </div>
 
@@ -166,21 +259,21 @@ export default function FoodCostAnalysisPage() {
         </h2>
         <div className="space-y-3 text-sm text-text-muted">
           <p>
-            <strong className="text-text">Theoretical Food Cost</strong> — what your food should
-            cost based on recipe ingredients and portions for everything you sold.
+            <strong className="text-text">Theoretical Food Cost</strong>: what your food should cost
+            based on recipe ingredients and portions for everything you sold.
           </p>
           <p>
-            <strong className="text-text">Actual Food Cost</strong> — what you really spent,
-            calculated from invoices, inventory changes, and recorded waste for the period.
+            <strong className="text-text">Actual Food Cost</strong>: the ingredients recorded as
+            used or wasted in the period, valued at what they cost when they were recorded.
           </p>
           <p>
-            <strong className="text-text">Variance</strong> — the gap between the two. It usually
+            <strong className="text-text">Variance</strong>: the gap between the two. It usually
             comes from over-portioning, spoilage, prep waste, theft, or unrecorded transfers.
           </p>
           <ul className="list-disc space-y-1 pl-5">
-            <li>Under 2% — excellent cost control</li>
-            <li>2–5% — acceptable, but worth monitoring</li>
-            <li>Over 5% — investigate portioning, waste, and receiving practices</li>
+            <li>Under 2%: excellent cost control</li>
+            <li>2 to 5%: acceptable, but worth monitoring</li>
+            <li>Over 5%: investigate portioning, waste, and receiving practices</li>
           </ul>
         </div>
       </Card>

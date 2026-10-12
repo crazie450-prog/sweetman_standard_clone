@@ -1,0 +1,60 @@
+{
+  "family": "nexus-${ENVIRONMENT}-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "runtimePlatform": { "cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX" },
+  "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/nexus-${ENVIRONMENT}-execution",
+  "taskRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/nexus-${ENVIRONMENT}-api-task",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "${ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/nexus-api:${IMAGE_TAG}",
+      "essential": true,
+      "portMappings": [{ "containerPort": 8000, "protocol": "tcp" }],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "APP_ENV", "value": "${ENVIRONMENT}" },
+        { "name": "APP_VERSION", "value": "${IMAGE_TAG}" },
+        { "name": "PORT", "value": "8000" },
+        { "name": "FRONTEND_ORIGIN", "value": "https://${WEB_HOST}" },
+        { "name": "STORAGE_PROVIDER", "value": "s3" },
+        { "name": "S3_BUCKET", "value": "nexus-${ENVIRONMENT}-documents" },
+        { "name": "AWS_REGION", "value": "${AWS_REGION}" },
+        { "name": "DOCUMENT_EXTRACTOR", "value": "${DOCUMENT_EXTRACTOR}" },
+        { "name": "MAIL_PROVIDER", "value": "none" },
+        { "name": "BILLING_PROVIDER", "value": "${BILLING_PROVIDER}" },
+        { "name": "BILLING_PER_LOCATION", "value": "false" },
+        { "name": "ERROR_REPORTER", "value": "none" }
+      ],
+      "secrets": [
+        { "name": "DATABASE_URL", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:nexus/${ENVIRONMENT}/api:DATABASE_URL::" },
+        { "name": "REDIS_URL", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:nexus/${ENVIRONMENT}/api:REDIS_URL::" },
+        { "name": "JWT_ACCESS_SECRET", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:nexus/${ENVIRONMENT}/api:JWT_ACCESS_SECRET::" },
+        { "name": "JWT_REFRESH_SECRET", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:nexus/${ENVIRONMENT}/api:JWT_REFRESH_SECRET::" },
+        { "name": "BILLING_WEBHOOK_SECRET", "valueFrom": "arn:aws:secretsmanager:${AWS_REGION}:${ACCOUNT_ID}:secret:nexus/${ENVIRONMENT}/api:BILLING_WEBHOOK_SECRET::" }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:8000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/nexus/${ENVIRONMENT}/api",
+          "awslogs-region": "${AWS_REGION}",
+          "awslogs-stream-prefix": "api"
+        }
+      }
+    }
+  ]
+}

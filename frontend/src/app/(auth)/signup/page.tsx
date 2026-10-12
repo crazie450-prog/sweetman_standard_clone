@@ -3,11 +3,12 @@
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState, type FormEvent } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Card, Spinner, TextField } from '@/components/ui'
 import { authService, invitationsService, ROLE_LABELS } from '@/lib/api/services'
 import { ApiError } from '@/lib/api/client'
 import { serverMessage } from '@/lib/api/error'
+import { queries } from '@/lib/api/queries'
 
 export default function SignupPage() {
   return (
@@ -30,30 +31,29 @@ function SignupOrInvite() {
 
 function CreateOrganization() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = new FormData(e.currentTarget)
-    setError('')
-    setLoading(true)
-    try {
-      await authService.register({
-        organizationName: String(form.get('organizationName')),
-        fullName: String(form.get('fullName')),
-        email: String(form.get('email')),
-        password: String(form.get('password')),
-      })
-      router.push('/dashboard')
-    } catch (err) {
+  const registration = useMutation({
+    mutationFn: authService.register,
+    onSuccess: () => router.push('/dashboard'),
+    onError: (err) =>
       setError(
         err instanceof ApiError && err.status === 409
           ? 'An account with this email already exists.'
-          : 'Could not create the organization. Check the form and try again.'
-      )
-      setLoading(false)
-    }
+          : serverMessage(err, 'Could not create the organization. Check the form and try again.')
+      ),
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = new FormData(e.currentTarget)
+    setError('')
+    registration.mutate({
+      organizationName: String(form.get('organizationName')),
+      fullName: String(form.get('fullName')),
+      email: String(form.get('email')),
+      password: String(form.get('password')),
+    })
   }
 
   return (
@@ -86,7 +86,11 @@ function CreateOrganization() {
             help="At least 8 characters"
             error={error}
           />
-          <Button type="submit" loading={loading} className="w-full">
+          <Button
+            type="submit"
+            loading={registration.isPending || registration.isSuccess}
+            className="w-full"
+          >
             Create Organization
           </Button>
         </form>
@@ -104,7 +108,6 @@ function CreateOrganization() {
 
 function AcceptInvite({ token }: { token: string }) {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const {
@@ -112,26 +115,25 @@ function AcceptInvite({ token }: { token: string }) {
     isLoading,
     error: previewError,
   } = useQuery({
-    queryKey: ['invitation', token],
-    queryFn: () => invitationsService.preview(token),
+    ...queries.invitation(token),
     retry: false,
   })
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const acceptance = useMutation({
+    mutationFn: (account: { fullName: string; password: string }) =>
+      invitationsService.accept(token, account),
+    onSuccess: () => router.push('/dashboard'),
+    onError: (err) => setError(serverMessage(err, 'Could not accept the invitation. Try again.')),
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
     setError('')
-    setLoading(true)
-    try {
-      await invitationsService.accept(token, {
-        fullName: String(form.get('fullName')),
-        password: String(form.get('password')),
-      })
-      router.push('/dashboard')
-    } catch (err) {
-      setError(serverMessage(err, 'Could not accept the invitation. Try again.'))
-      setLoading(false)
-    }
+    acceptance.mutate({
+      fullName: String(form.get('fullName')),
+      password: String(form.get('password')),
+    })
   }
 
   if (isLoading) {
@@ -147,7 +149,8 @@ function AcceptInvite({ token }: { token: string }) {
       <div className="w-full max-w-sm text-center">
         <h1 className="mb-2 text-2xl font-semibold">This invitation is no longer valid</h1>
         <p className="text-sm text-text-muted">
-          It may have been revoked or it has expired. Ask your administrator to send a new one.
+          It may have been used already, revoked, or it has expired. Ask your administrator to send
+          a new one.
         </p>
         <p className="mt-4 text-sm">
           <Link href="/login" className="text-primary-700 underline dark:text-primary-400">
@@ -184,7 +187,11 @@ function AcceptInvite({ token }: { token: string }) {
             help="At least 8 characters"
             error={error}
           />
-          <Button type="submit" loading={loading} className="w-full">
+          <Button
+            type="submit"
+            loading={acceptance.isPending || acceptance.isSuccess}
+            className="w-full"
+          >
             Accept Invitation
           </Button>
         </form>

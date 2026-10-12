@@ -20,11 +20,13 @@ export async function fillCredentials(page: Page, email: string, password: strin
 
 export async function signIn(page: Page, account: { email: string; password: string }) {
   await page.goto('/login')
+  await fillCredentials(page, account.email, account.password)
   await expect(async () => {
-    await fillCredentials(page, account.email, account.password)
-    await page.getByRole('button', { name: 'Sign In' }).click()
-    await page.waitForURL('**/dashboard', { timeout: 7000 })
-  }).toPass({ timeout: 40000 })
+    if (!/\/dashboard$/.test(page.url())) {
+      await page.getByRole('button', { name: 'Sign In' }).click()
+    }
+    await page.waitForURL('**/dashboard', { timeout: 15000 })
+  }).toPass({ timeout: 45000 })
 }
 
 export async function signOut(page: Page) {
@@ -63,6 +65,17 @@ export async function expectToast(page: Page, text: RegExp | string) {
   })
 }
 
+export async function written(page: Page, act: () => Promise<unknown>) {
+  const response = page.waitForResponse(
+    (r) =>
+      r.url().includes('/api/') &&
+      r.request().method() !== 'GET' &&
+      !new URL(r.url()).pathname.endsWith('/check')
+  )
+  await act()
+  await response
+}
+
 export function dialog(page: Page) {
   return page.locator('dialog[open]')
 }
@@ -73,7 +86,10 @@ export async function switchLocation(page: Page, name: string) {
 }
 
 export async function locationOptions(page: Page): Promise<string[]> {
-  const options = await page.getByRole('combobox', { name: 'Location' }).locator('option').allTextContents()
+  const options = await page
+    .getByRole('combobox', { name: 'Location' })
+    .locator('option')
+    .allTextContents()
   return options.map((o) => o.trim())
 }
 
@@ -82,9 +98,14 @@ export function apiUrl(path: string): string {
 }
 
 export async function workAtFirstLocation(page: Page): Promise<string> {
-  const [first] = await apiGet<{ id: string; name: string }[]>(page, '/api/properties')
+  const all = await apiGet<{ id: string; name: string }[]>(page, '/api/properties')
+  const first =
+    all.find((l) => l.name.includes('Downtown')) ??
+    all.find((l) => !l.name.startsWith('Audit ')) ??
+    all[0]
   expect(first, 'the account reaches no location').toBeDefined()
   await page.evaluate((id) => window.localStorage.setItem('nexus.locationId', id), first.id)
+  if (page.url().startsWith('http')) await page.reload()
   return first.id
 }
 
@@ -94,8 +115,28 @@ export async function apiGet<T>(page: Page, path: string): Promise<T> {
   return (await res.json()) as T
 }
 
+export async function apiRows<T>(page: Page, path: string): Promise<T[]> {
+  const glue = path.includes('?') ? '&' : '?'
+  return (await apiGet<{ data: T[] }>(page, `${path}${glue}limit=200`)).data
+}
+
 export async function onHandOf(page: Page, ingredient: string): Promise<number> {
   const rows = await apiGet<{ name: string; onHand: number }[]>(page, '/api/ingredients')
+  const found = rows.find((i) => i.name === ingredient)
+  expect(found, `ingredient ${ingredient} not found`).toBeDefined()
+  return found!.onHand
+}
+
+export async function onHandAt(
+  page: Page,
+  ingredient: string,
+  locationId: string
+): Promise<number> {
+  const res = await page.request.get(apiUrl('/api/ingredients'), {
+    headers: { 'X-Location-Id': locationId },
+  })
+  expect(res.ok(), `GET /api/ingredients → ${res.status()}`).toBeTruthy()
+  const rows = (await res.json()) as { name: string; onHand: number }[]
   const found = rows.find((i) => i.name === ingredient)
   expect(found, `ingredient ${ingredient} not found`).toBeDefined()
   return found!.onHand

@@ -1,17 +1,22 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
-import { IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  MinLength,
+  ValidateIf,
+} from 'class-validator'
+import { TrimmedName } from '../../common/validation/trimmed'
 
 export class RegisterDto {
   @ApiProperty({ example: 'The Golden Fork Group' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(120)
+  @TrimmedName(120)
   organizationName!: string
 
   @ApiProperty({ example: 'Alex Morgan' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(120)
+  @TrimmedName(120)
   fullName!: string
 
   @ApiProperty({ example: 'owner@goldenfork.com' })
@@ -33,6 +38,7 @@ export class LoginDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @MaxLength(128)
   password!: string
 }
 
@@ -46,6 +52,7 @@ export class ResetPasswordDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @MaxLength(200)
   token!: string
 
   @ApiProperty({ minLength: 8 })
@@ -58,21 +65,27 @@ export class ResetPasswordDto {
 export class UpdateProfileDto {
   @ApiPropertyOptional({ example: 'Alex Morgan' })
   @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(120)
+  @TrimmedName(120)
   fullName?: string
 
   @ApiPropertyOptional({ example: 'alex@goldenfork.com' })
   @IsOptional()
   @IsEmail()
   email?: string
+
+  @ApiPropertyOptional({ description: 'Required when the email changes' })
+  @ValidateIf((dto: UpdateProfileDto) => dto.email !== undefined)
+  @IsString()
+  @IsNotEmpty({ message: 'currentPassword is required to change the sign-in email' })
+  @MaxLength(128)
+  currentPassword?: string
 }
 
 export class ChangePasswordDto {
-  @ApiProperty({ description: 'Current password — proof the request comes from the account owner' })
+  @ApiProperty({ description: 'Current password: proof the request comes from the account owner' })
   @IsString()
   @IsNotEmpty()
+  @MaxLength(128)
   currentPassword!: string
 
   @ApiProperty({ minLength: 8 })

@@ -1,14 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Badge, Button, Card, PageHeader, TextField, useToast } from '@/components/ui'
-import { authService, organizationService, ROLE_LABELS } from '@/lib/api/services'
+import { authService, ROLE_LABELS } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 export default function ProfilePage() {
-  const { data: me } = useQuery({ queryKey: ['org-current'], queryFn: organizationService.current })
+  const { data: me } = useQuery(queries.orgCurrent())
   const { role } = useCurrentUser()
 
   return (
@@ -27,6 +29,12 @@ export default function ProfilePage() {
               <Badge tone="neutral">{ROLE_LABELS[role ?? ''] ?? role ?? '—'}</Badge>
               <span className="text-sm text-text-muted">{me?.organization ?? ''}</span>
             </div>
+            <p className="mt-3 text-sm">
+              <span className="text-text-muted">Locations you work at: </span>
+              {me && me.locations.length > 0
+                ? me.locations.map((l) => l.name).join(', ')
+                : 'none yet; ask your administrator'}
+            </p>
           </Card>
         </div>
       </div>
@@ -36,22 +44,25 @@ export default function ProfilePage() {
 
 function ProfileForm({ name, email }: { name: string; email: string }) {
   const toast = useToast()
-  const queryClient = useQueryClient()
+  const invalidate = useInvalidate()
   const [form, setForm] = useState({ fullName: name, email })
-  const [saving, setSaving] = useState(false)
+  const [currentPassword, setCurrentPassword] = useState('')
+  const emailChanged = form.email.trim().toLowerCase() !== email.toLowerCase()
 
-  const save = async () => {
-    setSaving(true)
-    try {
-      await authService.updateProfile(form)
-      await queryClient.invalidateQueries({ queryKey: ['org-current'] })
+  const saving = useMutation({
+    mutationFn: () =>
+      authService.updateProfile({
+        fullName: form.fullName,
+        ...(emailChanged ? { email: form.email, currentPassword } : {}),
+      }),
+    onSuccess: async () => {
+      setCurrentPassword('')
+      await invalidate('profile')
       toast('success', 'Profile updated')
-    } catch (e) {
-      toast('danger', serverMessage(e, 'Could not update the profile'))
-    } finally {
-      setSaving(false)
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e, 'Could not update the profile')),
+  })
+  const save = () => saving.mutate()
 
   return (
     <Card className="p-5">
@@ -69,10 +80,24 @@ function ProfileForm({ name, email }: { name: string; email: string }) {
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+        {emailChanged && (
+          <TextField
+            label="Current password"
+            type="password"
+            name="current-for-email"
+            help="Changing the sign-in email needs your current password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+        )}
       </div>
       <div className="mt-5 flex justify-end">
-        <Button variant="primary" onClick={save} disabled={saving || !form.fullName.trim()}>
-          {saving ? 'Saving…' : 'Save changes'}
+        <Button
+          variant="primary"
+          onClick={save}
+          disabled={saving.isPending || !form.fullName.trim() || (emailChanged && !currentPassword)}
+        >
+          {saving.isPending ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
     </Card>
@@ -82,22 +107,18 @@ function ProfileForm({ name, email }: { name: string; email: string }) {
 function PasswordForm() {
   const toast = useToast()
   const [form, setForm] = useState({ current: '', next: '', confirm: '' })
-  const [saving, setSaving] = useState(false)
   const mismatch = form.confirm.length > 0 && form.next !== form.confirm
   const ready = form.current.length > 0 && form.next.length >= 8 && !mismatch
 
-  const save = async () => {
-    setSaving(true)
-    try {
-      await authService.changePassword(form.current, form.next)
+  const saving = useMutation({
+    mutationFn: () => authService.changePassword(form.current, form.next),
+    onSuccess: () => {
       setForm({ current: '', next: '', confirm: '' })
       toast('success', 'Password changed. Other devices were signed out.')
-    } catch (e) {
-      toast('danger', serverMessage(e, 'Could not change the password'))
-    } finally {
-      setSaving(false)
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e, 'Could not change the password')),
+  })
+  const save = () => saving.mutate()
 
   return (
     <Card className="p-5">
@@ -129,8 +150,8 @@ function PasswordForm() {
         />
       </div>
       <div className="mt-5 flex justify-end">
-        <Button variant="primary" onClick={save} disabled={saving || !ready}>
-          {saving ? 'Saving…' : 'Change password'}
+        <Button variant="primary" onClick={save} disabled={saving.isPending || !ready}>
+          {saving.isPending ? 'Saving…' : 'Change password'}
         </Button>
       </div>
     </Card>

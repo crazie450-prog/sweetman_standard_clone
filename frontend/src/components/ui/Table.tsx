@@ -1,10 +1,32 @@
 import type { HTMLAttributes, TdHTMLAttributes, ThHTMLAttributes } from 'react'
 import { cn } from '@/lib/utils/cn'
 
-export function Table({ className, ...rest }: HTMLAttributes<HTMLTableElement>) {
+const pinnedLastColumn =
+  'sm:[&_th:last-child]:sticky sm:[&_th:last-child]:right-0 sm:[&_th:last-child]:bg-surface-subtle ' +
+  'sm:[&_td:last-child]:sticky sm:[&_td:last-child]:right-0 sm:[&_td:last-child]:bg-surface ' +
+  'sm:[&_tr:hover_td:last-child]:bg-surface-subtle ' +
+  'sm:[&_th:last-child]:border-l sm:[&_td:last-child]:border-l sm:[&_th:last-child]:border-border ' +
+  'sm:[&_td:last-child]:border-border'
+
+const compactCells = '[&_td]:px-3 [&_th]:px-3'
+
+export function Table({
+  pinActions = false,
+  compact = false,
+  className,
+  ...rest
+}: HTMLAttributes<HTMLTableElement> & { pinActions?: boolean; compact?: boolean }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
-      <table className={cn('w-full text-left text-sm', className)} {...rest} />
+      <table
+        className={cn(
+          'w-full text-left text-sm',
+          pinActions && pinnedLastColumn,
+          compact && compactCells,
+          className
+        )}
+        {...rest}
+      />
     </div>
   )
 }
@@ -66,21 +88,23 @@ export function TableEmpty({ colSpan, children }: { colSpan: number; children: R
   return (
     <tr>
       <td colSpan={colSpan} className="px-4 py-14 text-center">
-        <span className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="size-5"
-            aria-hidden
-          >
-            <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 12h6" />
-          </svg>
-        </span>
-        <span className="mx-auto block max-w-sm text-sm text-text-muted">{children}</span>
+        <div className="sticky left-4 w-[calc(100vw-5rem)] sm:static sm:w-auto">
+          <span className="mx-auto mb-3 flex size-11 items-center justify-center rounded-full bg-primary-50 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-5"
+              aria-hidden
+            >
+              <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0zM9 12h6" />
+            </svg>
+          </span>
+          <span className="mx-auto block max-w-sm text-sm text-text-muted">{children}</span>
+        </div>
       </td>
     </tr>
   )

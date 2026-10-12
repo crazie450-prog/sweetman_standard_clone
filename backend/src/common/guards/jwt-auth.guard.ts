@@ -15,7 +15,8 @@ export class JwtAuthGuard implements CanActivate {
     if (isPublic) return true
 
     const req = ctx.switchToHttp().getRequest<{ tenant?: TenantContext }>()
-    if (!req.tenant) throw new UnauthorizedException('Not authenticated')
+    if (!req.tenant)
+      throw new UnauthorizedException({ code: 'NOT_AUTHENTICATED', message: 'Not authenticated' })
     return true
   }
 }

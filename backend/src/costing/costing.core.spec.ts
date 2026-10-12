@@ -5,6 +5,7 @@ import {
   MAX_NESTING_DEPTH,
   RecipeCycleError,
   recipeFoodCostPct,
+  recipesContaining,
   wouldCreateCycle,
   type CostComponentEdge,
   type CostRecipe,
@@ -145,6 +146,24 @@ describe('computeAllCosts', () => {
     ).toThrow(RecipeCycleError)
   })
 
+  it('an organization rule carries a sub-recipe yield into the unit the parent takes it in', () => {
+    const recipes = [
+      recipe('dough', {
+        yieldAmount: 10,
+        yieldUnit: 'ea',
+        ingredients: [{ quantity: 1, costPerUnit: 50 }],
+      }),
+      recipe('pie'),
+    ]
+    const edges = [edge('pie', 'dough', 0.5, 'kg')]
+
+    const withoutRule = computeAllCosts(recipes, edges)
+    expect(withoutRule.get('pie')).toBeCloseTo(25)
+
+    const costs = computeAllCosts(recipes, edges, [{ fromUnit: 'ea', toUnit: 'kg', factor: 0.2 }])
+    expect(costs.get('pie')).toBeCloseTo(12.5)
+  })
+
   it('an edge to a missing recipe is ignored and does not hang the graph', () => {
     const costs = computeAllCosts(
       [recipe('a', { ingredients: [{ quantity: 1, costPerUnit: 5 }] })],
@@ -165,6 +184,20 @@ describe('wouldCreateCycle', () => {
   })
   it('a regular edge is allowed', () => {
     expect(wouldCreateCycle('a', 'd', edges)).toBe(false)
+  })
+})
+
+describe('recipesContaining', () => {
+  const edges = [edge('a', 'b'), edge('b', 'c'), edge('x', 'c'), edge('y', 'z')]
+
+  it('lists every recipe above, directly and through a chain', () => {
+    expect(recipesContaining('c', edges).sort()).toEqual(['a', 'b', 'x'])
+  })
+  it('a recipe nothing is built on is contained by none', () => {
+    expect(recipesContaining('a', edges)).toEqual([])
+  })
+  it('does not loop on a graph that already holds a cycle', () => {
+    expect(recipesContaining('p', [edge('p', 'q'), edge('q', 'p')]).sort()).toEqual(['p', 'q'])
   })
 })
 

@@ -9,4 +9,8 @@ export function roleAtLeast(actual: Role, required: Role): boolean {
   return ROLE_ORDER.indexOf(actual) >= ROLE_ORDER.indexOf(required)
 }
 
+export function roleBelow(role: Role, own: Role): boolean {
+  return !roleAtLeast(role, own)
+}
+
 export const Roles = (role: Role) => SetMetadata(ROLES_KEY, role)

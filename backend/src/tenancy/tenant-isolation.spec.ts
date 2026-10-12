@@ -2,9 +2,12 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '../generated/prisma/client'
 import { tenantExtension } from './tenant.extension'
 import { tenantStorage, TenantContext } from './tenant-context'
+import { configWith } from '../../test/config'
 
 const raw = new PrismaClient({
-  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+  adapter: new PrismaPg({
+    connectionString: configWith().getOrThrow('DATABASE_URL', { infer: true }),
+  }),
 })
 const db = raw.$extends(tenantExtension)
 
@@ -97,10 +100,26 @@ describe('direct access: a foreign row is indistinguishable from a missing one',
   })
 
   test('updateMany without a where clause does not touch foreign rows', async () => {
-    await asOrg(orgA, () => db.recipe.updateMany({ data: { notes: 'bulk-touch' } }))
-    const foreign = await raw.recipe.findMany({ where: { organizationId: orgB } })
-    expect(foreign.every((r) => r.notes !== 'bulk-touch')).toBe(true)
-    await raw.recipe.updateMany({ where: { organizationId: orgA }, data: { notes: null } })
+    const before = await raw.recipe.findMany({
+      where: { organizationId: orgA },
+      select: { id: true, notes: true },
+    })
+    try {
+      await asOrg(orgA, () => db.recipe.updateMany({ data: { notes: 'bulk-touch' } }))
+      const foreign = await raw.recipe.findMany({ where: { organizationId: orgB } })
+      expect(foreign.every((r) => r.notes !== 'bulk-touch')).toBe(true)
+    } finally {
+      for (const r of before) {
+        await raw.recipe.update({ where: { id: r.id }, data: { notes: r.notes } })
+      }
+    }
+    const after = await raw.recipe.findMany({
+      where: { organizationId: orgA },
+      select: { id: true, notes: true },
+    })
+    expect(after.map((r) => [r.id, r.notes]).sort()).toEqual(
+      before.map((r) => [r.id, r.notes]).sort(),
+    )
   })
 })
 
@@ -132,9 +151,19 @@ describe('outside a context and as a platform admin', () => {
     expect(all.length).toBeGreaterThanOrEqual(2)
   })
 
-  test('a platform admin sees both organizations', async () => {
+  test('a platform admin is scoped like anyone else until they say otherwise', async () => {
     const rows = (await asOrg(orgA, () => db.recipe.findMany(), {
       isPlatformAdmin: true,
+    })) as { organizationId: string }[]
+    const orgs = new Set(rows.map((r) => r.organizationId))
+    expect(orgs.has(orgA)).toBe(true)
+    expect(orgs.has(orgB)).toBe(false)
+  })
+
+  test('a declared platform scope sees both organizations', async () => {
+    const rows = (await asOrg(orgA, () => db.recipe.findMany(), {
+      isPlatformAdmin: true,
+      platformScope: true,
     })) as { organizationId: string }[]
     const orgs = new Set(rows.map((r) => r.organizationId))
     expect(orgs.has(orgA)).toBe(true)

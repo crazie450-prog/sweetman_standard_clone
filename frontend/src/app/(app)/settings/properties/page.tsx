@@ -13,26 +13,24 @@ import {
   TextField,
   useToast,
 } from '@/components/ui'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { locationsService, type LocationDetail } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 const EMPTY = { name: '', address: '', phone: '' }
 
 function LocationsPage() {
-  const { data: locations = [] } = useQuery({
-    queryKey: ['locations-all'],
-    queryFn: locationsService.listAll,
-  })
-  const queryClient = useQueryClient()
-  const { can } = useCurrentUser()
+  const { data: locations = [] } = useQuery(queries.locationsAll())
+  const invalidate = useInvalidate()
+  const { can, changesHere, worksEverywhere } = useCurrentUser()
   const toast = useToast()
 
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<LocationDetail | null>(null)
   const [form, setForm] = useState(EMPTY)
-  const [busy, setBusy] = useState(false)
   const [pendingArchive, setPendingArchive] = useState<LocationDetail | null>(null)
 
   const openCreate = () => {
@@ -47,58 +45,54 @@ function LocationsPage() {
     setOpen(true)
   }
 
-  async function submit() {
+  const save = useMutation({
+    mutationFn: () => {
+      const cleared = editing ? null : undefined
+      const payload = {
+        name: form.name.trim(),
+        address: form.address.trim() || cleared,
+        phone: form.phone.trim() || cleared,
+      }
+      return editing
+        ? locationsService.update(editing.id, payload)
+        : locationsService.create(payload)
+    },
+    onSuccess: async () => {
+      await invalidate('locations')
+      setOpen(false)
+      toast('success', editing ? 'Property updated' : 'Property created')
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function submit() {
     if (!form.name.trim()) {
       toast('danger', 'Property name is required')
       return
     }
-    setBusy(true)
-    try {
-      const payload = {
-        name: form.name.trim(),
-        address: form.address.trim() || undefined,
-        phone: form.phone.trim() || undefined,
-      }
-      if (editing) await locationsService.update(editing.id, payload)
-      else await locationsService.create(payload)
-      await queryClient.invalidateQueries({ queryKey: ['locations-all'] })
-      await queryClient.invalidateQueries({ queryKey: ['locations'] })
-      setOpen(false)
-      toast('success', editing ? 'Property updated' : 'Property created')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
+    save.mutate()
   }
 
-  async function archive() {
-    const l = pendingArchive
-    if (!l) return
-    setBusy(true)
-    try {
-      await locationsService.remove(l.id)
-      await queryClient.invalidateQueries({ queryKey: ['locations-all'] })
-      await queryClient.invalidateQueries({ queryKey: ['locations'] })
+  const archival = useMutation({
+    mutationFn: (l: LocationDetail) => locationsService.remove(l.id),
+    onSuccess: async (_, l) => {
+      await invalidate('locations')
       setPendingArchive(null)
       toast('success', `${l.name} archived`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
 
-  async function restore(l: LocationDetail) {
-    try {
-      await locationsService.restore(l.id)
-      await queryClient.invalidateQueries({ queryKey: ['locations-all'] })
-      await queryClient.invalidateQueries({ queryKey: ['locations'] })
+  const restoration = useMutation({
+    mutationFn: (l: LocationDetail) => locationsService.restore(l.id),
+    onSuccess: async (_, l) => {
+      await invalidate('locations')
       toast('success', `${l.name} restored`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const restore = (l: LocationDetail) => restoration.mutate(l)
 
   return (
     <>
@@ -106,7 +100,7 @@ function LocationsPage() {
         title="Property Management"
         subtitle="Manage your restaurant locations and properties"
         actions={
-          can('admin') ? (
+          can('admin') && worksEverywhere ? (
             <Button variant="primary" onClick={openCreate}>
               + Add Property
             </Button>
@@ -118,7 +112,7 @@ function LocationsPage() {
         <EmptyState
           title="No properties found"
           action={
-            can('admin') ? (
+            can('admin') && worksEverywhere ? (
               <Button onClick={openCreate}>+ Create Your First Property</Button>
             ) : undefined
           }
@@ -154,7 +148,7 @@ function LocationsPage() {
                 </div>
               </div>
               <div className="flex shrink-0 flex-col items-end gap-1">
-                {l.isDefault && (
+                {l.isDefault && l.isActive && (
                   <Badge dot tone="primary">
                     Default
                   </Badge>
@@ -166,7 +160,7 @@ function LocationsPage() {
                 )}
               </div>
             </div>
-            {can('admin') && (
+            {can('admin') && changesHere(l.id) && (
               <div className="mt-4 flex gap-2">
                 <Button variant="secondary" size="sm" onClick={() => openEdit(l)}>
                   Edit
@@ -176,7 +170,12 @@ function LocationsPage() {
                     Archive
                   </Button>
                 ) : (
-                  <Button variant="ghost" size="sm" onClick={() => restore(l)}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => restore(l)}
+                    disabled={restoration.isPending}
+                  >
                     Restore
                   </Button>
                 )}
@@ -195,7 +194,7 @@ function LocationsPage() {
             <Button variant="secondary" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={submit} disabled={busy}>
+            <Button onClick={submit} disabled={save.isPending}>
               {editing ? 'Save Property' : 'Create Property'}
             </Button>
           </>
@@ -228,13 +227,19 @@ function LocationsPage() {
       <ConfirmDialog
         open={pendingArchive !== null}
         onClose={() => setPendingArchive(null)}
-        onConfirm={archive}
+        onConfirm={() => pendingArchive && archival.mutate(pendingArchive)}
         title={`Archive ${pendingArchive?.name ?? 'property'}?`}
         confirmLabel="Archive"
-        busy={busy}
+        busy={archival.isPending}
       >
-        The property disappears from location pickers across the app. Its data stays and you can
-        restore it from this page.
+        The property disappears from location pickers across the app and nothing new can be recorded
+        there. Its data stays and you can restore it from this page.
+        {pendingArchive && pendingArchive.people > 0 && (
+          <span className="mt-2 block font-medium text-warning-700 dark:text-warning-100">
+            {pendingArchive.people} {pendingArchive.people === 1 ? 'person is' : 'people are'}{' '}
+            assigned to this property; anyone assigned to it alone will have no location to work at.
+          </span>
+        )}
       </ConfirmDialog>
     </>
   )

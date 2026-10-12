@@ -1,4 +1,4 @@
-# Nexus API — deployment image.
+# Nexus API: the deployment image.
 # Multi-stage build: dependencies and compilation stay out of the runtime layer.
 
 FROM node:22-alpine AS deps
@@ -26,6 +26,11 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/src/generated ./src/generated
 COPY prisma ./prisma
 COPY prisma.config.ts ./
+# The API runs as the unprivileged node user. Uploaded files kept locally go to
+# /app/.storage (STORAGE_LOCAL_DIR), so that directory belongs to it; a volume
+# mounted there must be writable by uid 1000.
+RUN mkdir -p /app/.storage && chown node:node /app/.storage
+USER node
 
 # The same route the load balancer polls; it is @Public() precisely for this
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \

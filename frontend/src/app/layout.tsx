@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { QueryProvider } from '@/lib/api/QueryProvider'
+import { ErrorReporting } from '@/lib/errors/ErrorReporting'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -27,7 +28,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full font-sans antialiased">
+      <body className="flex min-h-full flex-col font-sans antialiased">
+        <ErrorReporting />
         <QueryProvider>{children}</QueryProvider>
       </body>
     </html>

@@ -1,8 +1,16 @@
-import { BadRequestException, Injectable, Logger, Module } from '@nestjs/common'
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { BadRequestException, Inject, Injectable, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, isAbsolute, join, normalize, resolve } from 'node:path'
+import { storageChoice } from '../config/integrations'
+import type { AppConfig } from '../config/env.validation'
 
 export interface StoredFile {
   key: string
@@ -11,7 +19,10 @@ export interface StoredFile {
 
 export function safeStorageKey(key: string): string {
   const trimmed = key.trim()
-  const invalid = new BadRequestException('Invalid storage key')
+  const invalid = new BadRequestException({
+    code: 'STORAGE_KEY_INVALID',
+    message: 'Invalid storage key',
+  })
   if (!trimmed || trimmed.includes('\0') || isAbsolute(trimmed)) throw invalid
   const normalized = normalize(trimmed)
   if (normalized === '..' || normalized.startsWith('../') || normalized.includes('/../')) {
@@ -20,14 +31,33 @@ export function safeStorageKey(key: string): string {
   return normalized
 }
 
+const S3_CONNECT_TIMEOUT_MS = 5_000
+const S3_REQUEST_TIMEOUT_MS = 60_000
+
 @Injectable()
 export class StorageService {
   private readonly log = new Logger('Storage')
-  private readonly bucket = process.env.S3_BUCKET
-  private readonly localRoot = resolve(process.env.STORAGE_LOCAL_DIR ?? './.storage')
-  private readonly s3 = this.bucket
-    ? new S3Client({ region: process.env.AWS_REGION ?? 'us-east-1' })
-    : null
+  private readonly bucket: string | undefined
+  private readonly localRoot: string
+  private readonly s3: S3Client | null
+
+  constructor(@Inject(ConfigService) config: AppConfig) {
+    this.bucket = config.get('S3_BUCKET', { infer: true })
+    this.localRoot = resolve(config.get('STORAGE_LOCAL_DIR', { infer: true }) ?? './.storage')
+    this.s3 =
+      storageChoice(config) === 's3' && this.bucket
+        ? new S3Client({
+            region: config.get('AWS_REGION', { infer: true }) ?? 'us-east-1',
+            endpoint: config.get('S3_ENDPOINT', { infer: true }) || undefined,
+            forcePathStyle: config.get('S3_FORCE_PATH_STYLE', { infer: true }) === 'true',
+            requestHandler: {
+              connectionTimeout: S3_CONNECT_TIMEOUT_MS,
+              requestTimeout: S3_REQUEST_TIMEOUT_MS,
+              throwOnRequestTimeout: true,
+            },
+          })
+        : null
+  }
 
   get driver(): 's3' | 'local' {
     return this.s3 ? 's3' : 'local'
@@ -62,6 +92,16 @@ export class StorageService {
     return readFile(join(this.localRoot, safe))
   }
 
+  async remove(key: string): Promise<void> {
+    const safe = safeStorageKey(key)
+    if (this.s3 && this.bucket) {
+      await this.s3.send(new DeleteObjectCommand({ Bucket: this.bucket, Key: safe }))
+      return
+    }
+    await rm(join(this.localRoot, safe), { force: true })
+    this.log.debug(`local remove ${safe}`)
+  }
+
   async signedUrl(key: string, ttlSeconds = 900): Promise<string> {
     const safe = safeStorageKey(key)
     if (this.s3 && this.bucket) {
@@ -72,6 +112,3 @@ export class StorageService {
     return `file://${join(this.localRoot, safe)}`
   }
 }
-
-@Module({ providers: [StorageService], exports: [StorageService] })
-export class StorageModule {}

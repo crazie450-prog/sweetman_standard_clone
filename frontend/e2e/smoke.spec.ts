@@ -24,10 +24,68 @@ test.describe('Authentication', () => {
     await expect(page).toHaveURL(/\/login$/)
   })
 
+  test('a sign-in the server refuses with a reason shows that reason', async ({ page }) => {
+    const reason = 'This organization has been deactivated; contact Nexus support to restore access'
+    await page.route('**/api/auth/login', (route) =>
+      route.fulfill({
+        status: 403,
+        json: { error: { code: 'ORGANIZATION_DEACTIVATED', message: reason } },
+      })
+    )
+    await page.goto('/login')
+    await fillCredentials(page, ACCOUNTS.owner.email, ACCOUNTS.owner.password)
+    await page.getByRole('button', { name: 'Sign In' }).click()
+    await expect(page.getByText(reason)).toBeVisible()
+    await expect(page.getByText('Incorrect email or password.')).toHaveCount(0)
+  })
+
+  test('a sign-in that fails for any other reason does not blame the password', async ({
+    page,
+  }) => {
+    let answer: 'unreachable' | 'broken' | 'refused' = 'unreachable'
+    await page.route('**/api/auth/login', (route) =>
+      answer === 'unreachable'
+        ? route.abort('connectionrefused')
+        : answer === 'broken'
+          ? route.fulfill({
+              status: 500,
+              json: {
+                error: {
+                  code: 'INTERNAL_SERVER_ERROR',
+                  message: 'Something went wrong on our side; try again in a moment',
+                },
+              },
+            })
+          : route.fulfill({
+              status: 401,
+              json: {
+                error: { code: 'INVALID_CREDENTIALS', message: 'Invalid email or password' },
+              },
+            })
+    )
+    await page.goto('/login')
+    await fillCredentials(page, ACCOUNTS.owner.email, ACCOUNTS.owner.password)
+    const signIn = page.getByRole('button', { name: 'Sign In' })
+
+    await signIn.click()
+    await expect(page.getByText('Could not sign in. Try again.')).toBeVisible()
+    await expect(page.getByText('Incorrect email or password.')).toHaveCount(0)
+
+    answer = 'broken'
+    await signIn.click()
+    await expect(
+      page.getByText('Something went wrong on our side; try again in a moment')
+    ).toBeVisible()
+    await expect(page.getByText('Incorrect email or password.')).toHaveCount(0)
+
+    answer = 'refused'
+    await signIn.click()
+    await expect(page.getByText('Incorrect email or password.')).toBeVisible()
+  })
+
   test('an unauthenticated visitor cannot reach an application screen', async ({ page }) => {
-    await page.goto('/recipes')
-    await page.waitForURL('**/login', { timeout: 20000 })
-    await expect(page).toHaveURL(/\/login$/)
+    await page.goto('/recipes').catch(() => {})
+    await expect(page).toHaveURL(/\/login$/, { timeout: 20000 })
   })
 })
 
@@ -61,7 +119,9 @@ test.describe('Screens carry data from the API', () => {
 })
 
 test.describe('Deep links', () => {
-  test('a recipe carried in the URL opens the menu-item form with that recipe', async ({ page }) => {
+  test('a recipe carried in the URL opens the menu-item form with that recipe', async ({
+    page,
+  }) => {
     await signIn(page, ACCOUNTS.owner)
     await page.goto('/recipes')
     await page.getByRole('link', { name: 'Beef Wellington' }).first().click()

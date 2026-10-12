@@ -1,7 +1,7 @@
 import { Prisma } from '../generated/prisma/client'
 import { currentTenant } from './tenant-context'
 
-const TENANT_MODELS = new Set<string>([
+export const TENANT_MODELS = new Set<string>([
   'Location',
   'User',
   'Invitation',
@@ -11,23 +11,66 @@ const TENANT_MODELS = new Set<string>([
   'InventoryTransaction',
   'Recipe',
   'MenuItem',
+  'Menu',
   'Sale',
   'Production',
   'WasteEntry',
   'IngredientPriceHistory',
   'Invoice',
+  'Document',
+  'Extraction',
+  'IngredientAlias',
+  'MenuItemAlias',
+  'UnitConversion',
+  'VendorProduct',
+  'PurchaseDraft',
+  'BillingEvent',
 ])
 
-const LOCATION_STRICT = new Set<string>([
+/* ===== Models that carry no organizationId of their own ===== */
+
+export const CHILD_MODELS = new Map<string, string>([
+  ['IngredientLocationSettings', 'ingredient'],
+  ['IngredientLocationStock', 'ingredient'],
+  ['Instruction', 'recipe'],
+  ['InvoiceItem', 'invoice'],
+  ['MenuItemOnMenu', 'menu'],
+  ['MenuItemRecipe', 'menuItem'],
+  ['MenuOnLocation', 'menu'],
+  ['PurchaseDraftLine', 'draft'],
+  ['RecipeComponent', 'parent'],
+  ['RecipeIngredient', 'recipe'],
+  ['RecipeSection', 'recipe'],
+  ['SaleItem', 'sale'],
+  ['UserLocation', 'user'],
+  ['UserSession', 'user'],
+])
+
+export const TENANT_ROOT = 'Organization'
+
+export const LOCATION_STRICT = new Set<string>([
   'InventoryTransaction',
   'Sale',
   'Production',
   'WasteEntry',
   'Invoice',
+  'Document',
+  'PurchaseDraft',
 ])
 const LOCATION_SHARED = new Set<string>(['Recipe', 'MenuItem'])
 
 const LIST_OPS = new Set(['findMany', 'count', 'aggregate', 'groupBy'])
+
+/* ===== Reaching one row by id, or changing rows in bulk ===== */
+
+const REACH_OPS = new Set([
+  'findUnique',
+  'findUniqueOrThrow',
+  'update',
+  'updateMany',
+  'delete',
+  'deleteMany',
+])
 
 const WHERE_OPS = new Set([
   'findMany',
@@ -64,7 +107,7 @@ export const tenantExtension = Prisma.defineExtension({
     $allModels: {
       async $allOperations({ model, operation, args, query }) {
         const ctx = currentTenant()
-        if (!ctx || ctx.isPlatformAdmin || !TENANT_MODELS.has(model)) {
+        if (!ctx || ctx.platformScope || !TENANT_MODELS.has(model)) {
           return query(args)
         }
 
@@ -84,10 +127,11 @@ export const tenantExtension = Prisma.defineExtension({
             ? { in: ctx.assignedLocationIds }
             : null
 
-        if (locationScope && LIST_OPS.has(operation)) {
-          if (LOCATION_STRICT.has(model)) {
+        const reachable = LIST_OPS.has(operation) || REACH_OPS.has(operation)
+        if (locationScope) {
+          if (LOCATION_STRICT.has(model) && reachable) {
             a.where = { ...(a.where ?? {}), locationId: locationScope }
-          } else if (LOCATION_SHARED.has(model)) {
+          } else if (LOCATION_SHARED.has(model) && LIST_OPS.has(operation)) {
             const existing = a.where ?? {}
             a.where = {
               ...existing,

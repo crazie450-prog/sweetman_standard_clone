@@ -30,7 +30,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             Fresh mornings for your kitchen.
           </h2>
           <p className="mt-3 max-w-md text-[15px] text-text-muted">
-            Recipes, inventory, invoices, and food costs — one calm workspace for your whole
+            Recipes, inventory, invoices, and food costs: one calm workspace for your whole
             restaurant group.
           </p>
 

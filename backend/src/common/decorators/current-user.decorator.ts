@@ -5,7 +5,7 @@ export const CurrentUser = createParamDecorator(
   (_data: unknown, ctx: ExecutionContext): TenantContext => {
     const req = ctx.switchToHttp().getRequest<{ tenant?: TenantContext }>()
     if (!req.tenant)
-      throw new Error('CurrentUser used without TenantMiddleware — the route is unprotected')
+      throw new Error('CurrentUser used without TenantMiddleware: the route is unprotected')
     return req.tenant
   },
 )
