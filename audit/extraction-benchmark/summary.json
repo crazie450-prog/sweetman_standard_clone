@@ -1,0 +1,398 @@
+[
+ {
+  "arm": "m3-gemini_gemini-flash-lite-latest",
+  "jobs": 85,
+  "errors": 0,
+  "refused": 0,
+  "recipe_required_lines": 490,
+  "recipe_correct": 352,
+  "recipe_recall": 71.83673469387755,
+  "recipe_hallucinations": 15,
+  "recipe_extras": 33,
+  "recipe_lines": 444,
+  "ground_lines": 1731,
+  "ground_unsupported": 1,
+  "ground_recall": 97.49049429657795,
+  "all_recall": 88.35579514824798,
+  "inv_required": 50,
+  "inv_correct": 5,
+  "inv_wrong": 45,
+  "inv_fee_as_item": 5,
+  "inv_fee_separated": 0,
+  "inv_missed": 0,
+  "trap_pass": 3,
+  "trap_jobs": 10,
+  "trap_false_lines": 24,
+  "all_hallucinations": 90,
+  "unflagged": 90,
+  "flagged": 0,
+  "ok_flagged": 0,
+  "clean_jobs": 38,
+  "clean_rate": 44.705882352941174,
+  "cases_identical": 7,
+  "cases": 17,
+  "distinct_outputs": {
+   "bnb_event": 5,
+   "bonds_sheet": 2,
+   "brown_butter": 1,
+   "caramelized": 4,
+   "caviar": 5,
+   "collard": 5,
+   "duck_doc": 4,
+   "duck_docx": 1,
+   "invoice_pdf": 1,
+   "invoice_photo": 1,
+   "lasagna_pdf": 5,
+   "linguine_pdf": 1,
+   "pavlova_pdf": 3,
+   "synthetic_invoice": 1,
+   "trap_invoice_as_recipe": 1,
+   "trap_recipe_as_invoice": 3,
+   "tuna": 5
+  },
+  "p50_s": 1.559,
+  "p95_s": 11.385,
+  "max_s": 14.772,
+  "cost_total": 0.2801595,
+  "cost_per_doc": 0.0032959941176470588,
+  "models": [
+   "gemini-3.5-flash-lite"
+  ],
+  "per_case": {
+   "bnb_event": {
+    "ref_total": 325,
+    "ref_found": 309,
+    "grounded": 557,
+    "recipes": 46,
+    "recipe_count_ok": 5,
+    "lines": 558,
+    "invented_amount": 1,
+    "err_unflagged": 1
+   },
+   "bonds_sheet": {
+    "ref_total": 325,
+    "ref_found": 320,
+    "grounded": 340,
+    "recipes": 65,
+    "recipe_count_ok": 5,
+    "lines": 340
+   },
+   "brown_butter": {
+    "correct": 15,
+    "gold_required": 15,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 15
+   },
+   "caramelized": {
+    "correct": 47,
+    "unlisted": 2,
+    "gold_required": 40,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 49,
+    "missed": 8
+   },
+   "caviar": {
+    "grounded_extra": 7,
+    "correct": 70,
+    "gold_required": 70,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 103,
+    "invented_amount": 2,
+    "duplicate": 20,
+    "unlisted": 4,
+    "err_unflagged": 2
+   },
+   "collard": {
+    "ref_total": 665,
+    "ref_found": 653,
+    "grounded": 833,
+    "recipes": 25,
+    "recipe_count_ok": 5,
+    "lines": 833
+   },
+   "duck_doc": {
+    "correct": 36,
+    "missed": 39,
+    "gold_required": 65,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 36
+   },
+   "duck_docx": {
+    "correct": 10,
+    "missed": 65,
+    "gold_required": 65,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 10
+   },
+   "invoice_pdf": {
+    "wrong_value": 10,
+    "fee_not_captured": 5,
+    "gold_required": 10,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "err_unflagged": 10,
+    "lines": 10
+   },
+   "invoice_photo": {
+    "wrong_value": 10,
+    "fee_not_captured": 5,
+    "gold_required": 10,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "err_unflagged": 10,
+    "lines": 10
+   },
+   "lasagna_pdf": {
+    "correct": 85,
+    "invented": 5,
+    "wrong_value": 5,
+    "missed": 5,
+    "gold_required": 95,
+    "recipes": 10,
+    "recipe_count_ok": 5,
+    "err_unflagged": 10,
+    "lines": 95
+   },
+   "linguine_pdf": {
+    "correct": 40,
+    "gold_required": 40,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 40
+   },
+   "pavlova_pdf": {
+    "missed": 52,
+    "gold_required": 55,
+    "recipes": 6,
+    "recipe_count_ok": 5,
+    "lines": 12,
+    "correct": 11,
+    "wrong_value": 1,
+    "err_unflagged": 1
+   },
+   "synthetic_invoice": {
+    "wrong_value": 25,
+    "correct": 5,
+    "fee_as_stock_item": 5,
+    "gold_required": 30,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "err_unflagged": 30,
+    "lines": 35
+   },
+   "trap_invoice_as_recipe": {
+    "false_import": 10,
+    "trap_pass": 0
+   },
+   "trap_recipe_as_invoice": {
+    "false_import": 14,
+    "trap_pass": 3
+   },
+   "tuna": {
+    "correct": 82,
+    "missed": 1,
+    "gold_required": 45,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 84,
+    "wrong_value": 2,
+    "err_unflagged": 2
+   }
+  }
+ },
+ {
+  "arm": "final-gemini_gemini-3.8-flash",
+  "jobs": 85,
+  "errors": 0,
+  "refused": 0,
+  "recipe_required_lines": 490,
+  "recipe_correct": 490,
+  "recipe_recall": 100.0,
+  "recipe_hallucinations": 0,
+  "recipe_extras": 0,
+  "recipe_lines": 495,
+  "ground_lines": 1531,
+  "ground_unsupported": 1,
+  "ground_recall": 98.78326996197718,
+  "all_recall": 99.13746630727763,
+  "inv_required": 50,
+  "inv_correct": 50,
+  "inv_wrong": 0,
+  "inv_fee_as_item": 0,
+  "inv_fee_separated": 5,
+  "inv_missed": 0,
+  "trap_pass": 10,
+  "trap_jobs": 10,
+  "trap_false_lines": 0,
+  "all_hallucinations": 1,
+  "unflagged": 0,
+  "flagged": 1,
+  "ok_flagged": 280,
+  "clean_jobs": 84,
+  "clean_rate": 98.82352941176471,
+  "cases_identical": 12,
+  "cases": 17,
+  "distinct_outputs": {
+   "bnb_event": 5,
+   "bonds_sheet": 3,
+   "brown_butter": 1,
+   "caramelized": 2,
+   "caviar": 1,
+   "collard": 5,
+   "duck_doc": 1,
+   "duck_docx": 1,
+   "invoice_pdf": 1,
+   "invoice_photo": 1,
+   "lasagna_pdf": 1,
+   "linguine_pdf": 1,
+   "pavlova_pdf": 2,
+   "synthetic_invoice": 1,
+   "trap_invoice_as_recipe": 1,
+   "trap_recipe_as_invoice": 1,
+   "tuna": 1
+  },
+  "p50_s": 6.331,
+  "p95_s": 39.625,
+  "max_s": 73.16,
+  "cost_total": 0.84800625,
+  "cost_per_doc": 0.00997654411764706,
+  "models": [
+   "gemini-3.8-flash"
+  ],
+  "per_case": {
+   "bnb_event": {
+    "ref_total": 325,
+    "ref_found": 320,
+    "grounded": 510,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "ok_flagged": 65,
+    "lines": 511,
+    "merged": 1,
+    "err_flagged": 1
+   },
+   "bonds_sheet": {
+    "ref_total": 325,
+    "ref_found": 321,
+    "grounded": 340,
+    "recipes": 70,
+    "recipe_count_ok": 5,
+    "lines": 340
+   },
+   "brown_butter": {
+    "correct": 15,
+    "gold_required": 15,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 15
+   },
+   "caramelized": {
+    "correct": 45,
+    "gold_required": 40,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 45
+   },
+   "caviar": {
+    "correct": 70,
+    "gold_required": 70,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 70
+   },
+   "collard": {
+    "ref_total": 665,
+    "ref_found": 658,
+    "grounded": 680,
+    "recipes": 25,
+    "recipe_count_ok": 5,
+    "lines": 680
+   },
+   "duck_doc": {
+    "correct": 65,
+    "gold_required": 65,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "ok_flagged": 10,
+    "lines": 65
+   },
+   "duck_docx": {
+    "correct": 65,
+    "gold_required": 65,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 65
+   },
+   "invoice_pdf": {
+    "correct": 10,
+    "fee_not_captured": 5,
+    "gold_required": 10,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "lines": 10
+   },
+   "invoice_photo": {
+    "correct": 10,
+    "fee_not_captured": 5,
+    "gold_required": 10,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "ok_flagged": 10,
+    "lines": 10
+   },
+   "lasagna_pdf": {
+    "correct": 95,
+    "gold_required": 95,
+    "recipes": 10,
+    "recipe_count_ok": 5,
+    "ok_flagged": 95,
+    "lines": 95
+   },
+   "linguine_pdf": {
+    "correct": 40,
+    "gold_required": 40,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "ok_flagged": 40,
+    "lines": 40
+   },
+   "pavlova_pdf": {
+    "correct": 55,
+    "gold_required": 55,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "ok_flagged": 55,
+    "lines": 55
+   },
+   "synthetic_invoice": {
+    "correct": 30,
+    "fee_separated": 5,
+    "gold_required": 30,
+    "hdr_date_ok": 5,
+    "hdr_number_ok": 5,
+    "ok_flagged": 5,
+    "lines": 35
+   },
+   "trap_invoice_as_recipe": {
+    "false_import": 0,
+    "trap_pass": 5
+   },
+   "trap_recipe_as_invoice": {
+    "false_import": 0,
+    "trap_pass": 5
+   },
+   "tuna": {
+    "correct": 45,
+    "gold_required": 45,
+    "recipes": 5,
+    "recipe_count_ok": 5,
+    "lines": 45
+   }
+  }
+ }
+]
