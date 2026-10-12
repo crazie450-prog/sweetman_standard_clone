@@ -21,62 +21,39 @@ import {
   TR,
   useToast,
   Progress,
+  Icon,
 } from '@/components/ui'
 import Link from 'next/link'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { inventoryService } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useActiveLocationId } from '@/lib/api/useActiveLocation'
 import { formatMoney } from '@/lib/utils/format'
-
-const I = (d: string) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-6"
-    aria-hidden
-  >
-    <path d={d} />
-  </svg>
-)
-const icons = {
-  box: I('M12 3 4 7v10l8 4 8-4V7l-8-4M4 7l8 4 8-4M12 11v10'),
-  alert: I('M12 3 2 20h20L12 3zM12 9v5M12 17.5v.5'),
-  dollar: I(
-    'M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5s2 3 5 3.3 5 1.4 5 3.2-2.2 3.5-5 3.5-5-1.4-5-3.3'
-  ),
-  tag: I(
-    'M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4zM7 7v.01'
-  ),
-}
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 const categoryOf = (i: { category?: string }) => i.category || 'Uncategorized'
 
 export default function InventoryPage() {
-  const { data: ingredients = [], isLoading } = useQuery({
-    queryKey: ['inventory'],
-    queryFn: inventoryService.list,
-  })
+  const { data: ingredients = [], isLoading } = useQuery(queries.inventory())
   const [adjustFor, setAdjustFor] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('')
   const [vendor, setVendor] = useState('')
   const [lowOnly, setLowOnly] = useState(false)
   const toast = useToast()
-  const queryClient = useQueryClient()
+  const invalidate = useInvalidate()
   const { can } = useCurrentUser()
+  const locationId = useActiveLocationId()
 
   const [txType, setTxType] = useState<'COUNT' | 'ADJUST' | 'RECEIVE' | 'USE'>('COUNT')
   const [txQty, setTxQty] = useState('')
   const [txNote, setTxNote] = useState('')
-  const [txBusy, setTxBusy] = useState(false)
+  const [txCost, setTxCost] = useState('')
 
   const low = ingredients.filter((i) => i.status === 'low')
-  const totalValue = ingredients.reduce((s, i) => s + i.onHand * i.costPerUnit, 0)
+  const totalValue = ingredients.reduce((s, i) => s + i.value, 0)
   const categories = [...new Set(ingredients.map((i) => categoryOf(i)))].sort()
   const vendorNames = [...new Set(ingredients.map((i) => i.vendor))].filter(Boolean).sort()
   const item = ingredients.find((i) => i.id === adjustFor)
@@ -98,9 +75,21 @@ export default function InventoryPage() {
     setTxType('COUNT')
     setTxQty('')
     setTxNote('')
+    setTxCost('')
   }
 
-  async function saveAdjustment() {
+  const adjustment = useMutation({
+    mutationFn: (change: Parameters<typeof inventoryService.createTransaction>[0]) =>
+      inventoryService.createTransaction(change),
+    onSuccess: async () => {
+      await invalidate('stock')
+      setAdjustFor(null)
+      toast('success', `Stock updated for ${item?.name ?? 'the ingredient'}`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function saveAdjustment() {
     if (!item) return
     const qty = parseFloat(txQty)
     if (Number.isNaN(qty)) {
@@ -108,33 +97,32 @@ export default function InventoryPage() {
       return
     }
     if (txType !== 'ADJUST' && qty < 0) {
-      toast('danger', 'This quantity cannot be negative — use “Correction (+/−)” to subtract')
+      toast('danger', 'This quantity cannot be negative; use “Correction (+/−)” to subtract')
       return
     }
-    setTxBusy(true)
-    try {
-      await inventoryService.createTransaction({
-        ingredientId: item.id,
-        type: txType,
-        quantity: qty,
-        notes: txNote.trim() || undefined,
-      })
-      await queryClient.invalidateQueries({ queryKey: ['inventory'] })
-      await queryClient.invalidateQueries({ queryKey: ['ingredients'] })
-      setAdjustFor(null)
-      toast('success', `Stock updated for ${item.name}`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setTxBusy(false)
+    const cost = txType === 'RECEIVE' && txCost.trim() !== '' ? parseFloat(txCost) : undefined
+    if (cost !== undefined && (Number.isNaN(cost) || cost < 0)) {
+      toast('danger', 'The total cost must be a positive amount')
+      return
     }
+    adjustment.mutate({
+      ingredientId: item.id,
+      type: txType,
+      quantity: qty,
+      cost,
+      notes: txNote.trim() || undefined,
+    })
   }
 
   return (
     <>
       <PageHeader
         title="Inventory Management"
-        subtitle="Track ingredient stock levels, costs, and reorder points"
+        subtitle={
+          locationId
+            ? 'Track ingredient stock levels, costs, and reorder points'
+            : 'Stock held by every location together. Choose a location in the header to record a count or a movement: stock is held by a location'
+        }
         actions={
           <>
             {can('staff') && (
@@ -153,43 +141,35 @@ export default function InventoryPage() {
                 </Link>
               </>
             )}
-            <Button
-              variant="secondary"
-              onClick={() => toast('info', 'Reconciliation arrives with invoice processing')}
-            >
-              Reconcile Inventory
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => toast('info', 'A touch-optimized counting flow is not available yet')}
-            >
-              Mobile Count
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => toast('info', 'Duplicate detection arrives with document processing')}
-            >
-              Find Duplicates
-            </Button>
           </>
         }
       />
 
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <KpiCard label="Total Items" value={ingredients.length} tone="slate" icon={icons.box} />
+        <KpiCard
+          label="Total Items"
+          value={ingredients.length}
+          tone="slate"
+          icon={<Icon name="box" />}
+        />
         <KpiCard
           label="Low Stock Items"
           value={low.length}
           tone={low.length > 0 ? 'warning' : 'slate'}
-          icon={icons.alert}
+          icon={<Icon name="alert" />}
         />
         <KpiCard
           label="Inventory Value"
           value={formatMoney(totalValue)}
           tone="success"
-          icon={icons.dollar}
+          icon={<Icon name="dollar" />}
         />
-        <KpiCard label="Categories" value={categories.length} tone="primary" icon={icons.tag} />
+        <KpiCard
+          label="Categories"
+          value={categories.length}
+          tone="primary"
+          icon={<Icon name="tag" />}
+        />
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -225,7 +205,7 @@ export default function InventoryPage() {
         />
       </div>
 
-      <Table>
+      <Table pinActions>
         <THead>
           <TR>
             <TH>Ingredient</TH>
@@ -246,7 +226,14 @@ export default function InventoryPage() {
           ) : (
             filtered.map((i) => (
               <TR key={i.id}>
-                <TD className="font-medium">{i.name}</TD>
+                <TD className="font-medium">
+                  {i.name}
+                  {!i.isActive && (
+                    <Badge tone="neutral" className="ml-2">
+                      Archived
+                    </Badge>
+                  )}
+                </TD>
                 <TD>{categoryOf(i)}</TD>
                 <TD>{i.vendor}</TD>
                 <TD>
@@ -267,12 +254,17 @@ export default function InventoryPage() {
                 <TD>
                   {i.reorderLevel} {i.unit}
                 </TD>
-                <TD>{formatMoney(i.onHand * i.costPerUnit)}</TD>
+                <TD>{formatMoney(i.value)}</TD>
                 <TD>
                   {i.status === 'low' ? (
-                    <Badge dot tone="warning">
-                      Low stock
-                    </Badge>
+                    <div>
+                      <Badge dot tone="warning">
+                        Low stock
+                      </Badge>
+                      {i.lowAt.length > 0 && (
+                        <p className="mt-1 text-xs text-text-muted">at {i.lowAt.join(', ')}</p>
+                      )}
+                    </div>
                   ) : (
                     <Badge dot tone="success">
                       OK
@@ -282,7 +274,13 @@ export default function InventoryPage() {
                 <TD className="text-right">
                   <RowActions className="justify-end">
                     {can('staff') && (
-                      <Button variant="ghost" size="sm" onClick={() => openAdjust(i.id)}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        disabled={!locationId}
+                        title={locationId ? undefined : 'Choose a location in the header first'}
+                        onClick={() => openAdjust(i.id)}
+                      >
                         Adjust
                       </Button>
                     )}
@@ -297,13 +295,13 @@ export default function InventoryPage() {
       <Modal
         open={!!adjustFor}
         onClose={() => setAdjustFor(null)}
-        title={`Adjust — ${item?.name ?? ''}`}
+        title={`Adjust: ${item?.name ?? ''}`}
         footer={
           <>
             <Button variant="secondary" onClick={() => setAdjustFor(null)}>
               Cancel
             </Button>
-            <Button onClick={saveAdjustment} disabled={txBusy}>
+            <Button onClick={saveAdjustment} disabled={adjustment.isPending}>
               Save Adjustment
             </Button>
           </>
@@ -341,6 +339,19 @@ export default function InventoryPage() {
                   : undefined
             }
           />
+          {txType === 'RECEIVE' && (
+            <TextField
+              label="Total cost"
+              type="number"
+              min="0"
+              step="0.01"
+              className="sm:col-span-2"
+              placeholder="Optional"
+              help="What this delivery cost in total. It is recorded in the price history; leave it empty to value the delivery at the current price."
+              value={txCost}
+              onChange={(e) => setTxCost(e.target.value)}
+            />
+          )}
           <TextField
             label="Note"
             className="sm:col-span-2"

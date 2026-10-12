@@ -15,41 +15,30 @@ import {
   TH,
   THead,
   TR,
-  useToast,
 } from '@/components/ui'
 import { useQuery } from '@tanstack/react-query'
-import { recipesService } from '@/lib/api/services'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
 import { formatMoney } from '@/lib/utils/format'
+import { queries } from '@/lib/api/queries'
 
 export default function ComponentsPage() {
-  const { data: recipes = [], isLoading } = useQuery({
-    queryKey: ['recipes'],
-    queryFn: recipesService.list,
-  })
-  const toast = useToast()
+  const { data: recipes = [], isLoading } = useQuery(queries.recipes())
   const { can } = useCurrentUser()
   const [q, setQ] = useState('')
 
-  const components = recipes.filter((r) => r.category === 'Components')
+  const components = recipes.filter((r) => r.usedIn > 0 || r.category === 'Components')
   const rows = components.filter((c) => c.name.toLowerCase().includes(q.toLowerCase()))
 
   return (
     <>
       <PageHeader
         title="Component Library"
-        subtitle="Manage reusable recipe components across your organization"
+        subtitle="A component is a recipe that other recipes are built on. Write it as a recipe, then add it to another with + Add sub-recipe"
         actions={
           can('staff') ? (
             <>
-              <Button
-                variant="secondary"
-                onClick={() => toast('info', 'Duplicate detection is not available yet')}
-              >
-                Find Duplicates
-              </Button>
               <Link href="/recipes/new">
-                <Button variant="primary">New Component</Button>
+                <Button variant="primary">New Recipe</Button>
               </Link>
             </>
           ) : undefined
@@ -87,14 +76,17 @@ export default function ComponentsPage() {
             <TH>Component</TH>
             <TH>Batch cost</TH>
             <TH>Used in</TH>
-            <TH>Status</TH>
           </TR>
         </THead>
         <TBody>
           {isLoading ? (
-            <TableEmpty colSpan={4}>Loading components…</TableEmpty>
+            <TableEmpty colSpan={3}>Loading components…</TableEmpty>
           ) : rows.length === 0 ? (
-            <TableEmpty colSpan={4}>No components found.</TableEmpty>
+            <TableEmpty colSpan={3}>
+              {components.length === 0
+                ? 'No recipe is used inside another yet. Open a recipe and use + Add sub-recipe to build it on another one.'
+                : 'No components found.'}
+            </TableEmpty>
           ) : (
             rows.map((c) => (
               <TR key={c.id}>
@@ -115,9 +107,6 @@ export default function ComponentsPage() {
                   ) : (
                     <span className="text-text-muted">not used yet</span>
                   )}
-                </TD>
-                <TD>
-                  <Badge tone="success">Active</Badge>
                 </TD>
               </TR>
             ))

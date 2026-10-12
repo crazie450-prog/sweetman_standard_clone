@@ -1,9 +1,9 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { lastDays, today } from '@/lib/utils/date-range'
+import { isoDay, lastDays, today, endsBeforeBegins } from '@/lib/utils/date-range'
+import { useRestaurantDay } from '@/lib/utils/restaurant-day'
 
-const DEFAULT_RANGE = lastDays(30)
 import {
   Button,
   Card,
@@ -20,13 +20,23 @@ import {
   THead,
   TR,
   useToast,
+  BackwardsPeriod,
+  Icon,
+  PAGE_SIZE,
+  Pager,
+  usePageOffset,
 } from '@/components/ui'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { menuService, salesService } from '@/lib/api/services'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { salesService } from '@/lib/api/services'
+import { DocumentUploadButton, PendingReview } from '@/components/documents/DocumentUpload'
 import { serverMessage } from '@/lib/api/error'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useActiveLocationId } from '@/lib/api/useActiveLocation'
 import { cn } from '@/lib/utils/cn'
-import { formatDate, formatMoney, formatPercent } from '@/lib/utils/format'
+import { currencySymbol, formatDate, formatMoney, formatPercent } from '@/lib/utils/format'
+import { percentOf, shownShare, wholeCount } from '@/lib/utils/money'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 const TABS = ['Daily View', 'Individual Sales'] as const
 type Tab = (typeof TABS)[number]
@@ -43,7 +53,6 @@ type Preset = (typeof PRESETS)[number]
 
 function rangeOf(preset: Preset): { from: string; to: string } {
   const now = new Date()
-  const iso = (d: Date) => d.toISOString().slice(0, 10)
   const startOfMonth = (offset: number) => new Date(now.getFullYear(), now.getMonth() + offset, 1)
   switch (preset) {
     case 'Last 7 Days':
@@ -53,14 +62,14 @@ function rangeOf(preset: Preset): { from: string; to: string } {
     case 'Last 90 Days':
       return lastDays(90)
     case 'This Month':
-      return { from: iso(startOfMonth(0)), to: today() }
+      return { from: isoDay(startOfMonth(0)), to: today() }
     case 'Last Month':
       return {
-        from: iso(startOfMonth(-1)),
-        to: iso(new Date(now.getFullYear(), now.getMonth(), 0)),
+        from: isoDay(startOfMonth(-1)),
+        to: isoDay(new Date(now.getFullYear(), now.getMonth(), 0)),
       }
     case 'This Year':
-      return { from: iso(new Date(now.getFullYear(), 0, 1)), to: today() }
+      return { from: isoDay(new Date(now.getFullYear(), 0, 1)), to: today() }
   }
 }
 
@@ -70,6 +79,11 @@ const inRange = (date: string, from: string, to: string) =>
 const numberOr = (raw: string, fallback: number) => {
   const n = parseFloat(raw)
   return Number.isFinite(n) ? n : fallback
+}
+
+const moneyOrNone = (raw: string) => {
+  const n = parseFloat(raw)
+  return Number.isFinite(n) && n >= 0 ? n : undefined
 }
 
 const SORT_FIELD_OPTIONS = [
@@ -83,53 +97,24 @@ const SORT_DIR_OPTIONS = [
   { value: 'asc', label: 'Ascending' },
 ]
 
-const I = (d: string) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-6"
-    aria-hidden
-  >
-    <path d={d} />
-  </svg>
-)
-const icons = {
-  cart: I(
-    'M6 6h15l-1.5 9h-12zM6 6 5 3H3M9 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0M19 20a1 1 0 1 1-2 0 1 1 0 0 1 2 0'
-  ),
-  dollar: I(
-    'M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5s2 3 5 3.3 5 1.4 5 3.2-2.2 3.5-5 3.5-5-1.4-5-3.3'
-  ),
-  wallet: I('M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM16 12h2'),
-  trend: I('M3 17l6-6 4 4 8-8M15 7h6v6'),
-  percent: I('M19 5 5 19M7.5 8a1.5 1.5 0 1 1 0-.01M16.5 16a1.5 1.5 0 1 1 0-.01'),
-}
-
 export default function SalesPage() {
-  const { data: dailyRows = [] } = useQuery({
-    queryKey: ['sales-daily'],
-    queryFn: salesService.daily,
-  })
-  const { data: individualRows = [] } = useQuery({
-    queryKey: ['sales-individual'],
-    queryFn: salesService.individual,
-  })
-  const { data: menuItems = [] } = useQuery({
-    queryKey: ['menu-items'],
-    queryFn: menuService.list,
-  })
-  const MENU_ITEM_OPTIONS = menuItems.map((m) => ({ value: m.id, label: m.name }))
-  const queryClient = useQueryClient()
+  const { data: menuItems = [] } = useQuery(queries.menuItems())
+  const MENU_ITEM_OPTIONS = menuItems
+    .filter((m) => m.active)
+    .map((m) => ({ value: m.id, label: m.name }))
+  const invalidate = useInvalidate()
   const { can } = useCurrentUser()
   const toast = useToast()
+  const locationId = useActiveLocationId()
   const [tab, setTab] = useState<Tab>('Daily View')
   const [preset, setPreset] = useState<Preset>('Last 30 Days')
-  const [from, setFrom] = useState(DEFAULT_RANGE.from)
-  const [to, setTo] = useState(DEFAULT_RANGE.to)
+  const [from, setFrom] = useState(() => lastDays(30).from)
+  const [to, setTo] = useState(() => lastDays(30).to)
+  const backwards = endsBeforeBegins({ from, to })
+  const { data: dailyRows = [] } = useQuery({
+    ...queries.salesDaily(from, to),
+    enabled: !backwards,
+  })
   const [advancedOpen, setAdvancedOpen] = useState(true)
   const [minRevenue, setMinRevenue] = useState('')
   const [maxRevenue, setMaxRevenue] = useState('')
@@ -140,8 +125,8 @@ export default function SalesPage() {
   const [recordOpen, setRecordOpen] = useState(false)
   const [saleItem, setSaleItem] = useState('')
   const [saleQty, setSaleQty] = useState('1')
-  const [saleDate, setSaleDate] = useState(today())
-  const [saving, setSaving] = useState(false)
+  const day = useRestaurantDay()
+  const [saleDate, setSaleDate] = useState('')
 
   const visibleDaily = useMemo(() => {
     const minRev = numberOr(minRevenue, -Infinity)
@@ -151,13 +136,14 @@ export default function SalesPage() {
     const dir = sortDir === 'asc' ? 1 : -1
     return dailyRows
       .filter((r) => {
-        const pct = r.revenue ? (r.cost / r.revenue) * 100 : 0
+        const share = percentOf(r.cost, r.revenue)
+        const pct = share === null ? null : shownShare(share)
+        const unfiltered = minPct === -Infinity && maxPct === Infinity
         return (
           inRange(r.date, from, to) &&
           r.revenue >= minRev &&
           r.revenue <= maxRev &&
-          pct >= minPct &&
-          pct <= maxPct
+          (unfiltered || (pct !== null && pct >= minPct && pct <= maxPct))
         )
       })
       .sort((a, b) => {
@@ -167,36 +153,34 @@ export default function SalesPage() {
       })
   }, [dailyRows, from, to, minRevenue, maxRevenue, minFoodCost, maxFoodCost, sortField, sortDir])
 
-  const visibleIndividual = useMemo(() => {
-    const minRev = numberOr(minRevenue, -Infinity)
-    const maxRev = numberOr(maxRevenue, Infinity)
-    const dir = sortDir === 'asc' ? 1 : -1
-    return individualRows
-      .filter((r) => {
-        const total = r.qty * r.price
-        return inRange(r.date.slice(0, 10), from, to) && total >= minRev && total <= maxRev
-      })
-      .sort((a, b) => {
-        if (sortField === 'revenue' || sortField === 'profit') {
-          return (a.qty * a.price - b.qty * b.price) * dir
-        }
-        return a.date < b.date ? -dir : a.date > b.date ? dir : 0
-      })
-  }, [individualRows, from, to, minRevenue, maxRevenue, sortField, sortDir])
+  const lineFilter = {
+    from,
+    to,
+    sort: sortField === 'date' ? ('date' as const) : ('total' as const),
+    dir: sortDir === 'asc' ? ('asc' as const) : ('desc' as const),
+    minTotal: moneyOrNone(minRevenue),
+    maxTotal: moneyOrNone(maxRevenue),
+  }
+  const [lineOffset, setLineOffset] = usePageOffset(...Object.values(lineFilter))
+  const { data: linePage } = useQuery({
+    ...queries.salesIndividual({ ...lineFilter, offset: lineOffset, limit: PAGE_SIZE }),
+    enabled: !backwards,
+  })
+  const visibleIndividual = linePage?.data ?? []
 
   const kpi = useMemo(() => {
     const revenue = visibleDaily.reduce((s, r) => s + r.revenue, 0)
     const cost = visibleDaily.reduce((s, r) => s + r.cost, 0)
     const profit = visibleDaily.reduce((s, r) => s + r.profit, 0)
-    const todayKey = today()
-    const salesToday = dailyRows.find((r) => r.date === todayKey)?.sales ?? 0
-    return { today: salesToday, revenue, cost, profit, pct: revenue ? (cost / revenue) * 100 : 0 }
-  }, [visibleDaily, dailyRows])
+    const sales = visibleDaily.reduce((s, r) => s + r.sales, 0)
+    return { sales, revenue, cost, profit, pct: percentOf(cost, revenue) }
+  }, [visibleDaily])
 
   const clearFilters = () => {
     setPreset('Last 30 Days')
-    setFrom(DEFAULT_RANGE.from)
-    setTo(DEFAULT_RANGE.to)
+    const range = lastDays(30)
+    setFrom(range.from)
+    setTo(range.to)
     setMinRevenue('')
     setMaxRevenue('')
     setMinFoodCost('')
@@ -205,76 +189,88 @@ export default function SalesPage() {
     setSortDir('desc')
   }
 
-  const submitSale = async () => {
-    const qty = parseInt(saleQty, 10)
-    if (!saleItem || !qty || qty < 1) {
-      toast('danger', 'Pick a menu item and a quantity')
+  const recording = useMutation({
+    mutationFn: ({ menuItemId, quantity }: { menuItemId: string; quantity: number }) =>
+      salesService.create({
+        date: saleDate || day.today,
+        items: [{ menuItemId, quantity }],
+      }),
+    onSuccess: async (_, { menuItemId, quantity }) => {
+      await invalidate('sales')
+      setRecordOpen(false)
+      const name = menuItems.find((m) => m.id === menuItemId)?.name ?? 'item'
+      toast('success', `Sale recorded: ${name} × ${quantity}`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const submitSale = () => {
+    const qty = wholeCount(saleQty)
+    if (!saleItem) {
+      toast('danger', 'Pick a menu item')
       return
     }
-    setSaving(true)
-    try {
-      await salesService.create({
-        date: saleDate || undefined,
-        items: [{ menuItemId: saleItem, quantity: qty }],
-      })
-      await queryClient.invalidateQueries({ queryKey: ['sales-daily'] })
-      await queryClient.invalidateQueries({ queryKey: ['sales-individual'] })
-      setRecordOpen(false)
-      const name = menuItems.find((m) => m.id === saleItem)?.name ?? 'item'
-      toast('success', `Sale recorded: ${name} × ${qty}`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setSaving(false)
+    if (qty === null) {
+      toast('danger', 'Quantity is a whole number of at least 1')
+      return
     }
+    recording.mutate({ menuItemId: saleItem, quantity: qty })
   }
 
   return (
     <>
-      <PageHeader title="Sales Tracking" subtitle="Record sales and track revenue & food costs" />
+      <PageHeader
+        title="Sales Tracking"
+        subtitle={
+          locationId
+            ? 'Record sales and track revenue & food costs'
+            : 'Revenue and food costs of every location together. Choose a location in the header to record a sale: a sale is rung up at a location'
+        }
+      />
+
+      <PendingReview type="sales" />
 
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5">
-        <KpiCard label="Today's Sales" value={kpi.today} tone="slate" icon={icons.cart} />
+        <KpiCard label="Sales" value={kpi.sales} tone="slate" icon={<Icon name="cart" />} />
         <KpiCard
           label="Revenue"
           value={formatMoney(kpi.revenue)}
           tone="success"
-          icon={icons.dollar}
+          icon={<Icon name="dollar" />}
         />
         <KpiCard
           label="Food Cost"
           value={formatMoney(kpi.cost)}
           tone="warning"
-          icon={icons.wallet}
+          icon={<Icon name="wallet" />}
         />
-        <KpiCard label="Profit" value={formatMoney(kpi.profit)} tone="success" icon={icons.trend} />
+        <KpiCard
+          label="Profit"
+          value={formatMoney(kpi.profit)}
+          tone="success"
+          icon={<Icon name="trend" />}
+        />
         <KpiCard
           label="Food Cost %"
           value={formatPercent(kpi.pct)}
           tone="success"
-          icon={icons.percent}
+          icon={<Icon name="percent" />}
         />
       </div>
 
-      <div className="mb-6 flex flex-wrap gap-2">
-        {can('staff') && (
-          <Button variant="primary" onClick={() => setRecordOpen(true)}>
+      {can('staff') && (
+        <div className="mb-6 flex flex-wrap gap-2">
+          <Button
+            variant="primary"
+            disabled={!locationId}
+            title={locationId ? undefined : 'Choose a location in the header first'}
+            onClick={() => setRecordOpen(true)}
+          >
             + Record New Sale
           </Button>
-        )}
-        <Button
-          variant="secondary"
-          onClick={() => toast('info', 'CSV export is not available yet')}
-        >
-          Export
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => toast('info', 'Column settings are not available yet')}
-        >
-          Columns
-        </Button>
-      </div>
+          <DocumentUploadButton type="sales" label="Import sales report" />
+        </div>
+      )}
 
       <Card className="mb-6 space-y-4">
         <div
@@ -325,7 +321,6 @@ export default function SalesPage() {
           ))}
         </div>
 
-        {/* From / To */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <TextField
             label="From"
@@ -335,6 +330,7 @@ export default function SalesPage() {
           />
           <TextField label="To" type="date" value={to} onChange={(e) => setTo(e.target.value)} />
         </div>
+        <BackwardsPeriod from={from} to={to} />
 
         <div className="rounded-lg border border-border">
           <button
@@ -351,14 +347,14 @@ export default function SalesPage() {
           {advancedOpen && (
             <div className="grid grid-cols-1 gap-3 border-t border-border p-4 sm:grid-cols-2 xl:grid-cols-4">
               <TextField
-                label="Min Revenue ($)"
+                label={`Min Revenue (${currencySymbol()})`}
                 type="number"
                 placeholder="0.00"
                 value={minRevenue}
                 onChange={(e) => setMinRevenue(e.target.value)}
               />
               <TextField
-                label="Max Revenue ($)"
+                label={`Max Revenue (${currencySymbol()})`}
                 type="number"
                 placeholder="No limit"
                 value={maxRevenue}
@@ -423,12 +419,12 @@ export default function SalesPage() {
             ) : (
               visibleDaily.map((r) => (
                 <TR key={r.date}>
-                  <TD className="font-medium">{formatDate(r.date)}</TD>
+                  <TD className="whitespace-nowrap font-medium">{formatDate(r.date)}</TD>
                   <TD>{r.sales}</TD>
                   <TD>{formatMoney(r.revenue)}</TD>
                   <TD>{formatMoney(r.cost)}</TD>
                   <TD>{formatMoney(r.profit)}</TD>
-                  <TD>{formatPercent((r.cost / r.revenue) * 100)}</TD>
+                  <TD>{formatPercent(percentOf(r.cost, r.revenue))}</TD>
                 </TR>
               ))
             )}
@@ -455,12 +451,15 @@ export default function SalesPage() {
                   <TD>{r.qty}</TD>
                   <TD>{formatMoney(r.price)}</TD>
                   <TD>{formatMoney(r.qty * r.price)}</TD>
-                  <TD className="text-text-muted">{formatDate(r.date)}</TD>
+                  <TD className="whitespace-nowrap text-text-muted">{formatDate(r.date)}</TD>
                 </TR>
               ))
             )}
           </TBody>
         </Table>
+      )}
+      {tab !== 'Daily View' && (
+        <Pager page={linePage?.pagination} onOffset={setLineOffset} label="Sold item pages" />
       )}
 
       <Modal
@@ -472,7 +471,7 @@ export default function SalesPage() {
             <Button variant="secondary" onClick={() => setRecordOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={submitSale} disabled={saving}>
+            <Button onClick={submitSale} disabled={recording.isPending}>
               Record Sale
             </Button>
           </>
@@ -499,7 +498,8 @@ export default function SalesPage() {
             label="Date"
             required
             type="date"
-            value={saleDate}
+            max={day.latest}
+            value={saleDate || day.today}
             onChange={(e) => setSaleDate(e.target.value)}
           />
         </div>

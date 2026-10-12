@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/utils/cn'
+import { endsBeforeBegins } from '@/lib/utils/date-range'
 import { Button } from './Button'
 import { SegmentedControl } from './Segmented'
 
@@ -38,5 +39,22 @@ export function FilterBar({
         </Button>
       )}
     </div>
+  )
+}
+
+export function BackwardsPeriod({
+  from,
+  to,
+  className,
+}: {
+  from?: string
+  to?: string
+  className?: string
+}) {
+  if (!endsBeforeBegins({ from, to })) return null
+  return (
+    <p role="alert" className={cn('text-sm text-danger-700 dark:text-danger-100', className)}>
+      The period ends before it begins. Choose a to-date on or after the from-date.
+    </p>
   )
 }

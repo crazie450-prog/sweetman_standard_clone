@@ -18,13 +18,14 @@ import {
   TH,
   THead,
   TR,
-  useToast,
   Progress,
 } from '@/components/ui'
-import { recipesService } from '@/lib/api/services'
+import { DocumentUploadButton, PendingReview } from '@/components/documents/DocumentUpload'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
 import { cn } from '@/lib/utils/cn'
 import { formatDate, formatMoney, formatPercent } from '@/lib/utils/format'
+import { aboveTarget } from '@/lib/utils/money'
+import { queries } from '@/lib/api/queries'
 
 type ViewMode = 'grid' | 'compact' | 'list' | 'table'
 
@@ -106,22 +107,6 @@ const FunnelIcon = (
     <path d="M3 5h18l-7 8v5l-4 2v-7L3 5z" />
   </svg>
 )
-const DraftIcon = (
-  <svg
-    viewBox="0 0 24 24"
-    className="size-4"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" />
-    <path d="M14 3v5h5M9 13h6M9 17h6" />
-  </svg>
-)
-
 const VIEW_MODES: { mode: ViewMode; label: string; icon: React.ReactNode }[] = [
   { mode: 'grid', label: 'Grid view', icon: GridIcon },
   { mode: 'compact', label: 'Compact view', icon: CompactIcon },
@@ -130,31 +115,37 @@ const VIEW_MODES: { mode: ViewMode; label: string; icon: React.ReactNode }[] = [
 ]
 
 export default function RecipesPage() {
-  const toast = useToast()
   const { can } = useCurrentUser()
   const [q, setQ] = useState('')
   const [category, setCategory] = useState('')
-  const [showDrafts, setShowDrafts] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [view, setView] = useState<ViewMode>('grid')
 
-  const { data: recipes = [], isLoading } = useQuery({
-    queryKey: ['recipes'],
-    queryFn: recipesService.list,
-  })
+  const { data: org } = useQuery(queries.organization())
+  const orgTarget = org?.foodCostTargetPct ?? 30
+  const { data: recipes = [], isLoading } = useQuery(queries.recipes())
 
+  const { data: categories = [] } = useQuery(queries.categories('recipe'))
+
+  const needle = q.trim().toLowerCase()
   const rows = recipes.filter(
     (r) =>
-      r.name.toLowerCase().includes(q.toLowerCase()) &&
-      (!category || r.category === category) &&
-      (!showDrafts || r.status === 'draft')
+      (r.name.toLowerCase().includes(needle) ||
+        (r.description ?? '').toLowerCase().includes(needle)) &&
+      (!category || r.category === category)
   )
 
   const perPortion = (r: { cost: number; portions?: number }) =>
     r.cost / Math.max(1, r.portions ?? 1)
 
+  const whereServed = (r: { location: { name: string } | null }) =>
+    r.location?.name ?? 'All locations'
+  const unpricedNote = (r: { unpriced: number }) =>
+    r.unpriced > 0 ? `${r.unpriced} ingredient${r.unpriced === 1 ? '' : 's'} without a price` : null
+
+  const targetOf = (r: { targetFoodCostPct: number | null }) => r.targetFoodCostPct ?? orgTarget
   const overTarget = (r: { foodCostPct: number | null; targetFoodCostPct: number | null }) =>
-    r.foodCostPct !== null && r.targetFoodCostPct !== null && r.foodCostPct > r.targetFoodCostPct
+    aboveTarget(r.foodCostPct, targetOf(r))
 
   const recipeLink = (r: (typeof recipes)[number]) => (
     <Link
@@ -169,19 +160,11 @@ export default function RecipesPage() {
     <>
       <PageHeader
         title="Recipes"
-        subtitle="Recipes and reusable components with live costing"
+        subtitle="Recipes and reusable components, costed on the organization's shared ingredient prices"
         actions={
           can('staff') ? (
             <>
-              <Button
-                variant="secondary"
-                onClick={() => toast('info', 'Duplicate detection is not available yet')}
-              >
-                Find Duplicates
-              </Button>
-              <Link href="/recipes/import">
-                <Button variant="secondary">Import</Button>
-              </Link>
+              <DocumentUploadButton type="recipe" label="Upload recipes" />
               <Link href="/recipes/new">
                 <Button variant="primary">New Recipe</Button>
               </Link>
@@ -190,25 +173,11 @@ export default function RecipesPage() {
         }
       />
 
+      <PendingReview type="recipe" />
+
       <p className="mb-3 text-sm text-text-muted">
         {isLoading ? 'Loading…' : `${rows.length} recipe${rows.length === 1 ? '' : 's'} found`}
       </p>
-
-      <div className="mb-3">
-        <button
-          type="button"
-          aria-pressed={showDrafts}
-          onClick={() => setShowDrafts((v) => !v)}
-          className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition duration-150 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600 ${
-            showDrafts
-              ? 'border-primary-600 bg-primary-50 font-semibold text-primary-800'
-              : 'border-border-strong bg-surface text-text hover:border-ink-600'
-          }`}
-        >
-          {DraftIcon}
-          Show My Drafts
-        </button>
-      </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <SearchInput
@@ -261,11 +230,7 @@ export default function RecipesPage() {
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               placeholder="All categories"
-              options={[
-                { value: 'Mains', label: 'Mains' },
-                { value: 'Components', label: 'Components' },
-                { value: 'Desserts', label: 'Desserts' },
-              ]}
+              options={categories.map((c) => ({ value: c.name, label: c.name }))}
             />
             {category && (
               <Button variant="secondary" onClick={() => setCategory('')}>
@@ -292,6 +257,7 @@ export default function RecipesPage() {
             <TR>
               <TH>Recipe</TH>
               <TH>Category</TH>
+              <TH>Location</TH>
               <TH>Cost / portion</TH>
               <TH>Food cost</TH>
               <TH>Nested</TH>
@@ -303,14 +269,26 @@ export default function RecipesPage() {
               <TR key={r.id}>
                 <TD>{recipeLink(r)}</TD>
                 <TD>
-                  <Badge tone={r.category === 'Components' ? 'primary' : 'neutral'}>
-                    {r.category}
-                  </Badge>
+                  {r.category ? (
+                    <Badge tone={r.category === 'Components' ? 'primary' : 'neutral'}>
+                      {r.category}
+                    </Badge>
+                  ) : (
+                    <span className="text-text-muted">Uncategorized</span>
+                  )}
                 </TD>
-                <TD>{formatMoney(perPortion(r))}</TD>
+                <TD className="text-text-muted">{whereServed(r)}</TD>
+                <TD>
+                  {formatMoney(perPortion(r))}
+                  {unpricedNote(r) && (
+                    <span className="block text-xs text-warning-700 dark:text-warning-100">
+                      {unpricedNote(r)}
+                    </span>
+                  )}
+                </TD>
                 <TD>
                   <span className={overTarget(r) ? 'text-warning-700 font-medium' : ''}>
-                    {formatPercent(r.foodCostPct, 0)}
+                    {formatPercent(r.foodCostPct)}
                   </span>
                 </TD>
                 <TD>
@@ -320,7 +298,7 @@ export default function RecipesPage() {
                     <span className="text-text-muted">—</span>
                   )}
                 </TD>
-                <TD className="text-text-muted">{formatDate(r.updatedAt)}</TD>
+                <TD className="whitespace-nowrap text-text-muted">{formatDate(r.updatedAt)}</TD>
               </TR>
             ))}
           </TBody>
@@ -334,14 +312,24 @@ export default function RecipesPage() {
                 className="flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 sm:px-6"
               >
                 <div className="min-w-40 flex-1">{recipeLink(r)}</div>
-                <Badge tone={r.category === 'Components' ? 'primary' : 'neutral'}>
-                  {r.category}
-                </Badge>
+                {r.category ? (
+                  <Badge tone={r.category === 'Components' ? 'primary' : 'neutral'}>
+                    {r.category}
+                  </Badge>
+                ) : (
+                  <span className="text-sm text-text-muted">Uncategorized</span>
+                )}
+                <span className="text-sm text-text-muted">{whereServed(r)}</span>
                 <span className="text-sm">{formatMoney(perPortion(r))}</span>
+                {unpricedNote(r) && (
+                  <span className="text-sm text-warning-700 dark:text-warning-100">
+                    {unpricedNote(r)}
+                  </span>
+                )}
                 <span
                   className={`text-sm ${overTarget(r) ? 'text-warning-700 font-medium' : 'text-text-muted'}`}
                 >
-                  {formatPercent(r.foodCostPct, 0)} food cost
+                  {formatPercent(r.foodCostPct)} food cost
                 </span>
                 <span className="text-sm text-text-muted">{formatDate(r.updatedAt)}</span>
               </li>
@@ -373,6 +361,7 @@ export default function RecipesPage() {
                 )}
               </div>
               <p className="mt-0.5 truncate text-[13px] text-text-muted">
+                {whereServed(r)} ·{' '}
                 {r.nested > 0 && `${r.nested} sub-recipe${r.nested === 1 ? '' : 's'} · `}
                 {formatDate(r.updatedAt)}
               </p>
@@ -386,19 +375,24 @@ export default function RecipesPage() {
                     {formatMoney(perPortion(r))}
                   </p>
                   <p className="text-[13px] text-text-muted">cost / portion</p>
+                  {unpricedNote(r) && (
+                    <p className="text-[12px] font-medium text-warning-700 dark:text-warning-100">
+                      {unpricedNote(r)}
+                    </p>
+                  )}
                 </div>
                 <div className="text-right">
                   <p
                     className={`font-bold tracking-tight ${view === 'compact' ? 'text-xl' : 'text-2xl'} ${overTarget(r) ? 'text-warning-700 dark:text-warning-100' : 'text-primary-700 dark:text-primary-300'}`}
                   >
-                    {formatPercent(r.foodCostPct, 0)}
+                    {formatPercent(r.foodCostPct)}
                   </p>
                   <p className="text-[13px] text-text-muted">food cost</p>
                 </div>
               </div>
               <Progress
                 value={((r.foodCostPct ?? 0) / 50) * 100}
-                target={60}
+                target={(targetOf(r) / 50) * 100}
                 tone={overTarget(r) ? 'warning' : 'primary'}
                 className="mt-3"
               />

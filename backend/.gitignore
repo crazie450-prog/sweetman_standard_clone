@@ -12,7 +12,9 @@ coverage/
 src/generated/
 
 # misc
-node_modules/
+# No trailing slash: with one the rule matches directories only, and a symlink
+# named node_modules would be offered to git as a normal file
+node_modules
 *.log
 
 # Local document storage (used when no S3 bucket is configured)

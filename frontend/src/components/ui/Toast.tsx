@@ -57,6 +57,7 @@ const ToneIcon = ({ tone }: { tone: ToastTone }) => (
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<ToastItem[]>([])
+  const region = useRef<HTMLDivElement>(null)
   const counter = useRef(0)
   const timers = useRef(new Map<number, ReturnType<typeof setTimeout>>())
   const toastsRef = useRef<ToastItem[]>([])
@@ -97,12 +98,21 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     return () => pending.forEach((timer) => clearTimeout(timer))
   }, [])
 
+  useEffect(() => {
+    const el = region.current
+    if (!el || typeof el.showPopover !== 'function') return
+    if (el.matches(':popover-open')) el.hidePopover()
+    if (toasts.length > 0) el.showPopover()
+  }, [toasts])
+
   return (
     <ToastContext.Provider value={push}>
       {children}
       <div
+        ref={region}
+        popover="manual"
         aria-live="polite"
-        className="pointer-events-none fixed right-4 bottom-4 z-50 flex w-80 flex-col gap-2.5"
+        className="pointer-events-none fixed inset-auto right-4 bottom-4 z-50 m-0 flex w-80 flex-col gap-2.5 overflow-visible border-0 bg-transparent p-0"
       >
         {toasts.map((t) => (
           <div

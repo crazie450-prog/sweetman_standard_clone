@@ -6,20 +6,19 @@ import { useEffect, type ReactNode } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { cn } from '@/lib/utils/cn'
 import { ToastProvider } from '@/components/ui'
-import { organizationService } from '@/lib/api/services'
+import { queries } from '@/lib/api/queries'
 
 const TABS = [
   { href: '/admin/organizations', label: 'Organizations' },
+  { href: '/admin/users', label: 'Users' },
   { href: '/admin/queue', label: 'Processing Queue' },
+  { href: '/admin/services', label: 'Services' },
 ]
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
-  const { data: currentUser, isLoading } = useQuery({
-    queryKey: ['org-current'],
-    queryFn: organizationService.current,
-  })
+  const { data: currentUser, isLoading } = useQuery(queries.orgCurrent())
 
   const denied = !isLoading && !currentUser?.isPlatformAdmin
   useEffect(() => {
@@ -36,8 +35,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <span className="flex size-7 items-center justify-center rounded-lg bg-white/15 text-sm font-bold">
               N
             </span>
-            <span className="font-semibold">Nexus — Platform Admin</span>
-            <nav className="ml-6 flex gap-1" aria-label="Admin">
+            <span className="font-semibold">Nexus Platform Admin</span>
+            <nav
+              className="order-last flex basis-full gap-1 overflow-x-auto whitespace-nowrap sm:order-none sm:ml-6 sm:basis-auto"
+              aria-label="Admin"
+            >
               {TABS.map((t) => (
                 <Link
                   key={t.href}

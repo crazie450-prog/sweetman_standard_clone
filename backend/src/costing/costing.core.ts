@@ -1,10 +1,21 @@
+import { money, num, rounded } from '../common/utils/decimal'
 import type { Prisma } from '../generated/prisma/client'
+import { bridgedConversion, type IngredientConversion } from './units'
 
 export const MAX_NESTING_DEPTH = 5
 
 export interface CostIngredient {
   quantity: number
   costPerUnit: number
+  unit?: string
+  pricedIn?: string
+  conversions?: IngredientConversion[]
+}
+
+export function ingredientLineCost(line: CostIngredient): number {
+  if (!line.unit || !line.pricedIn) return line.quantity * line.costPerUnit
+  const priced = bridgedConversion(line.quantity, line.unit, line.pricedIn, line.conversions ?? [])
+  return (priced ?? line.quantity) * line.costPerUnit
 }
 export interface CostComponentEdge {
   parentId: string
@@ -26,6 +37,18 @@ export class RecipeCycleError extends Error {
   }
 }
 
+export function componentShare(
+  component: { portions: number; yieldAmount: number | null; yieldUnit: string | null },
+  edge: { quantity: number; unit: string },
+  conversions: IngredientConversion[] = [],
+): number {
+  if (component.yieldAmount !== null && component.yieldAmount > 0 && component.yieldUnit !== null) {
+    const taken = bridgedConversion(edge.quantity, edge.unit, component.yieldUnit, conversions)
+    if (taken !== null) return taken / component.yieldAmount
+  }
+  return edge.quantity / Math.max(1, component.portions)
+}
+
 export function componentContribution(
   component: {
     totalCost: number
@@ -34,16 +57,34 @@ export function componentContribution(
     yieldUnit: string | null
   },
   edge: { quantity: number; unit: string },
+  conversions: IngredientConversion[] = [],
 ): number {
-  if (
-    component.yieldAmount !== null &&
-    component.yieldAmount > 0 &&
-    component.yieldUnit !== null &&
-    component.yieldUnit === edge.unit
-  ) {
-    return component.totalCost * (edge.quantity / component.yieldAmount)
-  }
-  return (component.totalCost / Math.max(1, component.portions)) * edge.quantity
+  return component.totalCost * componentShare(component, edge, conversions)
+}
+
+export function dishUnitCost(
+  recipes: { portions: number; recipe: { totalCost: number; portions: number } }[],
+): number {
+  return recipes.reduce(
+    (sum, r) => sum + (r.recipe.totalCost / Math.max(1, r.recipe.portions)) * r.portions,
+    0,
+  )
+}
+
+export function dishCost(
+  recipes: {
+    portions: Parameters<typeof num>[0]
+    recipe: { totalCost: Parameters<typeof num>[0]; portions: number }
+  }[],
+): number {
+  return money(
+    dishUnitCost(
+      recipes.map((r) => ({
+        portions: num(r.portions),
+        recipe: { totalCost: num(r.recipe.totalCost), portions: r.recipe.portions },
+      })),
+    ),
+  )
 }
 
 export function recipeFoodCostPct(
@@ -55,13 +96,17 @@ export function recipeFoodCostPct(
     .filter((u) => u.price > 0)
     .map((u) => ((perPortion * u.portions) / u.price) * 100)
   if (shares.length === 0) return null
-  return Math.round((shares.reduce((s, p) => s + p, 0) / shares.length) * 10) / 10
+  return rounded(shares.reduce((s, p) => s + p, 0) / shares.length, 1)
 }
 
 export function computeAllCosts(
   recipes: CostRecipe[],
   edges: CostComponentEdge[],
+  conversions:
+    | IngredientConversion[]
+    | ((parentId: string, componentId: string) => IngredientConversion[]) = [],
 ): Map<string, number> {
+  const rulesOf = typeof conversions === 'function' ? conversions : () => conversions
   const byId = new Map(recipes.map((r) => [r.id, r]))
   const indegree = new Map<string, number>(recipes.map((r) => [r.id, 0]))
   const dependents = new Map<string, CostComponentEdge[]>()
@@ -85,7 +130,7 @@ export function computeAllCosts(
     const recipe = byId.get(id)!
     processed++
 
-    let total = recipe.ingredients.reduce((s, i) => s + i.quantity * i.costPerUnit, 0)
+    let total = recipe.ingredients.reduce((s, i) => s + ingredientLineCost(i), 0)
     for (const e of componentsOf.get(id) ?? []) {
       const comp = byId.get(e.componentId)!
       total += componentContribution(
@@ -96,6 +141,7 @@ export function computeAllCosts(
           yieldUnit: comp.yieldUnit,
         },
         e,
+        rulesOf(id, e.componentId),
       )
     }
     costs.set(id, Math.round(total * 10000) / 10000)
@@ -138,6 +184,27 @@ export function wouldCreateCycle(
   return false
 }
 
+export function recipesContaining(
+  recipeId: string,
+  edges: { parentId: string; componentId: string }[],
+): string[] {
+  const parentsOf = new Map<string, string[]>()
+  for (const e of edges) {
+    ;(parentsOf.get(e.componentId) ?? parentsOf.set(e.componentId, []).get(e.componentId)!).push(
+      e.parentId,
+    )
+  }
+  const stack = [...(parentsOf.get(recipeId) ?? [])]
+  const seen = new Set<string>()
+  while (stack.length > 0) {
+    const cur = stack.pop()!
+    if (seen.has(cur)) continue
+    seen.add(cur)
+    for (const next of parentsOf.get(cur) ?? []) stack.push(next)
+  }
+  return [...seen]
+}
+
 export function depthAfterInsert(
   parentId: string,
   componentId: string,
@@ -176,8 +243,14 @@ export function toCostRecipes(
     portions: number
     yieldAmount: Prisma.Decimal | null
     yieldUnit: string | null
-    ingredients: { quantity: Prisma.Decimal; ingredient: { costPerUnit: Prisma.Decimal } }[]
+    ingredients: {
+      quantity: Prisma.Decimal
+      unit?: string
+      ingredientId?: string
+      ingredient: { costPerUnit: Prisma.Decimal; unit?: string }
+    }[]
   }[],
+  conversionsFor: (ingredientId?: string, recipeId?: string) => IngredientConversion[] = () => [],
 ): CostRecipe[] {
   return rows.map((r) => ({
     id: r.id,
@@ -187,6 +260,9 @@ export function toCostRecipes(
     ingredients: r.ingredients.map((i) => ({
       quantity: i.quantity.toNumber(),
       costPerUnit: i.ingredient.costPerUnit.toNumber(),
+      unit: i.unit,
+      pricedIn: i.ingredient.unit,
+      conversions: conversionsFor(i.ingredientId, r.id),
     })),
   }))
 }

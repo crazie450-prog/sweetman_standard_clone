@@ -1,11 +1,11 @@
-import { ApiError } from './client'
+import { ApiError, errorOf } from './client'
 
 export function serverMessage(e: unknown, fallback = 'Something went wrong. Try again.'): string {
   if (e instanceof ApiError) {
-    const body = e.body as { message?: string | string[] } | undefined
-    const msg = body?.message
-    if (Array.isArray(msg) && msg.length > 0) return msg.join('. ')
-    if (typeof msg === 'string' && msg.trim()) return msg
+    const error = errorOf(e.body)
+    const details = (error?.details ?? []).map((d) => d.message).filter((m) => m.trim())
+    if (details.length > 0) return details.join('. ')
+    if (error?.message.trim()) return error.message
     if (e.status === 403) return 'Your role does not allow this action.'
   }
   return fallback

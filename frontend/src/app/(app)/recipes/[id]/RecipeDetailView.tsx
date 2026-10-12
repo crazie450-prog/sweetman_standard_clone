@@ -2,15 +2,10 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  categoriesService,
-  ingredientsService,
-  recipeDetailService,
-  recipesService,
-  type RecipeDetail,
-} from '@/lib/api/services'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { recipesService, type RecipeDetail } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
+import { CategoryField } from '@/components/catalogue/CategoryField'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
 
 import Link from 'next/link'
@@ -28,15 +23,78 @@ import {
   Table,
   TBody,
   TD,
+  TextAreaField,
   TextField,
+  UnitField,
   TH,
   THead,
   TR,
   useToast,
 } from '@/components/ui'
-import { formatMoney, formatPercent } from '@/lib/utils/format'
+import { currencySymbol, formatMoney, formatPercent } from '@/lib/utils/format'
+import { wholeCount } from '@/lib/utils/money'
+import { ingredientChoices, keepingCurrent } from '@/lib/utils/options'
+import { NewIngredientDialog } from '@/components/catalogue/NewIngredientDialog'
+import { RecipeConversions } from '@/components/catalogue/RecipeConversions'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
-type Line = { ingredientId: string; qty: string; unit: string }
+type Line = { ingredientId: string; qty: string; unit: string; prepNote: string }
+
+const PORTION = [{ value: 'portion', label: 'Portion' }]
+
+function ComponentUnitField({
+  yields,
+  recipeIds,
+  value,
+  onChange,
+}: {
+  yields?: { name: string; yieldAmount: number | null; yieldUnit: string | null }
+  recipeIds: string[]
+  value: string
+  onChange: (unit: string) => void
+}) {
+  if (!yields) {
+    return (
+      <SelectField
+        label="Unit"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        options={PORTION}
+      />
+    )
+  }
+  if (!yields.yieldUnit || !yields.yieldAmount) {
+    return (
+      <SelectField
+        label="Unit"
+        help={`${yields.name} states no yield, so it goes in by the portion`}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        options={PORTION}
+      />
+    )
+  }
+  return (
+    <UnitField
+      label="Unit"
+      pricedIn={yields.yieldUnit}
+      recipeIds={recipeIds}
+      extraOptions={PORTION}
+      help={`A batch makes ${yields.yieldAmount} ${yields.yieldUnit}`}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  )
+}
+
+const linesOf = (r: RecipeDetail): Line[] =>
+  r.ingredients.map((i) => ({
+    ingredientId: i.ingredientId,
+    qty: String(i.qty),
+    unit: i.unit,
+    prepNote: i.prepNote,
+  }))
 
 export default function RecipeDetailView({ id }: { id: string }) {
   const {
@@ -44,8 +102,7 @@ export default function RecipeDetailView({ id }: { id: string }) {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['recipe-detail', id],
-    queryFn: () => recipeDetailService.get(id),
+    ...queries.recipeDetail(id),
     retry: false,
   })
 
@@ -62,7 +119,7 @@ export default function RecipeDetailView({ id }: { id: string }) {
       <div className="py-16">
         <EmptyState
           title="Recipe not found"
-          hint="It may have been deleted, or the link belongs to another organization."
+          hint="It may have been deleted, or the link belongs to another organization or to another location you do not work at."
           action={
             <Link
               href="/recipes"
@@ -80,42 +137,64 @@ export default function RecipeDetailView({ id }: { id: string }) {
 }
 
 function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
-  const queryClient = useQueryClient()
+  const invalidate = useInvalidate()
   const router = useRouter()
   const toast = useToast()
-  const { can } = useCurrentUser()
+  const { can: role, mine, changesHere } = useCurrentUser()
+  const can = (minRole: Parameters<typeof role>[0]) => role(minRole) && changesHere(r.locationId)
 
-  const { data: ingredients = [] } = useQuery({
-    queryKey: ['ingredients'],
-    queryFn: ingredientsService.list,
-  })
-  const { data: recipes = [] } = useQuery({ queryKey: ['recipes'], queryFn: recipesService.list })
-  const { data: categories = [] } = useQuery({
-    queryKey: ['categories', 'recipe'],
-    queryFn: () => categoriesService.list('recipe'),
-  })
+  const { data: ingredients = [] } = useQuery(queries.ingredients())
+
+  const optionsFor = (ingredientId: string) => {
+    const offered = ingredientChoices(ingredients)
+    return keepingCurrent(
+      offered,
+      ingredientId,
+      r.ingredients.find((i) => i.ingredientId === ingredientId)?.name
+    )
+  }
+  const { data: recipes = [] } = useQuery(queries.recipes())
+
+  const { data: locations = [] } = useQuery(queries.locations())
+  const movable = locations.filter((l) => mine.length === 0 || mine.includes(l.id))
+  const mayMove =
+    can('manager') &&
+    (mine.length === 0 ||
+      (r.locationId !== null && mine.includes(r.locationId) && movable.length > 1))
+  const { data: org } = useQuery(queries.organization())
+  const target = r.targetFoodCostPct ?? org?.foodCostTargetPct ?? null
+  const targetHint =
+    r.targetFoodCostPct !== null
+      ? `recipe target ${formatPercent(r.targetFoodCostPct, 0)}`
+      : `organization target ${formatPercent(target, 0)}`
 
   const [editOpen, setEditOpen] = useState(false)
+  const [lineError, setLineError] = useState('')
   const [name, setName] = useState(r.name)
+  const [description, setDescription] = useState(r.description)
   const [categoryId, setCategoryId] = useState(r.categoryId ?? '')
+  const [locationId, setLocationId] = useState(r.locationId ?? '')
   const [portions, setPortions] = useState(String(r.portions))
   const [targetPct, setTargetPct] = useState(
     r.targetFoodCostPct === null ? '' : String(r.targetFoodCostPct)
   )
-  const [lines, setLines] = useState<Line[]>(
-    r.ingredients.map((i) => ({ ingredientId: i.ingredientId, qty: String(i.qty), unit: i.unit }))
+  const [yieldAmount, setYieldAmount] = useState(
+    r.yieldAmount === null ? '' : String(r.yieldAmount)
   )
-  const [busy, setBusy] = useState(false)
+  const [yieldUnit, setYieldUnit] = useState(r.yieldUnit ?? '')
+  const [lines, setLines] = useState<Line[]>(() => linesOf(r))
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [pendingComponent, setPendingComponent] = useState<{
     componentId: string
     name: string
   } | null>(null)
 
+  const [creatingIngredient, setCreatingIngredient] = useState(false)
   const [componentOpen, setComponentOpen] = useState(false)
   const [componentId, setComponentId] = useState('')
   const [componentQty, setComponentQty] = useState('')
-  const [componentUnit, setComponentUnit] = useState('ea')
+  const [componentUnit, setComponentUnit] = useState('portion')
+  const [changing, setChanging] = useState<{ componentId: string; name: string } | null>(null)
 
   const ingredientsCost = r.ingredients.reduce((s, i) => s + i.cost, 0)
   const componentsCost = r.components.reduce((s, c) => s + c.cost, 0)
@@ -126,109 +205,146 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
 
   const openEdit = () => {
     setName(r.name)
+    setDescription(r.description)
     setCategoryId(r.categoryId ?? '')
+    setLocationId(r.locationId ?? '')
     setPortions(String(r.portions))
     setTargetPct(r.targetFoodCostPct === null ? '' : String(r.targetFoodCostPct))
-    setLines(
-      r.ingredients.map((i) => ({ ingredientId: i.ingredientId, qty: String(i.qty), unit: i.unit }))
-    )
+    setYieldAmount(r.yieldAmount === null ? '' : String(r.yieldAmount))
+    setYieldUnit(r.yieldUnit ?? '')
+    setLines(linesOf(r))
+    setLineError('')
     setEditOpen(true)
   }
 
-  const refresh = async () => {
-    await queryClient.invalidateQueries({ queryKey: ['recipe-detail', r.id] })
-    await queryClient.invalidateQueries({ queryKey: ['recipes'] })
-  }
+  const edit = useMutation({
+    mutationFn: (payload: Parameters<typeof recipesService.update>[1]) =>
+      recipesService.update(r.id, payload),
+    onSuccess: async () => {
+      await invalidate('recipes')
+      setEditOpen(false)
+      toast('success', 'Recipe saved')
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
 
-  async function saveEdit() {
+  function saveEdit() {
     if (!name.trim()) {
       toast('danger', 'Recipe name is required')
       return
     }
-    setBusy(true)
-    try {
-      await recipesService.update(r.id, {
-        name: name.trim(),
-        categoryId: categoryId || undefined,
-        portions: parseInt(portions, 10) || 1,
-        targetFoodCostPct: targetPct === '' ? undefined : parseFloat(targetPct),
-        ingredients: lines
-          .filter((l) => l.ingredientId && parseFloat(l.qty) > 0)
-          .map((l) => ({
-            ingredientId: l.ingredientId,
-            quantity: parseFloat(l.qty),
-            unit: l.unit || 'ea',
-          })),
-      })
-      await refresh()
-      setEditOpen(false)
-      toast('success', 'Recipe saved')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
+    const portionCount = portions.trim() === '' ? null : wholeCount(portions)
+    if (portions.trim() !== '' && portionCount === null) {
+      toast('danger', 'Portions is a whole number of at least 1')
+      return
     }
+    const unfilled = lines.findIndex((l) => l.ingredientId && !(parseFloat(l.qty) > 0))
+    if (unfilled !== -1) {
+      setLineError(`Line ${unfilled + 1} needs a quantity above zero, or remove the line`)
+      return
+    }
+    setLineError('')
+    edit.mutate({
+      name: name.trim(),
+      description: description.trim(),
+      categoryId: categoryId || null,
+      ...(mayMove && locationId !== (r.locationId ?? '') ? { locationId: locationId || null } : {}),
+      portions: portionCount ?? 1,
+      targetFoodCostPct: targetPct === '' ? null : parseFloat(targetPct),
+      yieldAmount: yieldAmount === '' ? null : parseFloat(yieldAmount),
+      yieldUnit: yieldAmount === '' ? null : yieldUnit || null,
+      ingredients: lines
+        .filter((l) => l.ingredientId && parseFloat(l.qty) > 0)
+        .map((l) => ({
+          ingredientId: l.ingredientId,
+          quantity: parseFloat(l.qty),
+          unit: l.unit || 'ea',
+          ...(l.prepNote.trim() ? { prepNote: l.prepNote.trim() } : {}),
+        })),
+    })
   }
 
-  async function removeRecipe() {
-    setBusy(true)
-    try {
-      await recipesService.remove(r.id)
-      await refresh()
+  const removal = useMutation({
+    mutationFn: () => recipesService.remove(r.id),
+    onSuccess: async () => {
+      await invalidate('recipes')
       setDeleteOpen(false)
       toast('success', `${r.name} deleted`)
       router.push('/recipes')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
 
-  async function addComponent() {
+  const componentAdd = useMutation({
+    mutationFn: (quantity: number) =>
+      recipesService.addComponent(r.id, {
+        componentId,
+        quantity,
+        unit: componentUnit || 'portion',
+      }),
+    onSuccess: async () => {
+      await invalidate('recipes')
+      setComponentOpen(false)
+      setComponentId('')
+      setComponentQty('')
+      toast('success', 'Sub-recipe added')
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function addComponent() {
     const qty = parseFloat(componentQty)
     if (!componentId || !qty || qty <= 0) {
       toast('danger', 'Pick a sub-recipe and a quantity')
       return
     }
-    setBusy(true)
-    try {
-      await recipesService.addComponent(r.id, {
-        componentId,
-        quantity: qty,
-        unit: componentUnit || 'ea',
-      })
-      await refresh()
-      setComponentOpen(false)
-      setComponentId('')
-      setComponentQty('')
-      toast('success', 'Sub-recipe added')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
+    componentAdd.mutate(qty)
   }
 
-  async function removeComponent() {
-    if (!pendingComponent) return
-    const { componentId, name } = pendingComponent
-    try {
-      await recipesService.removeComponent(r.id, componentId)
-      await refresh()
-      toast('success', `${name} removed`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setPendingComponent(null)
+  const componentChange = useMutation({
+    mutationFn: (change: { componentId: string; name: string; quantity: number }) =>
+      recipesService.updateComponent(r.id, change.componentId, {
+        quantity: change.quantity,
+        unit: componentUnit || 'portion',
+      }),
+    onSuccess: async (_, { name }) => {
+      await invalidate('recipes')
+      toast('success', `${name} changed`)
+      setChanging(null)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function changeComponent() {
+    if (!changing) return
+    const qty = parseFloat(componentQty)
+    if (!qty || qty <= 0) {
+      toast('danger', 'Enter a quantity above zero')
+      return
     }
+    componentChange.mutate({
+      componentId: changing.componentId,
+      name: changing.name,
+      quantity: qty,
+    })
   }
+
+  const componentRemoval = useMutation({
+    mutationFn: (component: { componentId: string; name: string }) =>
+      recipesService.removeComponent(r.id, component.componentId),
+    onSuccess: async (_, { name }) => {
+      await invalidate('recipes')
+      toast('success', `${name} removed`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+    onSettled: () => setPendingComponent(null),
+  })
 
   return (
     <>
       <PageHeader
         title={r.name}
-        subtitle={`${r.category || 'Uncategorized'} · ${r.portions} portions`}
+        subtitle={`${r.category || 'Uncategorized'} · ${r.location?.name ?? 'All locations'} · ${r.portions} portions${r.yieldAmount !== null && r.yieldUnit ? ` · ${r.yieldAmount} ${r.yieldUnit} a batch` : ''}`}
         actions={
           <>
             {can('staff') && (
@@ -255,12 +371,19 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
         }
       />
 
+      {r.description && (
+        <Card className="mb-6">
+          <h2 className="section-title font-semibold">Description</h2>
+          <p className="mt-2 whitespace-pre-line text-sm">{r.description}</p>
+        </Card>
+      )}
+
       <div className="mb-6 grid grid-cols-2 gap-3 xl:grid-cols-4">
         <KpiCard
           label="Total cost"
           value={formatMoney(total)}
           tone="primary"
-          icon={<span>$</span>}
+          icon={<span>{currencySymbol()}</span>}
         />
         <KpiCard
           label="Cost / portion"
@@ -270,12 +393,10 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
         />
         <KpiCard
           label="Food cost"
-          value={formatPercent(r.foodCostPct, 0)}
-          hint={`target ${formatPercent(r.targetFoodCostPct, 0)}`}
+          value={formatPercent(r.foodCostPct)}
+          hint={targetHint}
           tone={
-            r.foodCostPct !== null &&
-            r.targetFoodCostPct !== null &&
-            r.foodCostPct > r.targetFoodCostPct
+            r.foodCostPct !== null && target !== null && r.foodCostPct > target
               ? 'warning'
               : 'success'
           }
@@ -304,7 +425,12 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
               <TBody>
                 {r.ingredients.map((i) => (
                   <TR key={i.ingredientId}>
-                    <TD className="font-medium">{i.name}</TD>
+                    <TD>
+                      <span className="font-medium">{i.name}</span>
+                      {i.prepNote && (
+                        <span className="block text-[13px] text-text-muted">{i.prepNote}</span>
+                      )}
+                    </TD>
                     <TD>
                       {i.qty} {i.unit}
                     </TD>
@@ -334,7 +460,7 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
                 onClick={() => {
                   setComponentId('')
                   setComponentQty('')
-                  setComponentUnit('ea')
+                  setComponentUnit('portion')
                   setComponentOpen(true)
                 }}
               >
@@ -343,66 +469,140 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             )}
           </div>
           <div className="p-4 sm:p-6">
-            <Table>
-              <THead>
-                <TR>
-                  <TH>Sub-recipe</TH>
-                  <TH>Qty</TH>
-                  <TH>Contribution</TH>
-                  {can('staff') && <TH className="text-right">Actions</TH>}
-                </TR>
-              </THead>
-              <TBody>
-                {r.components.map((c) => (
-                  <TR key={c.componentId}>
-                    <TD>
-                      <Link
-                        href={`/recipes/${c.link}`}
-                        className="font-medium text-primary-700 underline dark:text-primary-400"
-                      >
-                        {c.name}
-                      </Link>
-                    </TD>
-                    <TD>
-                      {c.qty} {c.unit}
-                    </TD>
-                    <TD>{formatMoney(c.cost)}</TD>
-                    {can('staff') && (
-                      <TD className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setPendingComponent({ componentId: c.componentId, name: c.name })}
-                        >
-                          Remove
-                        </Button>
-                      </TD>
-                    )}
+            {r.components.length === 0 ? (
+              <p className="text-sm text-text-muted">
+                This recipe uses no sub-recipes. A sub-recipe is any other recipe, such as a sauce
+                or a dough, costed into this one.
+              </p>
+            ) : (
+              <Table pinActions={can('staff')} compact>
+                <THead>
+                  <TR>
+                    <TH>Sub-recipe</TH>
+                    <TH>Qty</TH>
+                    <TH>Cost</TH>
+                    {can('staff') && <TH className="text-right">Actions</TH>}
                   </TR>
-                ))}
-                <TR>
-                  <TD className="font-semibold" colSpan={2}>
-                    Subtotal
-                  </TD>
-                  <TD className="font-semibold">{formatMoney(componentsCost)}</TD>
-                  {can('staff') && <TD />}
-                </TR>
-              </TBody>
-            </Table>
+                </THead>
+                <TBody>
+                  {r.components.map((c) => (
+                    <TR key={c.componentId}>
+                      <TD>
+                        <Link
+                          href={`/recipes/${c.link}`}
+                          className="font-medium text-primary-700 underline dark:text-primary-400"
+                        >
+                          {c.name}
+                        </Link>
+                      </TD>
+                      <TD>
+                        {c.qty} {c.unit}
+                        {can('staff') && (
+                          <button
+                            type="button"
+                            className="ms-2 text-[13px] font-medium text-primary-700 hover:underline dark:text-primary-300"
+                            onClick={() => {
+                              setComponentQty(String(c.qty))
+                              setComponentUnit(c.yieldUnit ? c.unit : 'portion')
+                              setChanging({ componentId: c.componentId, name: c.name })
+                            }}
+                          >
+                            Change
+                          </button>
+                        )}
+                      </TD>
+                      <TD className="whitespace-nowrap">{formatMoney(c.cost)}</TD>
+                      {can('staff') && (
+                        <TD className="text-right">
+                          <button
+                            type="button"
+                            className="text-[13px] font-medium text-danger-700 hover:underline dark:text-danger-100"
+                            onClick={() =>
+                              setPendingComponent({ componentId: c.componentId, name: c.name })
+                            }
+                          >
+                            Remove
+                          </button>
+                        </TD>
+                      )}
+                    </TR>
+                  ))}
+                  <TR>
+                    <TD className="font-semibold" colSpan={2}>
+                      Subtotal
+                    </TD>
+                    <TD className="font-semibold">{formatMoney(componentsCost)}</TD>
+                    {can('staff') && <TD />}
+                  </TR>
+                </TBody>
+              </Table>
+            )}
           </div>
         </Card>
       </div>
+
+      <Card className="mt-4">
+        <h2 className="section-title font-semibold">Used in</h2>
+        {r.usedBy.recipes.length === 0 && r.usedBy.dishes.length === 0 ? (
+          <p className="mt-2 text-sm text-text-muted">
+            No recipe or dish is built on this recipe yet. Open another recipe and use + Add
+            sub-recipe to make this one a component of it.
+          </p>
+        ) : (
+          <div className="mt-3 grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="text-[13px] font-semibold text-text-muted">Recipes</p>
+              {r.usedBy.recipes.length === 0 ? (
+                <p className="mt-1 text-sm text-text-muted">None</p>
+              ) : (
+                <ul className="mt-1 space-y-1 text-sm">
+                  {r.usedBy.recipes.map((p) => (
+                    <li key={p.id}>
+                      <Link
+                        href={`/recipes/${p.id}`}
+                        className="text-primary-700 hover:underline dark:text-primary-300"
+                      >
+                        {p.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div>
+              <p className="text-[13px] font-semibold text-text-muted">Dishes</p>
+              {r.usedBy.dishes.length === 0 ? (
+                <p className="mt-1 text-sm text-text-muted">None</p>
+              ) : (
+                <ul className="mt-1 space-y-1 text-sm">
+                  {r.usedBy.dishes.map((d) => (
+                    <li key={d.id}>{d.name}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+      </Card>
+
+      <RecipeConversions recipe={r} manage={can('manager')} />
 
       <Modal
         open={editOpen}
         onClose={() => setEditOpen(false)}
         title="Edit Recipe"
+        size="xl"
         footer={
           <>
+            {lineError && (
+              <p role="alert" className="mr-auto text-sm text-danger-700 dark:text-danger-100">
+                {lineError}
+              </p>
+            )}
             <Button variant="secondary" onClick={() => setEditOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={saveEdit} disabled={busy}>
+            <Button onClick={saveEdit} disabled={edit.isPending}>
               Save Recipe
             </Button>
           </>
@@ -416,13 +616,7 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <SelectField
-            label="Category"
-            placeholder="Uncategorized"
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            options={categories.map((c) => ({ value: c.id, label: c.name }))}
-          />
+          <CategoryField kind="recipe" value={categoryId} onChange={setCategoryId} />
           <TextField
             label="Portions"
             type="number"
@@ -430,6 +624,36 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             value={portions}
             onChange={(e) => setPortions(e.target.value)}
           />
+          <TextField
+            label="Batch yield"
+            type="number"
+            min="0"
+            step="0.01"
+            help="What one batch makes, such as 3 l of sauce, so another recipe can take a share by weight or volume. Empty: by the portion only"
+            value={yieldAmount}
+            onChange={(e) => setYieldAmount(e.target.value)}
+          />
+          <UnitField
+            label="Yield measured in"
+            placeholder="Not stated"
+            value={yieldUnit}
+            onChange={(e) => setYieldUnit(e.target.value)}
+          />
+          {mayMove && (
+            <SelectField
+              label="Location"
+              placeholder={mine.length === 0 ? 'All locations' : undefined}
+              help={
+                mine.length === 0
+                  ? 'Leave empty to share this recipe across locations'
+                  : 'Move it to another location you work at'
+              }
+              className="sm:col-span-2"
+              value={locationId}
+              onChange={(e) => setLocationId(e.target.value)}
+              options={movable.map((l) => ({ value: l.id, label: l.name }))}
+            />
+          )}
           <TextField
             label="Target food-cost %"
             type="number"
@@ -439,12 +663,23 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             value={targetPct}
             onChange={(e) => setTargetPct(e.target.value)}
           />
+          <TextAreaField
+            label="Description"
+            help="Method, plating, or anything the kitchen should know"
+            className="sm:col-span-2"
+            maxLength={2000}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
 
           <div className="sm:col-span-2">
             <p className="mb-2 text-sm font-semibold">Ingredients</p>
             <div className="space-y-3">
               {lines.map((line, idx) => (
-                <div key={idx} className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr_auto] sm:items-end">
+                <div
+                  key={idx}
+                  className="grid gap-3 sm:grid-cols-[2fr_1fr_1fr_1.5fr_auto] sm:items-end"
+                >
                   <SelectField
                     label="Ingredient"
                     hideLabel={idx > 0}
@@ -454,7 +689,8 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
                       const ing = ingredients.find((i) => i.id === e.target.value)
                       setLine(idx, { ingredientId: e.target.value, unit: ing?.unit ?? line.unit })
                     }}
-                    options={ingredients.map((i) => ({ value: i.id, label: i.name }))}
+                    options={optionsFor(line.ingredientId)}
+                    searchable
                   />
                   <TextField
                     label="Qty"
@@ -465,11 +701,22 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
                     value={line.qty}
                     onChange={(e) => setLine(idx, { qty: e.target.value })}
                   />
-                  <TextField
+                  <UnitField
                     label="Unit"
                     hideLabel={idx > 0}
+                    pricedIn={ingredients.find((i) => i.id === line.ingredientId)?.unit}
+                    ingredientId={line.ingredientId || undefined}
+                    recipeIds={[r.id]}
                     value={line.unit}
                     onChange={(e) => setLine(idx, { unit: e.target.value })}
+                  />
+                  <TextField
+                    label="Prep"
+                    hideLabel={idx > 0}
+                    placeholder="e.g. diced"
+                    maxLength={120}
+                    value={line.prepNote}
+                    onChange={(e) => setLine(idx, { prepNote: e.target.value })}
                   />
                   <Button
                     variant="ghost"
@@ -482,17 +729,35 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
                 </div>
               ))}
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mt-2"
-              onClick={() => setLines((ls) => [...ls, { ingredientId: '', qty: '', unit: '' }])}
-            >
-              + Add ingredient
-            </Button>
+            <div className="mt-2 flex flex-wrap gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() =>
+                  setLines((ls) => [...ls, { ingredientId: '', qty: '', unit: '', prepNote: '' }])
+                }
+              >
+                + Add ingredient
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => setCreatingIngredient(true)}>
+                + New ingredient
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>
+
+      <NewIngredientDialog
+        open={creatingIngredient}
+        onClose={() => setCreatingIngredient(false)}
+        onCreated={(created) =>
+          setLines((ls) => {
+            const line = { ingredientId: created.id, qty: '', unit: created.unit, prepNote: '' }
+            const empty = ls.findIndex((l) => !l.ingredientId)
+            return empty === -1 ? [...ls, line] : ls.map((l, i) => (i === empty ? line : l))
+          })
+        }
+      />
 
       <Modal
         open={componentOpen}
@@ -503,7 +768,7 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             <Button variant="secondary" onClick={() => setComponentOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={addComponent} disabled={busy}>
+            <Button onClick={addComponent} disabled={componentAdd.isPending}>
               Add
             </Button>
           </>
@@ -514,11 +779,20 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             label="Sub-recipe"
             className="sm:col-span-3"
             placeholder="Select…"
-            help="A recipe cannot contain itself, directly or through a chain."
+            help="A recipe cannot contain itself, directly or through a chain, so the recipes this one is already part of are not offered, nor the ones already in it. Only recipes for all locations or for this recipe's location are."
             value={componentId}
-            onChange={(e) => setComponentId(e.target.value)}
+            onChange={(e) => {
+              setComponentId(e.target.value)
+              setComponentUnit('portion')
+            }}
             options={recipes
-              .filter((rec) => rec.id !== r.id)
+              .filter(
+                (rec) =>
+                  rec.id !== r.id &&
+                  !r.containedBy.includes(rec.id) &&
+                  !r.components.some((c) => c.componentId === rec.id) &&
+                  (rec.location === null || rec.location.id === r.locationId)
+              )
               .map((rec) => ({ value: rec.id, label: rec.name }))}
           />
           <TextField
@@ -530,10 +804,45 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
             value={componentQty}
             onChange={(e) => setComponentQty(e.target.value)}
           />
-          <TextField
-            label="Unit"
+          <ComponentUnitField
+            yields={recipes.find((rec) => rec.id === componentId)}
+            recipeIds={[r.id, componentId]}
             value={componentUnit}
-            onChange={(e) => setComponentUnit(e.target.value)}
+            onChange={setComponentUnit}
+          />
+        </div>
+      </Modal>
+
+      <Modal
+        open={changing !== null}
+        onClose={() => setChanging(null)}
+        title={`How much ${changing?.name ?? ''} goes into ${r.name}`}
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setChanging(null)}>
+              Cancel
+            </Button>
+            <Button onClick={changeComponent} disabled={componentChange.isPending}>
+              Save
+            </Button>
+          </>
+        }
+      >
+        <div className="grid gap-4 sm:grid-cols-3">
+          <TextField
+            label="Qty"
+            type="number"
+            min="0"
+            step="0.01"
+            className="sm:col-span-2"
+            value={componentQty}
+            onChange={(e) => setComponentQty(e.target.value)}
+          />
+          <ComponentUnitField
+            yields={r.components.find((c) => c.componentId === changing?.componentId)}
+            recipeIds={[r.id, changing?.componentId ?? '']}
+            value={componentUnit}
+            onChange={setComponentUnit}
           />
         </div>
       </Modal>
@@ -541,7 +850,8 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
       <ConfirmDialog
         open={pendingComponent !== null}
         onClose={() => setPendingComponent(null)}
-        onConfirm={removeComponent}
+        onConfirm={() => pendingComponent && componentRemoval.mutate(pendingComponent)}
+        busy={componentRemoval.isPending}
         title={`Remove ${pendingComponent?.name ?? ''} from ${r.name}?`}
         confirmLabel="Remove"
       >
@@ -552,12 +862,12 @@ function RecipeDetailLoaded({ recipe: r }: { recipe: RecipeDetail }) {
       <ConfirmDialog
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
-        onConfirm={removeRecipe}
+        onConfirm={() => removal.mutate()}
         title={`Delete ${r.name}?`}
-        busy={busy}
+        busy={removal.isPending}
       >
-        Its ingredient list, its steps and its links to sub-recipes go with it. Menu items built on
-        this recipe will refuse the deletion instead. This cannot be undone.
+        Its ingredient list, its steps and its links to sub-recipes go with it. Recipes and menu
+        items built on this recipe will refuse the deletion instead. This cannot be undone.
       </ConfirmDialog>
     </>
   )

@@ -3,19 +3,19 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState, type FormEvent } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Button, Card, TextField } from '@/components/ui'
-import { authService, organizationService } from '@/lib/api/services'
+import { authService } from '@/lib/api/services'
 import { ApiError } from '@/lib/api/client'
+import { serverMessage } from '@/lib/api/error'
+import { queries } from '@/lib/api/queries'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const { data: signedIn } = useQuery({
-    queryKey: ['org-current'],
-    queryFn: organizationService.current,
+    ...queries.orgCurrent(),
     retry: false,
   })
 
@@ -23,22 +23,27 @@ export default function LoginPage() {
     if (signedIn) router.replace('/dashboard')
   }, [signedIn, router])
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const signIn = useMutation({
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      authService.login(email, password),
+    onSuccess: () => router.push('/dashboard'),
+    onError: (err) => {
+      const status = err instanceof ApiError ? err.status : 0
+      setError(
+        status === 401
+          ? 'Incorrect email or password.'
+          : status === 423
+            ? 'Too many attempts. Try again in a few minutes.'
+            : serverMessage(err, 'Could not sign in. Try again.')
+      )
+    },
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
     setError('')
-    setLoading(true)
-    try {
-      await authService.login(String(form.get('email')), String(form.get('password')))
-      router.push('/dashboard')
-    } catch (err) {
-      setError(
-        err instanceof ApiError && err.status === 423
-          ? 'Too many attempts. Try again in a few minutes.'
-          : 'Incorrect email or password.'
-      )
-      setLoading(false)
-    }
+    signIn.mutate({ email: String(form.get('email')), password: String(form.get('password')) })
   }
 
   return (
@@ -92,7 +97,7 @@ export default function LoginPage() {
               Forgot password?
             </Link>
           </div>
-          <Button type="submit" loading={loading} className="w-full">
+          <Button type="submit" loading={signIn.isPending || signIn.isSuccess} className="w-full">
             Sign In
           </Button>
         </form>

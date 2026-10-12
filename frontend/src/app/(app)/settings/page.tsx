@@ -3,88 +3,21 @@
 import { RequireRole } from '@/components/layout/RequireRole'
 import { useState } from 'react'
 import Link from 'next/link'
-import {
-  Badge,
-  Button,
-  Card,
-  PageHeader,
-  SegmentedControl,
-  SelectField,
-  TextField,
-  useToast,
-  Progress,
-} from '@/components/ui'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  locationsService,
-  billingService,
-  organizationService,
-  teamService,
-  ROLE_LABELS,
-  type OrganizationProfile,
-} from '@/lib/api/services'
+import { Badge, Button, Card, PageHeader, SelectField, TextField, useToast } from '@/components/ui'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { organizationService, type OrganizationProfile } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
 import { formatDate } from '@/lib/utils/format'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
-
-const TABS = ['Organization', 'Team', 'Properties', 'Unit Conversions'] as const
-type Tab = (typeof TABS)[number]
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 function SettingsPage() {
-  const [tab, setTab] = useState<Tab>('Organization')
-
   return (
     <>
-      <PageHeader title="Settings" subtitle="Manage system configuration and preferences" />
-
-      <div
-        role="tablist"
-        aria-label="Settings sections"
-        className="mb-6 flex flex-wrap gap-1 border-b border-border"
-      >
-        {TABS.map((t) => (
-          <button
-            key={t}
-            role="tab"
-            type="button"
-            aria-selected={tab === t}
-            onClick={() => setTab(t)}
-            className={`-mb-px border-b-2 px-4 py-2.5 text-sm font-medium transition-colors ${
-              tab === t
-                ? 'border-primary-600 text-primary-700 dark:text-primary-400'
-                : 'border-transparent text-text-muted hover:text-text'
-            }`}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-
-      {tab === 'Organization' && <OrganizationTab />}
-      {tab === 'Team' && <TeamTab />}
-      {tab === 'Properties' && <PropertiesTab />}
-      {tab === 'Unit Conversions' && <UnitConversionsTab />}
+      <PageHeader title="Settings" subtitle="Manage your organization's profile and preferences" />
+      <OrganizationTab />
     </>
-  )
-}
-
-function TabHeading({
-  title,
-  hint,
-  actions,
-}: {
-  title: string
-  hint: string
-  actions?: React.ReactNode
-}) {
-  return (
-    <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
-      <div>
-        <h2 className="text-base font-semibold">{title}</h2>
-        <p className="mt-1 text-sm text-text-muted">{hint}</p>
-      </div>
-      {actions}
-    </div>
   )
 }
 
@@ -139,54 +72,41 @@ const EMPTY_ORG: OrganizationProfile = {
   timezone: 'America/New_York',
   currency: 'USD',
   dateFormat: 'MM/DD/YYYY',
+  foodCostTargetPct: 30,
   subscriptionStatus: 'trial',
   trialEndsAt: null,
 }
 
-const TRIAL_DAYS_TOTAL = 30
-
 function OrganizationTab() {
-  const { data: org } = useQuery({
-    queryKey: ['organization'],
-    queryFn: organizationService.profile,
-  })
+  const { data: org } = useQuery(queries.organization())
 
   return <OrganizationForm key={org?.id ?? 'loading'} org={org ?? EMPTY_ORG} />
 }
 
 function OrganizationForm({ org }: { org: OrganizationProfile }) {
   const toast = useToast()
-  const queryClient = useQueryClient()
-  const { can } = useCurrentUser()
+  const invalidate = useInvalidate()
+  const { can, worksEverywhere } = useCurrentUser()
   const [dirty, setDirty] = useState(false)
-  const [saving, setSaving] = useState(false)
   const [form, setForm] = useState<OrganizationProfile>(org)
+  const [target, setTarget] = useState(String(org.foodCostTargetPct))
+  const [targetError, setTargetError] = useState<string | undefined>(undefined)
 
-  const { data: daysLeft = 0 } = useQuery({
-    queryKey: ['trial-days'],
-    queryFn: billingService.trialDaysRemaining,
-  })
-  const { data: plans = [] } = useQuery({
-    queryKey: ['billing-plans'],
-    queryFn: billingService.plans,
-  })
-  const currentPlan = plans.find((p) => p.current)?.name
+  const { data: daysLeft = 0 } = useQuery(queries.billingTrial())
+  const { data: subscription } = useQuery(queries.billingSubscription())
+  const currentPlan = subscription?.planName
 
   const set = <K extends keyof OrganizationProfile>(key: K, value: OrganizationProfile[K]) => {
     setForm((f) => ({ ...f, [key]: value }))
     setDirty(true)
   }
 
-  const trialDaysUsed = Math.min(TRIAL_DAYS_TOTAL, Math.max(0, TRIAL_DAYS_TOTAL - daysLeft))
   const onTrial = form.subscriptionStatus === 'trial' && !!form.trialEndsAt
 
-  async function save(e: React.FormEvent) {
-    e.preventDefault()
-    setSaving(true)
-    try {
-      await organizationService.updateProfile({
+  const saving = useMutation({
+    mutationFn: (foodCostTargetPct: number) =>
+      organizationService.updateProfile({
         name: form.name,
-        ownerName: form.ownerName,
         phone: form.phone,
         address: form.address,
         city: form.city,
@@ -195,17 +115,25 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
         country: form.country,
         timezone: form.timezone,
         currency: form.currency,
-        dateFormat: form.dateFormat,
-      })
-      await queryClient.invalidateQueries({ queryKey: ['organization'] })
-      await queryClient.invalidateQueries({ queryKey: ['org-current'] })
+        foodCostTargetPct,
+      }),
+    onSuccess: async () => {
+      await invalidate('organization')
       setDirty(false)
       toast('success', 'Organization settings saved')
-    } catch (err) {
-      toast('danger', serverMessage(err))
-    } finally {
-      setSaving(false)
+    },
+    onError: (err) => toast('danger', serverMessage(err)),
+  })
+
+  function save(e: React.FormEvent) {
+    e.preventDefault()
+    const targetPct = Number(target.trim().replace(',', '.'))
+    if (target.trim() === '' || !Number.isFinite(targetPct) || targetPct < 1 || targetPct > 100) {
+      setTargetError('Enter a share between 1 and 100')
+      return
     }
+    setTargetError(undefined)
+    saving.mutate(targetPct)
   }
 
   return (
@@ -213,14 +141,11 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
       onSubmit={save}
       onReset={() => {
         setForm(org)
+        setTarget(String(org.foodCostTargetPct))
+        setTargetError(undefined)
         setDirty(false)
       }}
     >
-      <TabHeading
-        title="Organization Settings"
-        hint="Manage your organization details, usage, and account settings"
-      />
-
       <div className="grid grid-cols-1 gap-6">
         <SettingsSection title="General" hint="How your organization appears across Nexus.">
           <div className="grid grid-cols-1 gap-4">
@@ -232,7 +157,9 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
             <TextField
               label="Owner Name"
               value={form.ownerName}
-              onChange={(e) => set('ownerName', e.target.value)}
+              disabled
+              trailing={LockIcon}
+              help="The owner's own account; the owner changes it on My Profile"
             />
             <TextField
               label="Owner Email"
@@ -240,7 +167,7 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
               value={form.ownerEmail}
               disabled
               trailing={LockIcon}
-              help="Contact support to change owner email"
+              help="The owner signs in with it and changes it on My Profile"
             />
           </div>
         </SettingsSection>
@@ -300,7 +227,7 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
 
         <SettingsSection
           title="Preferences"
-          hint="Saved with the organization. Reports and screens still render in US English and USD."
+          hint="Amounts are shown in this currency, and days, weeks and months in reports and on the dashboard are counted in this timezone. Dates are shown in US English."
         >
           <div className="grid grid-cols-1 gap-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -319,26 +246,25 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
                 value={form.timezone}
                 onChange={(e) => set('timezone', e.target.value)}
                 options={[
-                  { value: 'America/New_York', label: 'Eastern Time (ET)' },
-                  { value: 'America/Chicago', label: 'Central Time (CT)' },
-                  { value: 'America/Denver', label: 'Mountain Time (MT)' },
-                  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
+                  ...TIMEZONES,
+                  ...(TIMEZONES.some((z) => z.value === form.timezone)
+                    ? []
+                    : [{ value: form.timezone, label: form.timezone }]),
                 ]}
               />
             </div>
-            <div>
-              <span className="mb-1.5 block text-[13px] font-semibold">Date Format</span>
-              <SegmentedControl
-                label="Date Format"
-                value={form.dateFormat}
-                onChange={(v) => set('dateFormat', v)}
-                options={[
-                  { value: 'MM/DD/YYYY', label: 'MM/DD/YYYY' },
-                  { value: 'DD/MM/YYYY', label: 'DD/MM/YYYY' },
-                  { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
-                ]}
-              />
-            </div>
+            <TextField
+              label="Target food cost %"
+              inputMode="decimal"
+              help="Recipes and menu items above this share of their selling price are flagged"
+              error={targetError}
+              value={target}
+              onChange={(e) => {
+                setTarget(e.target.value)
+                setTargetError(undefined)
+                setDirty(true)
+              }}
+            />
           </div>
         </SettingsSection>
 
@@ -374,41 +300,46 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
                 <p className="text-[13px] text-text-muted">
                   {onTrial
                     ? `${daysLeft} days left · ends ${formatDate(form.trialEndsAt!)}`
-                    : 'Subscription billing arrives with Stripe'}
+                    : subscription?.status === 'active'
+                      ? subscription.currentPeriodEnd
+                        ? `Active · ${subscription.provider === 'stripe' ? 'next payment' : 'period ends'} ${formatDate(subscription.currentPeriodEnd)}`
+                        : 'Active'
+                      : subscription?.status === 'past_due'
+                        ? 'The last payment failed'
+                        : subscription?.status === 'canceled'
+                          ? 'Canceled · choose a plan to continue'
+                          : ''}
                 </p>
               </div>
             </div>
-            <Link
-              href="/subscription"
-              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border-strong bg-surface px-3.5 text-sm font-semibold text-text shadow-xs transition-colors hover:border-ink-600 hover:bg-surface-subtle"
-            >
-              Manage Subscription
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-3.5"
-                aria-hidden
+            {!can('owner') && (
+              <p className="text-[13px] text-text-muted">The owner manages the subscription.</p>
+            )}
+            {can('owner') && (
+              <Link
+                href="/subscription"
+                className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border-strong bg-surface px-3.5 text-sm font-semibold text-text shadow-xs transition-colors hover:border-ink-600 hover:bg-surface-subtle"
               >
-                <path d="M7 17 17 7M9 7h8v8" />
-              </svg>
-            </Link>
+                Manage Subscription
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-3.5"
+                  aria-hidden
+                >
+                  <path d="M7 17 17 7M9 7h8v8" />
+                </svg>
+              </Link>
+            )}
           </div>
-          {onTrial && (
-            <div className="mt-4">
-              <Progress value={(trialDaysUsed / TRIAL_DAYS_TOTAL) * 100} />
-              <p className="mt-1.5 text-[13px] text-text-muted">
-                {trialDaysUsed} of {TRIAL_DAYS_TOTAL} trial days used
-              </p>
-            </div>
-          )}
         </SettingsSection>
       </div>
 
-      {dirty && can('admin') && (
+      {dirty && can('admin') && worksEverywhere && (
         <div className="sticky bottom-4 z-20 mt-6 lg:max-w-[57.5rem]">
           <div className="toast-in flex items-center justify-between gap-3 rounded-xl border border-border bg-surface/90 py-3 pr-3 pl-4 shadow-lg backdrop-blur-sm">
             <p className="flex items-center gap-2 text-sm font-medium">
@@ -419,8 +350,8 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
               <Button type="reset" variant="secondary" size="sm">
                 Discard
               </Button>
-              <Button type="submit" size="sm" disabled={saving}>
-                {saving ? 'Saving…' : 'Save Changes'}
+              <Button type="submit" size="sm" disabled={saving.isPending}>
+                {saving.isPending ? 'Saving…' : 'Save Changes'}
               </Button>
             </div>
           </div>
@@ -430,217 +361,16 @@ function OrganizationForm({ org }: { org: OrganizationProfile }) {
   )
 }
 
-/* ================================== Team ================================== */
-
-function TeamTab() {
-  const { data: teamMembers = [] } = useQuery({
-    queryKey: ['team'],
-    queryFn: teamService.list,
-  })
-  const active = teamMembers.filter((m) => m.status === 'active')
-
-  return (
-    <>
-      <TabHeading
-        title="Team Management"
-        hint="Manage team members, roles, and invitations"
-        actions={
-          <Link
-            href="/team"
-            className="inline-flex h-10 items-center rounded-lg bg-primary-600 px-4 text-sm font-medium text-white transition-colors hover:bg-primary-700"
-          >
-            Invite Team Member
-          </Link>
-        }
-      />
-
-      <h3 className="mb-3 text-lg font-semibold">Active Team Members ({active.length})</h3>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {active.map((m) => (
-          <Card key={m.id}>
-            <p className="text-lg font-semibold">{m.name}</p>
-            <p className="mt-1 text-sm text-text-muted">{m.email}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <Badge tone="primary">{ROLE_LABELS[m.role] ?? m.role}</Badge>
-              <span className="text-xs text-text-muted">
-                {m.locations.length === 0
-                  ? 'All locations'
-                  : m.locations.map((l) => l.name).join(', ')}
-              </span>
-            </div>
-          </Card>
-        ))}
-      </div>
-      <p className="mt-4 text-sm text-text-muted">
-        Full member list, role editing, and invitations live on the{' '}
-        <Link href="/team" className="font-medium text-primary-700 underline dark:text-primary-400">
-          Team page
-        </Link>
-        .
-      </p>
-    </>
-  )
-}
-
-/* =============================== Properties =============================== */
-
-function PropertiesTab() {
-  const { data: locations = [] } = useQuery({
-    queryKey: ['locations-all'],
-    queryFn: locationsService.listAll,
-  })
-  return (
-    <>
-      <TabHeading
-        title="Properties"
-        hint="Manage your restaurant locations and properties"
-        actions={
-          <Link
-            href="/settings/properties"
-            className="inline-flex h-10 items-center rounded-lg bg-primary-600 px-4 text-sm font-medium text-white transition-colors hover:bg-primary-700"
-          >
-            Add Property
-          </Link>
-        }
-      />
-
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {locations.map((l) => (
-          <Card key={l.id}>
-            <div className="flex items-start justify-between gap-2">
-              <p className="text-lg font-semibold">{l.name}</p>
-              {l.isDefault && <Badge tone="primary">Default</Badge>}
-            </div>
-            <p className="mt-1 text-sm text-text-muted">{l.address || 'Restaurant location'}</p>
-          </Card>
-        ))}
-      </div>
-      <p className="mt-4 text-sm text-text-muted">
-        Editing and archiving locations lives on the{' '}
-        <Link
-          href="/settings/properties"
-          className="font-medium text-primary-700 underline dark:text-primary-400"
-        >
-          Property Management page
-        </Link>
-        .
-      </p>
-    </>
-  )
-}
-
-/* ============================ Unit Conversions ============================ */
-
-const systemConversions = [
-  { from: '1 kg', to: '1000 g' },
-  { from: '1 lb', to: '453.59 g' },
-  { from: '1 oz', to: '28.35 g' },
-  { from: '1 gal', to: '3.785 L' },
-  { from: '1 qt', to: '0.946 L' },
-  { from: '1 cup', to: '236.59 ml' },
-  { from: '1 tbsp', to: '14.79 ml' },
-  { from: '1 tsp', to: '4.93 ml' },
+const TIMEZONES = [
+  { value: 'America/New_York', label: 'Eastern Time (ET)' },
+  { value: 'America/Chicago', label: 'Central Time (CT)' },
+  { value: 'America/Denver', label: 'Mountain Time (MT)' },
+  { value: 'America/Phoenix', label: 'Arizona (MST)' },
+  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
+  { value: 'America/Anchorage', label: 'Alaska Time (AKT)' },
+  { value: 'Pacific/Honolulu', label: 'Hawaii Time (HT)' },
+  { value: 'UTC', label: 'UTC' },
 ]
-
-function ConversionSection({
-  title,
-  count,
-  defaultOpen,
-  children,
-}: {
-  title: string
-  count: number
-  defaultOpen?: boolean
-  children?: React.ReactNode
-}) {
-  const [open, setOpen] = useState(defaultOpen ?? true)
-
-  return (
-    <Card>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between gap-2 text-left"
-      >
-        <span className="flex items-center gap-2 text-lg font-semibold">
-          {title}
-          <Badge>{count}</Badge>
-        </span>
-        <svg
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          aria-hidden
-          className={`size-5 text-text-muted transition-transform ${open ? 'rotate-180' : ''}`}
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </button>
-      {open && <div className="mt-4">{children}</div>}
-    </Card>
-  )
-}
-
-function UnitConversionsTab() {
-  const toast = useToast()
-
-  return (
-    <>
-      <TabHeading
-        title="Unit Conversions"
-        hint="Manage global and ingredient-specific unit conversions"
-        actions={
-          <Button onClick={() => toast('info', 'Unit conversions are not available yet')}>
-            Add Conversion
-          </Button>
-        }
-      />
-
-      <div className="grid grid-cols-1 gap-4">
-        <ConversionSection
-          title="System Conversions (Built-in)"
-          count={systemConversions.length}
-          defaultOpen={false}
-        >
-          <ul className="grid grid-cols-1 gap-x-6 gap-y-1 text-sm sm:grid-cols-2 xl:grid-cols-4">
-            {systemConversions.map((c) => (
-              <li key={c.from} className="text-text-muted">
-                {c.from} = {c.to}
-              </li>
-            ))}
-          </ul>
-        </ConversionSection>
-
-        <ConversionSection title="Custom Global Conversions" count={0}>
-          <p className="text-sm text-text-muted">
-            Custom conversions that apply to all ingredients
-          </p>
-          <p className="mt-3 text-sm italic text-text-muted">
-            No custom global conversions. Click &quot;Add Conversion&quot; to create one.
-          </p>
-        </ConversionSection>
-
-        <ConversionSection title="Ingredient-Specific Conversions" count={0}>
-          <p className="text-sm text-text-muted">
-            These conversions apply only to specific ingredients (e.g., &quot;to taste&quot; for
-            salt vs chives)
-          </p>
-          <div className="mt-3 rounded-lg border border-info-700/30 bg-info-100 p-4 text-sm text-info-700 dark:bg-info-900/40 dark:text-info-100">
-            <p className="font-medium">No ingredient-specific conversions yet</p>
-            <p className="mt-1">
-              They will cover measurements that only make sense per ingredient, such as &quot;to
-              taste&quot;.
-            </p>
-          </div>
-        </ConversionSection>
-      </div>
-    </>
-  )
-}
 
 export default function Page() {
   return (

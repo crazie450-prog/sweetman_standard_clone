@@ -19,9 +19,11 @@ export class RolesGuard implements CanActivate {
     const tenant = req.tenant
     if (!tenant) return true
 
-    if (tenant.isPlatformAdmin) return true
     if (!roleAtLeast(tenant.role, required)) {
-      throw new ForbiddenException(`Requires ${required} role or higher`)
+      throw new ForbiddenException({
+        code: 'ROLE_TOO_LOW',
+        message: `Requires ${required} role or higher`,
+      })
     }
     return true
   }

@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import {
+  AreaChart,
   Avatar,
   Badge,
   Button,
@@ -25,13 +25,18 @@ import {
   THead,
   TR,
   useToast,
+  PAGE_SIZE,
+  Pager,
+  usePageOffset,
 } from '@/components/ui'
 import { cn } from '@/lib/utils/cn'
-import { formatDate } from '@/lib/utils/format'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { formatDate, formatMoney, formatMonthShort } from '@/lib/utils/format'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { vendorsService, type Vendor } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 const TABS = ['Vendors', 'Analytics'] as const
 
@@ -50,16 +55,25 @@ export default function VendorsPage() {
     notes: string
     status: 'active' | 'inactive'
   }>(EMPTY)
-  const [busy, setBusy] = useState(false)
   const [pendingDelete, setPendingDelete] = useState<Vendor | null>(null)
+  const [invoicesOf, setInvoicesOf] = useState<Vendor | null>(null)
   const toast = useToast()
-  const queryClient = useQueryClient()
+  const invalidate = useInvalidate()
   const { can } = useCurrentUser()
 
-  const { data: vendors = [], isLoading } = useQuery({
-    queryKey: ['vendors'],
-    queryFn: vendorsService.list,
+  const { data: vendors = [], isLoading } = useQuery(queries.vendors())
+
+  const { data: spend = [], isFetching: spendLoading } = useQuery({
+    ...queries.vendorSpend(),
+    enabled: tab === 'Analytics',
   })
+
+  const [invoiceOffset, setInvoiceOffset] = usePageOffset(invoicesOf?.id)
+  const { data: invoicePage, isLoading: invoicesLoading } = useQuery({
+    ...queries.invoices(invoicesOf?.id ?? '', { offset: invoiceOffset, limit: PAGE_SIZE }),
+    enabled: invoicesOf !== null,
+  })
+  const invoices = invoicePage?.data ?? []
 
   const rows = vendors.filter(
     (v) => v.name.toLowerCase().includes(q.toLowerCase()) && (!activeOnly || v.status === 'active')
@@ -67,6 +81,7 @@ export default function VendorsPage() {
 
   const activeCount = vendors.filter((v) => v.status === 'active').length
   const productsTracked = vendors.reduce((s, v) => s + v.products, 0)
+  const spend30 = vendors.reduce((s, v) => s + v.spend30, 0)
   const topByProducts = [...vendors].sort((a, b) => b.products - a.products)[0]
 
   const openCreate = () => {
@@ -87,47 +102,42 @@ export default function VendorsPage() {
     setOpen(true)
   }
 
-  async function submit() {
+  const save = useMutation({
+    mutationFn: () => {
+      const cleared = editing ? null : undefined
+      const payload = {
+        name: form.name.trim(),
+        contact: form.contact.trim() || cleared,
+        phone: form.phone.trim() || cleared,
+        notes: form.notes.trim() || cleared,
+        status: form.status,
+      }
+      return editing ? vendorsService.update(editing.id, payload) : vendorsService.create(payload)
+    },
+    onSuccess: async () => {
+      await invalidate('vendors')
+      setOpen(false)
+      toast('success', editing ? 'Vendor updated' : 'Vendor added')
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const removal = useMutation({
+    mutationFn: (v: Vendor) => vendorsService.remove(v.id),
+    onSuccess: async (_, v) => {
+      await invalidate('vendors')
+      setPendingDelete(null)
+      toast('success', `${v.name} deleted`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function submit() {
     if (!form.name.trim()) {
       toast('danger', 'Vendor name is required')
       return
     }
-    setBusy(true)
-    try {
-      const payload = {
-        name: form.name.trim(),
-        contact: form.contact.trim() || undefined,
-        phone: form.phone.trim() || undefined,
-        notes: form.notes.trim() || undefined,
-        status: form.status,
-      }
-      if (editing) await vendorsService.update(editing.id, payload)
-      else await vendorsService.create(payload)
-      await queryClient.invalidateQueries({ queryKey: ['vendors'] })
-      setOpen(false)
-      toast('success', editing ? 'Vendor updated' : 'Vendor added')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function remove() {
-    const v = pendingDelete
-    if (!v) return
-    setBusy(true)
-    try {
-      await vendorsService.remove(v.id)
-      await queryClient.invalidateQueries({ queryKey: ['vendors'] })
-      await queryClient.invalidateQueries({ queryKey: ['ingredients'] })
-      setPendingDelete(null)
-      toast('success', `${v.name} deleted`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
+    save.mutate()
   }
 
   return (
@@ -146,7 +156,7 @@ export default function VendorsPage() {
           }
         />
         <KpiCard label="Products Tracked" value={productsTracked} />
-        <KpiCard label="30-Day Spend" value="—" hint="Available once invoices are processed" />
+        <KpiCard label="30-Day Spend" value={formatMoney(spend30)} />
         <KpiCard
           label="Largest Catalog"
           value={topByProducts?.name ?? '—'}
@@ -192,32 +202,27 @@ export default function VendorsPage() {
               onChange={(e) => setActiveOnly(e.target.checked)}
             />
             <div className="ms-auto flex flex-wrap gap-2">
-              <Link
-                href="/import/order-guides"
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-surface px-4 text-sm font-medium text-text transition-colors hover:bg-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-              >
-                Import Order Guides
-              </Link>
               {can('manager') && <Button onClick={openCreate}>Add Vendor</Button>}
             </div>
           </div>
 
-          <Table>
+          <Table pinActions>
             <THead>
               <TR>
                 <TH>Vendor</TH>
                 <TH>Contact</TH>
                 <TH>Products</TH>
+                <TH>Ingredients</TH>
                 <TH>Last invoice</TH>
                 <TH>Status</TH>
-                {can('manager') && <TH className="text-right">Actions</TH>}
+                <TH className="text-right">Actions</TH>
               </TR>
             </THead>
             <TBody>
               {isLoading ? (
-                <TableEmpty colSpan={6}>Loading vendors…</TableEmpty>
+                <TableEmpty colSpan={7}>Loading vendors…</TableEmpty>
               ) : rows.length === 0 ? (
-                <TableEmpty colSpan={6}>
+                <TableEmpty colSpan={7}>
                   No vendors found. Add your first vendor to get started.
                 </TableEmpty>
               ) : (
@@ -234,8 +239,13 @@ export default function VendorsPage() {
                       <p className="text-xs text-text-muted">{v.phone}</p>
                     </TD>
                     <TD>{v.products}</TD>
+                    <TD>{v.ingredients}</TD>
                     <TD className="whitespace-nowrap">
-                      {v.lastInvoice ? formatDate(v.lastInvoice) : <span className="text-text-muted">—</span>}
+                      {v.lastInvoice ? (
+                        formatDate(v.lastInvoice)
+                      ) : (
+                        <span className="text-text-muted">—</span>
+                      )}
                     </TD>
                     <TD>
                       {v.status === 'active' ? (
@@ -246,23 +256,28 @@ export default function VendorsPage() {
                         <Badge>Inactive</Badge>
                       )}
                     </TD>
-                    {can('manager') && (
-                      <TD className="text-right">
-                        <RowActions className="justify-end">
-                          <Button variant="ghost" size="sm" onClick={() => openEdit(v)}>
-                            Edit
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-danger-700 dark:text-danger-100"
-                            onClick={() => setPendingDelete(v)}
-                          >
-                            Delete
-                          </Button>
-                        </RowActions>
-                      </TD>
-                    )}
+                    <TD className="text-right">
+                      <RowActions className="justify-end">
+                        <Button variant="ghost" size="sm" onClick={() => setInvoicesOf(v)}>
+                          Invoices
+                        </Button>
+                        {can('manager') && (
+                          <>
+                            <Button variant="ghost" size="sm" onClick={() => openEdit(v)}>
+                              Edit
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="text-danger-700 dark:text-danger-100"
+                              onClick={() => setPendingDelete(v)}
+                            >
+                              Delete
+                            </Button>
+                          </>
+                        )}
+                      </RowActions>
+                    </TD>
                   </TR>
                 ))
               )}
@@ -290,10 +305,20 @@ export default function VendorsPage() {
           </Card>
           <Card>
             <h3 className="mb-3 text-sm font-semibold">Spend over time</h3>
-            <EmptyState
-              title="No invoices yet"
-              hint="Spend and order history appear once invoices are processed."
-            />
+            {spend.some((p) => p.total > 0) ? (
+              <AreaChart
+                data={spend.map((p) => ({ label: formatMonthShort(p.period), value: p.total }))}
+                format="money"
+                height={180}
+              />
+            ) : spendLoading ? (
+              <div style={{ height: 180 }} />
+            ) : (
+              <EmptyState
+                title="No invoices yet"
+                hint="Spend appears once a confirmed invoice is on file."
+              />
+            )}
           </Card>
         </div>
       )}
@@ -307,7 +332,7 @@ export default function VendorsPage() {
             <Button variant="secondary" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={submit} disabled={busy}>
+            <Button onClick={submit} disabled={save.isPending}>
               {editing ? 'Save Vendor' : 'Add Vendor'}
             </Button>
           </>
@@ -353,18 +378,93 @@ export default function VendorsPage() {
         </div>
       </Modal>
 
+      <Modal
+        open={invoicesOf !== null}
+        onClose={() => setInvoicesOf(null)}
+        title={`Invoices from ${invoicesOf?.name ?? 'this vendor'}`}
+        size="lg"
+        footer={
+          <Button variant="secondary" onClick={() => setInvoicesOf(null)}>
+            Close
+          </Button>
+        }
+      >
+        {invoicesOf === null ? null : invoicesLoading ? (
+          <p className="text-sm text-text-muted">Loading invoices…</p>
+        ) : invoices.length === 0 ? (
+          <EmptyState
+            title="No invoices yet"
+            hint="Invoices this vendor sent to the active location appear here once confirmed or entered."
+          />
+        ) : (
+          <>
+            <p className="mb-3 text-sm text-text-muted">
+              What this vendor sent to the active location, newest first. A confirmed invoice is the
+              record of what it moved and stays as written.
+            </p>
+            <Table>
+              <THead>
+                <TR>
+                  <TH>Number</TH>
+                  <TH>Date</TH>
+                  <TH>Status</TH>
+                  <TH>Lines</TH>
+                  <TH className="text-right">Total</TH>
+                </TR>
+              </THead>
+              <TBody>
+                {invoices.map((i) => (
+                  <TR key={i.id}>
+                    <TD className="font-medium">{i.number || '—'}</TD>
+                    <TD className="whitespace-nowrap">{formatDate(i.invoiceDate)}</TD>
+                    <TD>
+                      {i.status === 'confirmed' ? (
+                        <Badge dot tone="success">
+                          Confirmed
+                        </Badge>
+                      ) : (
+                        <Badge>Draft</Badge>
+                      )}
+                    </TD>
+                    <TD>{i.items.length}</TD>
+                    <TD className="text-right tabular-nums">{formatMoney(i.total)}</TD>
+                  </TR>
+                ))}
+              </TBody>
+            </Table>
+            <Pager
+              page={invoicePage?.pagination}
+              onOffset={setInvoiceOffset}
+              label="Invoice pages"
+            />
+          </>
+        )}
+      </Modal>
+
       <ConfirmDialog
         open={pendingDelete !== null}
         onClose={() => setPendingDelete(null)}
-        onConfirm={remove}
+        onConfirm={() => pendingDelete && removal.mutate(pendingDelete)}
         title={`Delete ${pendingDelete?.name ?? 'vendor'}?`}
-        busy={busy}
+        busy={removal.isPending}
       >
-        {pendingDelete && pendingDelete.products > 0 ? (
+        {pendingDelete && (pendingDelete.ingredients > 0 || pendingDelete.products > 0) ? (
           <>
-            {pendingDelete.products} ingredient
-            {pendingDelete.products === 1 ? '' : 's'} will keep their prices but lose this vendor,
-            and so will their recorded price history. This cannot be undone.
+            {pendingDelete.ingredients > 0 && (
+              <>
+                {pendingDelete.ingredients} ingredient
+                {pendingDelete.ingredients === 1 ? '' : 's'} will keep their prices but lose this
+                vendor, and so will their recorded price history.{' '}
+              </>
+            )}
+            {pendingDelete.products > 0 && (
+              <>
+                Its {pendingDelete.products} product
+                {pendingDelete.products === 1 ? '' : 's'} will be removed with it, so an invoice
+                naming them will park them again.{' '}
+              </>
+            )}
+            This cannot be undone.
           </>
         ) : (
           <>This vendor will be removed permanently. This cannot be undone.</>

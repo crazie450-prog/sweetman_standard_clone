@@ -6,8 +6,9 @@
 /docs/
 
 # Root-level dependencies: there are no workspaces here yet, but a stray
-# `npm install` at the root would otherwise drag a whole tree into git
-/node_modules/
+# `npm install` at the root would otherwise drag a whole tree into git. No
+# trailing slash, so the rule also covers a symlink named node_modules
+/node_modules
 
 # Secrets — deliberately duplicated in backend/ and frontend/ so the rule also
 # covers a file dropped at the root

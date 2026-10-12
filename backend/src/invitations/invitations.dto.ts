@@ -4,12 +4,12 @@ import {
   IsArray,
   IsEmail,
   IsIn,
-  IsNotEmpty,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator'
+import { TrimmedName } from '../common/validation/trimmed'
 import type { Role } from '../generated/prisma/client'
 
 export const INVITABLE_ROLES: Role[] = ['viewer', 'staff', 'manager', 'admin']
@@ -33,9 +33,7 @@ export class CreateInvitationDto {
 
 export class AcceptInvitationDto {
   @ApiProperty({ example: 'Sofia Ricci' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(120)
+  @TrimmedName(120)
   fullName!: string
 
   @ApiProperty({ minLength: 8 })

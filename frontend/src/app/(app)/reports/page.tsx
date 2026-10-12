@@ -15,47 +15,29 @@ import {
   TR,
   TableEmpty,
   TextField,
+  BackwardsPeriod,
+  Icon,
+  PAGE_SIZE,
+  Pager,
+  usePageOffset,
 } from '@/components/ui'
+import type { IconName } from '@/components/ui'
 import { useQuery } from '@tanstack/react-query'
-import { inventoryService, productionService, type InventoryTransaction } from '@/lib/api/services'
-import { lastDays } from '@/lib/utils/date-range'
+import { type InventoryTransaction } from '@/lib/api/services'
+import { lastDays, endsBeforeBegins } from '@/lib/utils/date-range'
 
 type TxType = InventoryTransaction['type']
-import { formatDate, formatDayShort, formatMoney, formatPercent } from '@/lib/utils/format'
+import {
+  formatChange,
+  formatDate,
+  formatDayShort,
+  formatMoney,
+  formatPercent,
+} from '@/lib/utils/format'
 import { cn } from '@/lib/utils/cn'
+import { queries } from '@/lib/api/queries'
 
 /* ---------- Icons ---------- */
-
-const I = (d: string, className = 'size-6') => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-hidden
-  >
-    <path d={d} />
-  </svg>
-)
-
-const ICON = {
-  received: 'M12 3v12m-4-4l4 4 4-4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4',
-  activity: 'M22 12h-4l-3 9L9 3l-3 9H2',
-  trash: 'M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m1 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6',
-  trendingUp: 'M3 17l6-6 4 4 8-8m0 0h-5m5 0v5',
-  trendingDown: 'M3 7l6 6 4-4 8 8m0 0h-5m5 0v-5',
-  dollar: 'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
-  box: 'M20 7l-8-4-8 4v10l8 4 8-4V7zM4 7l8 4 8-4M12 11v10',
-  calendar:
-    'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
-  barChart: 'M18 20V10M12 20V4M6 20v-6',
-  clock: 'M12 8v4l2.5 2.5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
-  percent:
-    'M19 5L5 19M9 6.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM20 17.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z',
-} as const
 
 const TX_TYPE: Record<TxType, { label: string; plate: string; icon: string }> = {
   received: {
@@ -72,6 +54,11 @@ const TX_TYPE: Record<TxType, { label: string; plate: string; icon: string }> = 
     label: 'Wasted',
     plate: 'bg-danger-100 text-danger-700 dark:bg-danger-900/40 dark:text-danger-600',
     icon: 'm6 6 12 12M18 6 6 18',
+  },
+  counted: {
+    label: 'Counted',
+    plate: 'bg-warning-100 text-warning-700 dark:bg-warning-900/40 dark:text-warning-600',
+    icon: 'M9 11l3 3 8-8M4 12a8 8 0 1 0 16 0',
   },
 }
 
@@ -107,37 +94,43 @@ function TxTypeCell({ type }: { type: TxType }) {
 const TABS = ['Inventory History', 'Usage Over Time', 'Production History', 'Price Trends'] as const
 type Tab = (typeof TABS)[number]
 
-const TAB_ICON: Record<Tab, string> = {
-  'Inventory History': ICON.barChart,
-  'Usage Over Time': ICON.clock,
-  'Production History': ICON.dollar,
-  'Price Trends': ICON.trendingUp,
+const TAB_ICON: Record<Tab, IconName> = {
+  'Inventory History': 'bars',
+  'Usage Over Time': 'clock',
+  'Production History': 'dollar',
+  'Price Trends': 'trend',
 }
 
-const RANGE_AWARE_TABS: Tab[] = ['Inventory History', 'Production History']
-
-const DEFAULT_RANGE = lastDays(30)
+const RANGE_AWARE_TABS: Tab[] = ['Inventory History', 'Usage Over Time', 'Production History']
 
 export default function ReportsPage() {
-  const { data: TRANSACTIONS = [] } = useQuery({
-    queryKey: ['inventory-transactions'],
-    queryFn: inventoryService.transactions,
+  const { data: PRICE_ROWS = [] } = useQuery(queries.priceTrends())
+  const [applied, setApplied] = useState(() => lastDays(30))
+  const [from, setFrom] = useState(applied.from)
+  const [to, setTo] = useState(applied.to)
+  const backwards = endsBeforeBegins(applied)
+  const [txOffset, setTxOffset] = usePageOffset(applied.from, applied.to)
+  const [batchOffset, setBatchOffset] = usePageOffset(applied.from, applied.to)
+  const { data: txPage } = useQuery({
+    ...queries.inventoryTransactions({ ...applied, offset: txOffset, limit: PAGE_SIZE }),
+    enabled: !backwards,
+  })
+  const { data: txSummary } = useQuery({
+    ...queries.inventoryTransactionsSummary(applied),
+    enabled: !backwards,
   })
   const { data: USAGE_ROWS = [] } = useQuery({
-    queryKey: ['inventory-usage'],
-    queryFn: inventoryService.usage,
+    ...queries.inventoryUsage(applied),
+    enabled: !backwards,
   })
-  const { data: PRICE_ROWS = [] } = useQuery({
-    queryKey: ['price-trends'],
-    queryFn: inventoryService.priceTrends,
+  const { data: batchPage } = useQuery({
+    ...queries.production({ ...applied, offset: batchOffset, limit: PAGE_SIZE }),
+    enabled: !backwards,
   })
-  const { data: batches = [] } = useQuery({
-    queryKey: ['production'],
-    queryFn: productionService.batches,
+  const { data: prodSummary } = useQuery({
+    ...queries.productionSummary(applied),
+    enabled: !backwards,
   })
-  const [from, setFrom] = useState(DEFAULT_RANGE.from)
-  const [to, setTo] = useState(DEFAULT_RANGE.to)
-  const [applied, setApplied] = useState(DEFAULT_RANGE)
   const [tab, setTab] = useState<Tab>('Inventory History')
 
   const usageStats = useMemo(() => {
@@ -145,7 +138,7 @@ export default function ReportsPage() {
     const weeks = new Set(USAGE_ROWS.map((r) => r.period))
     const byWeek = new Map<string, number>()
     for (const r of USAGE_ROWS) byWeek.set(r.period, (byWeek.get(r.period) ?? 0) + r.cost)
-    const peak = [...byWeek.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? '—'
+    const peak = [...byWeek.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null
     return {
       total,
       ingredients: new Set(USAGE_ROWS.map((r) => r.ingredient)).size,
@@ -154,23 +147,13 @@ export default function ReportsPage() {
     }
   }, [USAGE_ROWS])
 
-  const productionRows = useMemo(
-    () =>
-      batches.filter((b) => {
-        const day = b.date.slice(0, 10)
-        return (!applied.from || day >= applied.from) && (!applied.to || day <= applied.to)
-      }),
-    [batches, applied]
-  )
-
-  const prodStats = useMemo(() => {
-    const total = productionRows.reduce((s, b) => s + b.cost, 0)
-    return {
-      total,
-      avg: productionRows.length ? total / productionRows.length : 0,
-      recipes: new Set(productionRows.map((b) => b.recipe)).size,
-    }
-  }, [productionRows])
+  const productionRows = batchPage?.data ?? []
+  const prodStats = {
+    batches: prodSummary?.batches ?? 0,
+    total: prodSummary?.cost ?? 0,
+    avg: prodSummary?.average ?? 0,
+    recipes: prodSummary?.recipes ?? 0,
+  }
 
   const priceStats = useMemo(
     () => ({
@@ -184,23 +167,13 @@ export default function ReportsPage() {
     [PRICE_ROWS]
   )
 
-  const transactions = useMemo(
-    () =>
-      TRANSACTIONS.filter((t) => {
-        const day = t.date.slice(0, 10)
-        return (!applied.from || day >= applied.from) && (!applied.to || day <= applied.to)
-      }),
-    [TRANSACTIONS, applied]
-  )
-
-  const totals = useMemo(() => {
-    const sum = (type: TxType) =>
-      transactions.filter((t) => t.type === type).reduce((acc, t) => acc + t.cost, 0)
-    const received = sum('received')
-    const used = sum('used')
-    const wasted = sum('wasted')
-    return { received, used, wasted, net: received - used - wasted }
-  }, [transactions])
+  const transactions = txPage?.data ?? []
+  const totals = {
+    received: txSummary?.received ?? 0,
+    used: txSummary?.used ?? 0,
+    wasted: txSummary?.wasted ?? 0,
+    net: txSummary?.net ?? 0,
+  }
 
   return (
     <>
@@ -237,6 +210,7 @@ export default function ReportsPage() {
               className="w-44"
             />
           </div>
+          <BackwardsPeriod from={applied.from} to={applied.to} className="mt-2" />
         </Card>
       )}
 
@@ -259,7 +233,7 @@ export default function ReportsPage() {
                 : 'border-transparent text-text-muted hover:text-text'
             )}
           >
-            {I(TAB_ICON[t], 'size-4')}
+            <Icon name={TAB_ICON[t]} className="size-4" />
             {t}
           </button>
         ))}
@@ -272,25 +246,25 @@ export default function ReportsPage() {
               label="Total Received"
               value={formatMoney(totals.received)}
               tone="success"
-              icon={I(ICON.received)}
+              icon={<Icon name="received" />}
             />
             <KpiCard
               label="Total Used"
               value={formatMoney(totals.used)}
               tone="info"
-              icon={I(ICON.activity)}
+              icon={<Icon name="activity" />}
             />
             <KpiCard
               label="Total Wasted"
               value={formatMoney(totals.wasted)}
               tone="danger"
-              icon={I(ICON.trash)}
+              icon={<Icon name="trash" />}
             />
             <KpiCard
               label="Net Change"
               value={formatMoney(totals.net)}
               tone={totals.net >= 0 ? 'success' : 'danger'}
-              icon={I(ICON.trendingUp)}
+              icon={<Icon name="trend" />}
             />
           </div>
           <Card className="mt-6">
@@ -322,6 +296,7 @@ export default function ReportsPage() {
                       <TD className="font-medium">{t.ingredient}</TD>
                       <TD className="text-text-muted">{t.category}</TD>
                       <TD className="text-right whitespace-nowrap">
+                        {t.type === 'counted' && t.quantity > 0 ? '+' : ''}
                         {t.quantity} {t.unit}
                       </TD>
                       <TD className="text-right whitespace-nowrap">{formatMoney(t.cost)}</TD>
@@ -331,6 +306,7 @@ export default function ReportsPage() {
                 )}
               </TBody>
             </Table>
+            <Pager page={txPage?.pagination} onOffset={setTxOffset} label="Transaction pages" />
           </Card>
         </>
       )}
@@ -342,25 +318,25 @@ export default function ReportsPage() {
               label="Total Usage Cost"
               value={formatMoney(usageStats.total)}
               tone="info"
-              icon={I(ICON.dollar)}
+              icon={<Icon name="dollar" />}
             />
             <KpiCard
               label="Ingredients Tracked"
               value={usageStats.ingredients}
               tone="primary"
-              icon={I(ICON.box)}
+              icon={<Icon name="box" />}
             />
             <KpiCard
               label="Avg Weekly Cost"
               value={formatMoney(usageStats.avgWeek)}
               tone="success"
-              icon={I(ICON.calendar)}
+              icon={<Icon name="calendar" />}
             />
             <KpiCard
               label="Peak Week"
-              value={usageStats.peak}
+              value={usageStats.peak ? `Week of ${formatDayShort(usageStats.peak)}` : '—'}
               tone="warning"
-              icon={I(ICON.trendingUp)}
+              icon={<Icon name="trend" />}
             />
           </div>
           <Card className="mt-6">
@@ -378,6 +354,9 @@ export default function ReportsPage() {
                 </TR>
               </THead>
               <TBody>
+                {USAGE_ROWS.length === 0 && (
+                  <TableEmpty colSpan={5}>No usage recorded in the selected date range.</TableEmpty>
+                )}
                 {USAGE_ROWS.map((r) => (
                   <TR key={r.id}>
                     <TD className="whitespace-nowrap">Week of {formatDayShort(r.period)}</TD>
@@ -400,27 +379,27 @@ export default function ReportsPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             <KpiCard
               label="Batches Produced"
-              value={productionRows.length}
+              value={prodStats.batches}
               tone="primary"
-              icon={I(ICON.box)}
+              icon={<Icon name="box" />}
             />
             <KpiCard
               label="Recipes Produced"
               value={prodStats.recipes}
               tone="info"
-              icon={I(ICON.activity)}
+              icon={<Icon name="activity" />}
             />
             <KpiCard
               label="Production Cost"
               value={formatMoney(prodStats.total)}
               tone="success"
-              icon={I(ICON.dollar)}
+              icon={<Icon name="dollar" />}
             />
             <KpiCard
               label="Avg Cost / Batch"
               value={formatMoney(prodStats.avg)}
               tone="warning"
-              icon={I(ICON.barChart)}
+              icon={<Icon name="bars" />}
             />
           </div>
           <Card className="mt-6">
@@ -456,6 +435,7 @@ export default function ReportsPage() {
                 </TBody>
               </Table>
             )}
+            <Pager page={batchPage?.pagination} onOffset={setBatchOffset} label="Batch pages" />
           </Card>
         </>
       )}
@@ -467,25 +447,25 @@ export default function ReportsPage() {
               label="Ingredients Tracked"
               value={priceStats.tracked}
               tone="primary"
-              icon={I(ICON.box)}
+              icon={<Icon name="box" />}
             />
             <KpiCard
               label="Prices Increased"
               value={priceStats.up}
               tone="danger"
-              icon={I(ICON.trendingUp)}
+              icon={<Icon name="trend" />}
             />
             <KpiCard
               label="Prices Decreased"
               value={priceStats.down}
               tone="success"
-              icon={I(ICON.trendingDown)}
+              icon={<Icon name="trendDown" />}
             />
             <KpiCard
               label="Avg Change"
               value={formatPercent(priceStats.avgChange)}
               tone="info"
-              icon={I(ICON.percent)}
+              icon={<Icon name="percent" />}
             />
           </div>
           <Card className="mt-6">
@@ -501,6 +481,9 @@ export default function ReportsPage() {
                 </TR>
               </THead>
               <TBody>
+                {PRICE_ROWS.length === 0 && (
+                  <TableEmpty colSpan={5}>No price has been recorded yet.</TableEmpty>
+                )}
                 {PRICE_ROWS.map((r) => (
                   <TR key={r.id}>
                     <TD className="font-medium">{r.ingredient}</TD>
@@ -509,8 +492,7 @@ export default function ReportsPage() {
                     <TD className="text-right whitespace-nowrap">{formatMoney(r.current)}</TD>
                     <TD className="text-right whitespace-nowrap">
                       <Badge tone={r.change > 0 ? 'danger' : 'success'}>
-                        {r.change > 0 ? '+' : ''}
-                        {formatPercent(r.change)}
+                        {formatChange(r.change)}
                       </Badge>
                     </TD>
                   </TR>

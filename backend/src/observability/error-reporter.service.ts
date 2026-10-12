@@ -1,20 +1,23 @@
-import { Injectable, Logger, Module } from '@nestjs/common'
 import Bugsnag from '@bugsnag/js'
+import { Inject, Injectable, Logger } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { appEnv, errorReporterChoice } from '../config/integrations'
+import type { AppConfig } from '../config/env.validation'
 
 @Injectable()
 export class ErrorReporterService {
   private readonly log = new Logger('ErrorReporter')
   private readonly enabled: boolean
 
-  constructor() {
-    const apiKey = process.env.BUGSNAG_API_KEY
-    this.enabled = Boolean(apiKey)
+  constructor(@Inject(ConfigService) config: AppConfig) {
+    const apiKey = config.get('BUGSNAG_API_KEY', { infer: true })
+    this.enabled = errorReporterChoice(config) === 'bugsnag' && Boolean(apiKey)
     if (this.enabled) {
       Bugsnag.start({
         apiKey: apiKey!,
-        releaseStage: process.env.NODE_ENV ?? 'development',
+        releaseStage: appEnv(config),
         enabledReleaseStages: ['production', 'staging'],
-        appVersion: process.env.APP_VERSION,
+        appVersion: config.get('APP_VERSION', { infer: true }),
       })
       this.log.log('BugSnag enabled')
     }
@@ -28,6 +31,3 @@ export class ErrorReporterService {
     })
   }
 }
-
-@Module({ providers: [ErrorReporterService], exports: [ErrorReporterService] })
-export class ObservabilityModule {}

@@ -10,11 +10,12 @@ import {
   signIn,
   signInAs,
   workAtFirstLocation,
+  written,
 } from '../helpers'
 
 /* ===== Navigation ===== */
 
-const NAV_ITEMS = { owner: 23, manager: 21, staff: 19 }
+const NAV_ITEMS = { owner: 25, manager: 23, staff: 17 }
 
 function railGroups(page: Page) {
   return page
@@ -69,7 +70,7 @@ test.describe('What a manager may write', () => {
     const name = `Audit Vendor ${Date.now()}`
     await page.getByRole('button', { name: 'Add Vendor' }).click()
     await dialog(page).getByLabel('Name').fill(name)
-    await dialog(page).getByRole('button', { name: 'Add Vendor' }).click()
+    await written(page, () => dialog(page).getByRole('button', { name: 'Add Vendor' }).click())
 
     await page.reload()
     await settled(page)
@@ -79,20 +80,45 @@ test.describe('What a manager may write', () => {
     expect((await created.json()).some((v: { name: string }) => v.name === name)).toBeTruthy()
 
     await dataRows(page).filter({ hasText: name }).getByRole('button', { name: 'Delete' }).click()
-    await dialog(page).getByRole('button', { name: 'Delete' }).click()
+    await written(page, () => dialog(page).getByRole('button', { name: 'Delete' }).click())
     await page.reload()
     await settled(page)
     await expect(dataRows(page).filter({ hasText: name })).toHaveCount(0)
   })
 
-  test('a manager cannot invite anyone', async ({ page }) => {
+  test('a manager invites below their role, to their own location, and runs only that team', async ({
+    page,
+  }) => {
     await signInAs(page, 'manager')
     await page.goto('/team')
     await settled(page)
 
-    await expect(page.getByRole('button', { name: 'Invite Member' })).toHaveCount(0)
-    await expect(page.getByRole('columnheader', { name: 'Actions' })).toHaveCount(0)
-    expect(await dataRows(page).count(), 'the team is still listed').toBeGreaterThan(0)
+    await expect(dataRows(page).filter({ hasText: 'Ken Tanaka' }).getByRole('button')).toHaveCount(
+      0
+    )
+    await expect(dataRows(page).filter({ hasText: 'Alex Morgan' }).getByRole('button')).toHaveCount(
+      0
+    )
+
+    await page.getByRole('button', { name: 'Invite Member' }).click()
+    const roles = await dialog(page).getByLabel('Role').locator('option').allTextContents()
+    expect(roles).toEqual(['Team Member', 'Executive Chef'])
+    await expect(dialog(page).getByRole('checkbox')).toHaveCount(1)
+    await expect(dialog(page).getByLabel('Golden Fork — Downtown')).toBeVisible()
+
+    const email = `manager-invite-${Date.now()}@example.com`
+    await dialog(page).getByLabel('Email').fill(email)
+    await dialog(page).getByLabel('Golden Fork — Downtown').check()
+    await dialog(page).getByRole('button', { name: 'Send Invite' }).click()
+    await expect(
+      page.getByRole('dialog').filter({ hasText: 'Share the invitation link' })
+    ).toBeVisible()
+    await page.keyboard.press('Escape')
+
+    const invited = dataRows(page).filter({ hasText: email })
+    await expect(invited).toContainText('Golden Fork — Downtown')
+    await invited.getByRole('button', { name: 'Revoke' }).click()
+    await expect(invited).toHaveCount(0)
   })
 })
 
@@ -106,21 +132,28 @@ test.describe('What a chef may write', () => {
     await page.getByRole('button', { name: 'Add Ingredient' }).click()
     await dialog(page).getByLabel('Name').fill(name)
     await dialog(page).getByLabel('Cost per unit').fill('4.25')
+    const created = page.waitForResponse(
+      (r) => r.url().endsWith('/api/ingredients') && r.request().method() === 'POST'
+    )
     await dialog(page).getByRole('button', { name: 'Add Ingredient' }).click()
+    expect((await created).ok(), 'the ingredient is created').toBeTruthy()
 
     await page.reload()
     await settled(page)
     const row = dataRows(page).filter({ hasText: name })
     await expect(row).toHaveCount(1)
-    await expect(row.getByRole('button', { name: 'Delete' }), 'deleting needs a manager').toHaveCount(
-      0
-    )
+    await expect(
+      row.getByRole('button', { name: 'Delete' }),
+      'deleting needs a manager'
+    ).toHaveCount(0)
 
     const cleanup = await browser.newContext()
     const ownerPage = await cleanup.newPage()
     await signIn(ownerPage, ACCOUNTS.owner)
     const list = await ownerPage.request.get(apiUrl('/api/ingredients'))
-    const id = ((await list.json()) as { id: string; name: string }[]).find((i) => i.name === name)!.id
+    const id = ((await list.json()) as { id: string; name: string }[]).find(
+      (i) => i.name === name
+    )!.id
     expect((await ownerPage.request.delete(apiUrl(`/api/ingredients/${id}`))).ok()).toBeTruthy()
     await cleanup.close()
   })

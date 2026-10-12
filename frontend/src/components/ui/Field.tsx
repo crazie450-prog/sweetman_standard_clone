@@ -3,6 +3,7 @@
 import {
   forwardRef,
   useId,
+  useState,
   type InputHTMLAttributes,
   type ReactNode,
   type SelectHTMLAttributes,
@@ -120,20 +121,100 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   )
 })
 
+export type SelectOption = { value: string; label: string; group?: string }
+
 export interface SelectFieldProps
   extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className'>, FieldWrapperProps {
-  options: { value: string; label: string }[]
+  options: SelectOption[]
   placeholder?: string
+  searchable?: boolean
+}
+
+export const SEARCHABLE_FROM = 8
+
+const matches = (option: SelectOption, query: string) =>
+  [option.label, option.group ?? ''].some((text) => text.toLowerCase().includes(query))
+
+function grouped(options: SelectOption[]) {
+  const groups: { name: string | undefined; options: SelectOption[] }[] = []
+  for (const option of options) {
+    const last = groups[groups.length - 1]
+    if (last && last.name === option.group) last.options.push(option)
+    else groups.push({ name: option.group, options: [option] })
+  }
+  return groups
 }
 
 export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(function SelectField(
-  { label, hideLabel, error, help, required, className, options, placeholder, id: idProp, ...rest },
+  {
+    label,
+    hideLabel,
+    error,
+    help,
+    required,
+    className,
+    options,
+    placeholder,
+    searchable,
+    id: idProp,
+    ...rest
+  },
   ref
 ) {
   const autoId = useId()
   const id = idProp ?? autoId
+  const [query, setQuery] = useState('')
+  const searching = !!searchable && options.length >= SEARCHABLE_FROM
+  const wanted = query.trim().toLowerCase()
+  const shown =
+    searching && wanted
+      ? options.filter((o) => matches(o, wanted) || o.value === rest.value)
+      : options
+  const found = shown.filter((o) => o.value !== rest.value || matches(o, wanted)).length
+  const renderOption = (o: SelectOption) => (
+    <option key={o.value} value={o.value}>
+      {o.label}
+    </option>
+  )
   return (
     <FieldWrapper {...{ label, hideLabel, error, help, required, className, id }}>
+      {searching && (
+        <div className="relative">
+          <svg
+            className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-text-muted"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden
+          >
+            <path
+              fillRule="evenodd"
+              d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.45 4.4l3.07 3.08a.75.75 0 11-1.06 1.06l-3.08-3.07A7 7 0 012 9z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <input
+            type="search"
+            aria-label="Type to narrow the list below"
+            aria-controls={id}
+            placeholder="Search by name or category"
+            className={cn(
+              inputClasses(),
+              'h-8 pl-8 text-[13px] [&::-webkit-search-cancel-button]:appearance-none',
+              wanted && 'pr-24'
+            )}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          {wanted && found > 0 && (
+            <span
+              className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[12px] text-text-muted"
+              aria-live="polite"
+            >
+              {found} of {options.length} shown
+            </span>
+          )}
+        </div>
+      )}
       <div className="relative">
         <select
           ref={ref}
@@ -144,11 +225,20 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(funct
           {...rest}
         >
           {placeholder && <option value="">{placeholder}</option>}
-          {options.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
+          {searching && wanted && found === 0 && (
+            <option value="" disabled>
+              Nothing matches &quot;{query.trim()}&quot;
             </option>
-          ))}
+          )}
+          {grouped(shown).map((g, i) =>
+            g.name ? (
+              <optgroup key={`${g.name}-${i}`} label={g.name}>
+                {g.options.map(renderOption)}
+              </optgroup>
+            ) : (
+              g.options.map(renderOption)
+            )
+          )}
         </select>
         <svg
           viewBox="0 0 20 20"

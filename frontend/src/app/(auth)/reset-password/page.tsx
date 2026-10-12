@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense, useState, type FormEvent } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { Button, Card, Spinner, TextField } from '@/components/ui'
 import { authService } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
@@ -47,22 +48,24 @@ function Shell({ title, children }: { title: string; children: React.ReactNode }
 
 function RequestLink() {
   const [sent, setSent] = useState(false)
-  const [loading, setLoading] = useState(false)
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const request = useMutation({
+    mutationFn: (email: string) => authService.forgotPassword(email).catch(() => undefined),
+    onSettled: () => setSent(true),
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
-    setLoading(true)
-    await authService.forgotPassword(String(form.get('email'))).catch(() => undefined)
-    setSent(true)
+    request.mutate(String(form.get('email')))
   }
 
   return (
     <Shell title="Reset your password">
       {sent ? (
         <p className="text-sm">
-          If an account exists for that email, a reset link has been generated. Email delivery is
-          not connected yet — ask an administrator for the link.
+          If an account uses that address, a reset link is on its way. If nothing arrives, an
+          administrator of your organization can reset your password from the Team screen.
         </p>
       ) : (
         <form onSubmit={onSubmit} className="space-y-4">
@@ -72,9 +75,9 @@ function RequestLink() {
             type="email"
             required
             autoComplete="email"
-            help="A secure reset link is generated for this address"
+            help="The reset link is sent to this address"
           />
-          <Button type="submit" loading={loading} className="w-full">
+          <Button type="submit" loading={request.isPending} className="w-full">
             Send Reset Link
           </Button>
         </form>
@@ -85,11 +88,19 @@ function RequestLink() {
 
 function SetNewPassword({ token }: { token: string }) {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [done, setDone] = useState(false)
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const reset = useMutation({
+    mutationFn: (password: string) => authService.resetPassword(token, password),
+    onSuccess: () => {
+      setDone(true)
+      setTimeout(() => router.push('/login'), 1800)
+    },
+    onError: (err) => setError(serverMessage(err, 'This reset link is invalid or has expired.')),
+  })
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = new FormData(e.currentTarget)
     const password = String(form.get('password'))
@@ -98,15 +109,7 @@ function SetNewPassword({ token }: { token: string }) {
       return
     }
     setError('')
-    setLoading(true)
-    try {
-      await authService.resetPassword(token, password)
-      setDone(true)
-      setTimeout(() => router.push('/login'), 1800)
-    } catch (err) {
-      setError(serverMessage(err, 'This reset link is invalid or has expired.'))
-      setLoading(false)
-    }
+    reset.mutate(password)
   }
 
   return (
@@ -133,7 +136,7 @@ function SetNewPassword({ token }: { token: string }) {
             autoComplete="new-password"
             error={error}
           />
-          <Button type="submit" loading={loading} className="w-full">
+          <Button type="submit" loading={reset.isPending || reset.isSuccess} className="w-full">
             Set New Password
           </Button>
         </form>

@@ -22,10 +22,9 @@ import {
   TR,
   useToast,
 } from '@/components/ui'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   invitationsService,
-  locationsService,
   teamService,
   INVITABLE_ROLES,
   ROLE_LABELS,
@@ -33,32 +32,39 @@ import {
   type TeamMember,
 } from '@/lib/api/services'
 import { serverMessage } from '@/lib/api/error'
+import { ROLE_RANK } from '@/lib/auth/roles'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
+import { useInvalidate } from '@/lib/api/useInvalidate'
+import { queries } from '@/lib/api/queries'
 
 const ROLE_OPTIONS = INVITABLE_ROLES.map((r) => ({ value: r, label: ROLE_LABELS[r] ?? r }))
 
 function TeamPage() {
-  const { data: teamMembers = [], isLoading } = useQuery({
-    queryKey: ['team'],
-    queryFn: teamService.list,
-  })
-  const { data: locations = [] } = useQuery({
-    queryKey: ['locations'],
-    queryFn: locationsService.list,
-  })
-  const queryClient = useQueryClient()
+  const { data: teamMembers = [], isLoading } = useQuery(queries.team())
+  const { data: locations = [] } = useQuery(queries.locations())
+  const invalidate = useInvalidate()
   const toast = useToast()
-  const { can, user } = useCurrentUser()
+  const { can, user, mine } = useCurrentUser()
 
-  const editable = (m: TeamMember) => m.role !== 'owner' && m.email !== user?.email
+  const below = (r: string) => (ROLE_RANK[r] ?? 99) < (ROLE_RANK[user?.roleKey ?? ''] ?? -1)
+  const reaches = (ids: string[]) =>
+    mine.length === 0 || (ids.length > 0 && ids.every((id) => mine.includes(id)))
+  const offered = mine.length === 0 ? locations : locations.filter((l) => mine.includes(l.id))
+  const everywhereHint =
+    mine.length === 0
+      ? 'Leave everything unchecked to grant access to all locations.'
+      : 'Choose at least one of the locations you work at.'
+  const manageable = (m: TeamMember) =>
+    below(m.role) && m.email !== user?.email && reaches(m.locations.map((l) => l.id))
+  const ASSIGNABLE = ROLE_OPTIONS.filter((o) => below(o.value))
 
   const [inviteOpen, setInviteOpen] = useState(false)
   const [email, setEmail] = useState('')
   const [role, setRole] = useState<InvitableRole>('staff')
   const [locationIds, setLocationIds] = useState<string[]>([])
-  const [busy, setBusy] = useState(false)
 
   const [inviteLink, setInviteLink] = useState<{ email: string; url: string } | null>(null)
+  const [resetLink, setResetLink] = useState<{ email: string; url: string } | null>(null)
   const [pendingDeactivate, setPendingDeactivate] = useState<TeamMember | null>(null)
 
   const [editing, setEditing] = useState<TeamMember | null>(null)
@@ -68,58 +74,82 @@ function TeamPage() {
   const toggle = (list: string[], id: string) =>
     list.includes(id) ? list.filter((x) => x !== id) : [...list, id]
 
-  async function sendInvite() {
-    if (!email.trim()) {
-      toast('danger', 'Email is required')
-      return
-    }
-    setBusy(true)
-    try {
-      const invited = email.trim()
-      const delivery = await invitationsService.create({
+  const invite = useMutation({
+    mutationFn: (invited: string) =>
+      invitationsService.create({
         email: invited,
         role,
         locationIds: locationIds.length > 0 ? locationIds : undefined,
-      })
-      await queryClient.invalidateQueries({ queryKey: ['team'] })
+      }),
+    onSuccess: async (delivery, invited) => {
+      await invalidate('team')
       setInviteOpen(false)
       setEmail('')
       setLocationIds([])
       if (delivery.emailDelivered) {
-        toast('success', 'Invitation sent — the link expires in 7 days')
+        toast('success', 'Invitation sent; the link expires in 7 days')
       } else if (delivery.acceptUrl) {
         setInviteLink({ email: invited, url: delivery.acceptUrl })
       }
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  function sendInvite() {
+    if (!email.trim()) {
+      toast('danger', 'Email is required')
+      return
     }
+    invite.mutate(email.trim())
   }
 
-  async function resend(m: TeamMember) {
-    try {
-      const delivery = await invitationsService.resend(m.id)
-      await queryClient.invalidateQueries({ queryKey: ['team'] })
+  const resending = useMutation({
+    mutationFn: (m: TeamMember) => invitationsService.resend(m.id),
+    onSuccess: async (delivery, m) => {
+      await invalidate('team')
       if (delivery.emailDelivered) {
         toast('success', `Invitation re-sent to ${m.email}`)
       } else if (delivery.acceptUrl) {
         setInviteLink({ email: m.email, url: delivery.acceptUrl })
       }
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
 
-  async function revoke(m: TeamMember) {
-    try {
-      await invitationsService.revoke(m.id)
-      await queryClient.invalidateQueries({ queryKey: ['team'] })
+  const reactivation = useMutation({
+    mutationFn: (m: TeamMember) => teamService.reactivate(m.id),
+    onSuccess: async (_, m) => {
+      await invalidate('team')
+      toast('success', `${m.name} can sign in again`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const passwordReset = useMutation({
+    mutationFn: (m: TeamMember) => teamService.resetPassword(m.id),
+    onSuccess: (delivery, m) => {
+      if (delivery.emailDelivered) {
+        toast('success', `Reset link sent to ${m.email}`)
+      } else if (delivery.resetUrl) {
+        setResetLink({ email: m.email, url: delivery.resetUrl })
+      }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const revocation = useMutation({
+    mutationFn: (m: TeamMember) => invitationsService.revoke(m.id),
+    onSuccess: async (_, m) => {
+      await invalidate('team')
       toast('success', `Invitation for ${m.email} revoked`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
+
+  const resend = (m: TeamMember) => resending.mutate(m)
+  const reactivate = (m: TeamMember) => reactivation.mutate(m)
+  const resetPassword = (m: TeamMember) => passwordReset.mutate(m)
+  const revoke = (m: TeamMember) => revocation.mutate(m)
 
   function openEdit(m: TeamMember) {
     setEditing(m)
@@ -129,36 +159,28 @@ function TeamPage() {
     setEditLocations(m.locations.map((l) => l.id))
   }
 
-  async function saveMember() {
-    if (!editing) return
-    setBusy(true)
-    try {
-      await teamService.update(editing.id, { role: editRole, locationIds: editLocations })
-      await queryClient.invalidateQueries({ queryKey: ['team'] })
+  const memberUpdate = useMutation({
+    mutationFn: (m: TeamMember) =>
+      teamService.update(m.id, { role: editRole, locationIds: editLocations }),
+    onSuccess: async () => {
+      await invalidate('team')
       setEditing(null)
       toast('success', 'Member updated')
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-    }
-  }
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+  })
 
-  async function deactivate() {
-    if (!pendingDeactivate) return
-    const member = pendingDeactivate
-    setBusy(true)
-    try {
-      await teamService.deactivate(member.id)
-      await queryClient.invalidateQueries({ queryKey: ['team'] })
-      toast('success', `${member.name} deactivated`)
-    } catch (e) {
-      toast('danger', serverMessage(e))
-    } finally {
-      setBusy(false)
-      setPendingDeactivate(null)
-    }
-  }
+  const saveMember = () => editing && memberUpdate.mutate(editing)
+
+  const deactivation = useMutation({
+    mutationFn: (m: TeamMember) => teamService.deactivate(m.id),
+    onSuccess: async (_, m) => {
+      await invalidate('team')
+      toast('success', `${m.name} deactivated`)
+    },
+    onError: (e) => toast('danger', serverMessage(e)),
+    onSettled: () => setPendingDeactivate(null),
+  })
 
   return (
     <>
@@ -166,7 +188,7 @@ function TeamPage() {
         title="Team"
         subtitle="Users, roles, and location access"
         actions={
-          can('admin') ? (
+          can('manager') ? (
             <Button onClick={() => setInviteOpen(true)}>Invite Member</Button>
           ) : undefined
         }
@@ -179,7 +201,7 @@ function TeamPage() {
             <TH>Role</TH>
             <TH>Locations</TH>
             <TH>Status</TH>
-            {can('admin') && <TH className="text-right">Actions</TH>}
+            {can('manager') && <TH className="text-right">Actions</TH>}
           </TR>
         </THead>
         <TBody>
@@ -207,28 +229,65 @@ function TeamPage() {
                     <Badge dot tone="success">
                       Active
                     </Badge>
+                  ) : m.status === 'inactive' ? (
+                    <Badge dot tone="neutral">
+                      Inactive
+                    </Badge>
+                  ) : m.status === 'expired' ? (
+                    <Badge dot tone="danger">
+                      Expired
+                    </Badge>
                   ) : (
                     <Badge dot tone="warning">
                       Invited
                     </Badge>
                   )}
                 </TD>
-                {can('admin') && (
+                {can('manager') && (
                   <TD className="text-right">
                     <RowActions className="justify-end">
-                      {m.status === 'invited' ? (
+                      {!manageable(m) ? (
+                        <span className="text-xs text-text-muted">—</span>
+                      ) : m.status === 'invited' || m.status === 'expired' ? (
                         <>
-                          <Button variant="ghost" size="sm" onClick={() => resend(m)}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => resend(m)}
+                            disabled={resending.isPending}
+                          >
                             Resend
                           </Button>
-                          <Button variant="ghost" size="sm" onClick={() => revoke(m)}>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => revoke(m)}
+                            disabled={revocation.isPending}
+                          >
                             Revoke
                           </Button>
                         </>
-                      ) : editable(m) ? (
+                      ) : m.status === 'inactive' ? (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => reactivate(m)}
+                          disabled={reactivation.isPending}
+                        >
+                          Reactivate
+                        </Button>
+                      ) : (
                         <>
                           <Button variant="ghost" size="sm" onClick={() => openEdit(m)}>
                             Edit
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => resetPassword(m)}
+                            disabled={passwordReset.isPending}
+                          >
+                            Reset password
                           </Button>
                           <Button
                             variant="ghost"
@@ -239,8 +298,6 @@ function TeamPage() {
                             Deactivate
                           </Button>
                         </>
-                      ) : (
-                        <span className="text-xs text-text-muted">—</span>
                       )}
                     </RowActions>
                   </TD>
@@ -259,7 +316,7 @@ function TeamPage() {
             <Button variant="secondary" onClick={() => setInviteOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={sendInvite} disabled={busy}>
+            <Button onClick={sendInvite} disabled={invite.isPending}>
               Send Invite
             </Button>
           </>
@@ -279,15 +336,13 @@ function TeamPage() {
             required
             value={role}
             onChange={(e) => setRole(e.target.value as InvitableRole)}
-            options={ROLE_OPTIONS}
+            options={ASSIGNABLE}
           />
           <fieldset>
             <legend className="mb-1.5 block text-sm font-medium">Location access</legend>
-            <p className="mb-2 text-xs text-text-muted">
-              Leave everything unchecked to grant access to all locations.
-            </p>
+            <p className="mb-2 text-xs text-text-muted">{everywhereHint}</p>
             <div className="space-y-1.5">
-              {locations.map((l) => (
+              {offered.map((l) => (
                 <Checkbox
                   key={l.id}
                   label={l.name}
@@ -303,13 +358,13 @@ function TeamPage() {
       <Modal
         open={!!editing}
         onClose={() => setEditing(null)}
-        title={`Edit — ${editing?.name ?? ''}`}
+        title={`Edit: ${editing?.name ?? ''}`}
         footer={
           <>
             <Button variant="secondary" onClick={() => setEditing(null)}>
               Cancel
             </Button>
-            <Button onClick={saveMember} disabled={busy}>
+            <Button onClick={saveMember} disabled={memberUpdate.isPending}>
               Save Member
             </Button>
           </>
@@ -320,15 +375,13 @@ function TeamPage() {
             label="Role"
             value={editRole}
             onChange={(e) => setEditRole(e.target.value as InvitableRole)}
-            options={ROLE_OPTIONS}
+            options={ASSIGNABLE}
           />
           <fieldset>
             <legend className="mb-1.5 block text-sm font-medium">Location access</legend>
-            <p className="mb-2 text-xs text-text-muted">
-              Leave everything unchecked to grant access to all locations.
-            </p>
+            <p className="mb-2 text-xs text-text-muted">{everywhereHint}</p>
             <div className="space-y-1.5">
-              {locations.map((l) => (
+              {offered.map((l) => (
                 <Checkbox
                   key={l.id}
                   label={l.name}
@@ -354,7 +407,7 @@ function TeamPage() {
         <div className="space-y-3">
           <p className="text-sm">
             The invitation for <span className="font-medium">{inviteLink?.email}</span> is ready,
-            but no mail provider is connected yet, so nothing was sent. Pass this link on yourself —
+            but no mail provider is connected yet, so nothing was sent. Pass this link on yourself;
             it expires in 7 days.
           </p>
           <TextField
@@ -366,16 +419,41 @@ function TeamPage() {
         </div>
       </Modal>
 
+      <Modal
+        open={resetLink !== null}
+        onClose={() => setResetLink(null)}
+        title="Share the reset link"
+        footer={
+          <Button variant="secondary" onClick={() => setResetLink(null)}>
+            Close
+          </Button>
+        }
+      >
+        <div className="space-y-3">
+          <p className="text-sm">
+            A reset for <span className="font-medium">{resetLink?.email}</span> is ready, but no
+            mail provider is connected yet, so nothing was sent. Pass this link on yourself; it
+            expires in an hour, and using it signs the account out everywhere.
+          </p>
+          <TextField
+            label="Reset link"
+            readOnly
+            value={resetLink?.url ?? ''}
+            onFocus={(e) => e.currentTarget.select()}
+          />
+        </div>
+      </Modal>
+
       <ConfirmDialog
         open={pendingDeactivate !== null}
         onClose={() => setPendingDeactivate(null)}
-        onConfirm={deactivate}
+        onConfirm={() => pendingDeactivate && deactivation.mutate(pendingDeactivate)}
         title={`Deactivate ${pendingDeactivate?.name ?? ''}?`}
         confirmLabel="Deactivate"
-        busy={busy}
+        busy={deactivation.isPending}
       >
-        They lose access immediately, every device is signed out, and they leave this list. Only a
-        new invitation brings them back.
+        They lose access immediately and every device is signed out. They stay in this list as
+        inactive, and Reactivate brings them back with the same role and locations.
       </ConfirmDialog>
     </>
   )

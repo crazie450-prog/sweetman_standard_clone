@@ -1,6 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
 import { RequireRole } from '@/components/layout/RequireRole'
 import {
   Badge,
@@ -30,6 +32,7 @@ import {
   type DocumentStatus,
   type PeriodPreset,
 } from '@/components/ui'
+import { queries } from '@/lib/api/queries'
 
 const statuses: DocumentStatus[] = [
   'queued',
@@ -48,7 +51,7 @@ function Gallery() {
   return (
     <main className="mx-auto max-w-5xl space-y-10 p-8">
       <PageHeader
-        title="Nexus UI — Component Gallery"
+        title="Nexus UI: Component Gallery"
         subtitle="Shared UI primitives and design tokens"
         actions={
           <>
@@ -218,12 +221,24 @@ function Gallery() {
   )
 }
 
+function PlatformOnly({ children }: { children: ReactNode }) {
+  const router = useRouter()
+  const { data: currentUser, isLoading } = useQuery(queries.orgCurrent())
+  const denied = !isLoading && !currentUser?.isPlatformAdmin
+  useEffect(() => {
+    if (denied) router.replace('/dashboard')
+  }, [denied, router])
+  return currentUser?.isPlatformAdmin ? <>{children}</> : null
+}
+
 export default function DesignPage() {
   return (
     <RequireRole minRole="viewer">
-      <ToastProvider>
-        <Gallery />
-      </ToastProvider>
+      <PlatformOnly>
+        <ToastProvider>
+          <Gallery />
+        </ToastProvider>
+      </PlatformOnly>
     </RequireRole>
   )
 }

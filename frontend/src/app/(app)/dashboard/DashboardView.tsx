@@ -1,67 +1,40 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import {
-  analyticsService,
-  dashboardService,
-  ingredientsService,
-  locationsService,
-  menuService,
-  organizationService,
-  recipesService,
-  type ActivityEvent,
-} from '@/lib/api/services'
+import { type ActivityEvent } from '@/lib/api/services'
 import { getActiveLocationId } from '@/lib/api/active-location'
 import { useCurrentUser } from '@/lib/api/useCurrentUser'
 
 import Link from 'next/link'
-import { AreaChart, BarsH, Card, CountUp, KpiCard, Skeleton, SkeletonKpiRow } from '@/components/ui'
-import { formatDayShort, formatMoneyCompact, formatPercent } from '@/lib/utils/format'
-
-const I = (d: string, sw = 1.8) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={sw}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="size-5"
-    aria-hidden
-  >
-    <path d={d} />
-  </svg>
-)
-const icons = {
-  dollar: I(
-    'M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.6 7 6.5s2 3 5 3.3 5 1.4 5 3.2-2.2 3.5-5 3.5-5-1.4-5-3.3'
-  ),
-  trend: I('M3 17l6-6 4 4 8-8M15 7h6v6'),
-  chart: I('M4 20V10M10 20V4M16 20v-7M20 20H3'),
-  alert: I('M12 3 2 20h20L12 3zM12 9v5M12 17.5v.5'),
-  clipboard: I(
-    'M9 4h6M9 4a2 2 0 0 0-2 2H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1a2 2 0 0 0-2-2'
-  ),
-  book: I('M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2v14', 1.6),
-  box: I('M12 3 4 7v10l8 4 8-4V7l-8-4M4 7l8 4 8-4M12 11v10', 1.6),
-  clock: I('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 3', 1.6),
-}
+import {
+  AreaChart,
+  BarsH,
+  Card,
+  CountUp,
+  KpiCard,
+  Skeleton,
+  SkeletonKpiRow,
+  Icon,
+} from '@/components/ui'
+import { formatChange, formatDayShort, formatMoneyCompact, formatPercent } from '@/lib/utils/format'
+import { aboveTarget } from '@/lib/utils/money'
+import { queries } from '@/lib/api/queries'
 
 const activityIcon: Record<ActivityEvent['type'], { icon: React.ReactNode; box: string }> = {
   production: {
-    icon: I('M7 3h7l4 4v14H7zM14 3v4h4M10 13h5M10 17h5', 1.6),
+    icon: <Icon name="document" className="size-5" strokeWidth={1.6} />,
     box: 'bg-info-100 text-info-700 dark:bg-info-900/40 dark:text-info-100',
   },
   recipe: {
-    icon: icons.book,
+    icon: <Icon name="book" className="size-5" strokeWidth={1.6} />,
     box: 'bg-primary-100 text-primary-800 dark:bg-primary-900/40 dark:text-primary-200',
   },
   waste: {
-    icon: I('M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2m-9 0 1 13h8l1-13M10 11v6M14 11v6', 1.6),
+    icon: <Icon name="bin" className="size-5" strokeWidth={1.6} />,
     box: 'bg-danger-100 text-danger-700 dark:bg-danger-900/40 dark:text-danger-100',
   },
   team: {
-    icon: I('M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM5 20c.5-3.5 3.4-5 7-5s6.5 1.5 7 5', 1.6),
+    icon: <Icon name="person" className="size-5" strokeWidth={1.6} />,
     box: 'bg-success-100 text-success-700 dark:bg-success-900/40 dark:text-success-100',
   },
 }
@@ -102,37 +75,16 @@ function StatInline({
 }
 
 export default function DashboardView() {
-  const { data: kpis } = useQuery({ queryKey: ['dashboard-kpis'], queryFn: dashboardService.kpis })
-  const { data: kpiTrends } = useQuery({
-    queryKey: ['dashboard-trends'],
-    queryFn: dashboardService.trends,
-  })
-  const { data: currentUser } = useQuery({
-    queryKey: ['org-current'],
-    queryFn: organizationService.current,
-  })
-  const { data: ingredients = [] } = useQuery({
-    queryKey: ['ingredients'],
-    queryFn: ingredientsService.list,
-  })
-  const { data: recipes = [] } = useQuery({ queryKey: ['recipes'], queryFn: recipesService.list })
-  const { data: menuItems = [] } = useQuery({ queryKey: ['menu-items'], queryFn: menuService.list })
-  const { data: revenueTrend = [] } = useQuery({
-    queryKey: ['revenue-trend'],
-    queryFn: analyticsService.revenueTrend,
-  })
-  const { data: spendByCategory = [] } = useQuery({
-    queryKey: ['spend-by-category'],
-    queryFn: analyticsService.spendByCategory,
-  })
-  const { data: activity = [] } = useQuery({
-    queryKey: ['dashboard-activity'],
-    queryFn: dashboardService.activity,
-  })
-  const { data: locations = [] } = useQuery({
-    queryKey: ['locations'],
-    queryFn: locationsService.list,
-  })
+  const { data: kpis } = useQuery(queries.dashboardKpis())
+  const { data: kpiTrends } = useQuery(queries.dashboardTrends())
+  const { data: currentUser } = useQuery(queries.orgCurrent())
+  const { data: ingredients = [] } = useQuery(queries.ingredients())
+  const { data: recipes = [] } = useQuery(queries.recipes())
+  const { data: menuItems = [] } = useQuery(queries.menuItems())
+  const { data: revenueTrend = [] } = useQuery(queries.revenueTrend())
+  const { data: spendByCategory = [] } = useQuery(queries.spendByCategory())
+  const { data: activity = [] } = useQuery(queries.dashboardActivity())
+  const { data: locations = [] } = useQuery(queries.locations())
   const { can } = useCurrentUser()
 
   if (!kpis || !kpiTrends || !currentUser) {
@@ -166,9 +118,9 @@ export default function DashboardView() {
   const delta = (series: number[]) => {
     const [prev, last] = [series.at(-2) ?? 0, series.at(-1) ?? 0]
     if (!prev || !last) return undefined
-    const pct = ((last - prev) / prev) * 100
+    const pct = ((last - prev) / Math.abs(prev)) * 100
     return {
-      value: `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`,
+      value: formatChange(pct),
       direction: pct >= 0 ? ('up' as const) : ('down' as const),
     }
   }
@@ -229,43 +181,43 @@ export default function DashboardView() {
         </div>
         <div className="relative flex flex-wrap items-center gap-2">
           {can('staff') && (
-          <Link
-            href="/documents"
-            className="inline-flex h-10 items-center gap-2 rounded-lg border border-border-strong bg-surface px-4 text-sm font-semibold text-text shadow-xs transition-colors hover:border-ink-600 hover:bg-surface-subtle"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="size-4"
-              aria-hidden
+            <Link
+              href="/documents"
+              className="inline-flex h-10 items-center gap-2 rounded-lg border border-border-strong bg-surface px-4 text-sm font-semibold text-text shadow-xs transition-colors hover:border-ink-600 hover:bg-surface-subtle"
             >
-              <path d="M12 15V3m0 0 4 4m-4-4L8 7M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-            </svg>
-            Upload invoice
-          </Link>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4"
+                aria-hidden
+              >
+                <path d="M12 15V3m0 0 4 4m-4-4L8 7M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+              </svg>
+              Upload invoice
+            </Link>
           )}
           {can('staff') && (
-          <Link
-            href="/recipes/new"
-            className="inline-flex h-10 items-center gap-2 rounded-lg bg-primary-600 px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className="size-4"
-              aria-hidden
+            <Link
+              href="/recipes/new"
+              className="inline-flex h-10 items-center gap-2 rounded-lg bg-primary-600 px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-700"
             >
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-            New Recipe
-          </Link>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className="size-4"
+                aria-hidden
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              New Recipe
+            </Link>
           )}
         </div>
       </div>
@@ -277,7 +229,7 @@ export default function DashboardView() {
             label="Today's Revenue"
             value={<CountUp value={kpis.todayRevenue} format="money" />}
             tone="primary"
-            icon={icons.dollar}
+            icon={<Icon name="dollar" className="size-5" />}
             delta={revenueDelta}
             trend={kpiTrends.revenue}
             trendLive
@@ -288,7 +240,7 @@ export default function DashboardView() {
             label="Today's Profit"
             value={<CountUp value={kpis.todayProfit} format="money" />}
             tone="primary"
-            icon={icons.trend}
+            icon={<Icon name="trend" className="size-5" />}
             delta={profitDelta}
             trend={kpiTrends.profit}
             className="rise"
@@ -298,8 +250,8 @@ export default function DashboardView() {
             label="Food Cost % · 30 days"
             value={<CountUp value={kpis.foodCostPct} format="percent" />}
             hint={`target ${formatPercent(kpis.foodCostTarget, 0)}`}
-            tone={kpis.foodCostPct > kpis.foodCostTarget ? 'warning' : 'success'}
-            icon={icons.chart}
+            tone={aboveTarget(kpis.foodCostPct, kpis.foodCostTarget) ? 'warning' : 'success'}
+            icon={<Icon name="chart" className="size-5" />}
             delta={
               foodCostDelta && { ...foodCostDelta, negative: foodCostDelta.direction === 'up' }
             }
@@ -312,7 +264,7 @@ export default function DashboardView() {
             value={kpis.lowStockCount}
             hint="items below reorder level"
             tone={kpis.lowStockCount > 0 ? 'danger' : 'slate'}
-            icon={icons.alert}
+            icon={<Icon name="alert" className="size-5" />}
             className="rise"
             style={{ '--i': 3 } as React.CSSProperties}
           />
@@ -323,25 +275,25 @@ export default function DashboardView() {
         <h2 className="section-title mb-4 text-base font-semibold">System Overview</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <StatInline
-            icon={icons.clipboard}
+            icon={<Icon name="clipboard" className="size-5" />}
             box="bg-surface-subtle text-text-muted dark:bg-slate-800"
             value={menuItems.length}
             label="Menu Items"
           />
           <StatInline
-            icon={icons.book}
+            icon={<Icon name="book" className="size-5" strokeWidth={1.6} />}
             box="bg-info-100 text-info-700 dark:bg-info-900/40 dark:text-info-100"
             value={recipes.length}
             label="Recipes"
           />
           <StatInline
-            icon={icons.box}
+            icon={<Icon name="box" className="size-5" strokeWidth={1.6} />}
             box="bg-warning-100 text-warning-700 dark:bg-warning-900/40 dark:text-warning-100"
             value={ingredients.length}
             label="Inventory Items"
           />
           <StatInline
-            icon={icons.clock}
+            icon={<Icon name="clock" className="size-5" strokeWidth={1.6} />}
             box="bg-primary-100 text-primary-800 dark:bg-primary-900/40 dark:text-primary-200"
             value={kpis.recentRecipe ?? '—'}
             label="Recently updated"
@@ -375,8 +327,7 @@ export default function DashboardView() {
                     >
                       <path d={trendDelta >= 0 ? 'M2 8.5 6 4l4 4.5' : 'M2 4 6 8.5 10 4'} />
                     </svg>
-                    {trendDelta >= 0 ? '+' : ''}
-                    {trendDelta.toFixed(1)}%
+                    {formatChange(trendDelta)}
                   </span>
                 )}
               </div>
@@ -387,9 +338,7 @@ export default function DashboardView() {
             <div className="flex items-center gap-3">
               <p className="tabular text-[13px] text-text-muted">
                 avg{' '}
-                {revenueTrend.length
-                  ? formatMoneyCompact(totalRevenue30 / TREND_WINDOW_DAYS)
-                  : '—'}{' '}
+                {revenueTrend.length ? formatMoneyCompact(totalRevenue30 / TREND_WINDOW_DAYS) : '—'}{' '}
                 / day
               </p>
               <Link
@@ -472,7 +421,7 @@ export default function DashboardView() {
         <Card className="p-0 sm:p-0">
           {activity.length === 0 ? (
             <p className="px-5 py-8 text-center text-sm text-text-muted">
-              Nothing has happened yet — log waste, record production or update a recipe.
+              Nothing has happened yet. Log waste, record production or update a recipe.
             </p>
           ) : (
             <ul className="divide-y divide-border">

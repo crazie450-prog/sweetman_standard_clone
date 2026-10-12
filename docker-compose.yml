@@ -1,7 +1,10 @@
 # Nexus — local development infrastructure.
 # `docker compose up -d` → Postgres :5432, Redis :6379
-# Redis stays idle until the AI processing queues arrive in Sprint 3; it is
-# defined now so the infrastructure is pinned down once.
+# Redis carries the document-processing queue; nothing else uses it.
+# `docker compose --profile s3 up -d` adds MinIO :9000 (console :9001), an
+# S3-compatible store for STORAGE_PROVIDER=s3 without an AWS account:
+#   STORAGE_PROVIDER=s3 S3_BUCKET=nexus-documents S3_ENDPOINT=http://localhost:9000
+#   S3_FORCE_PATH_STYLE=true AWS_ACCESS_KEY_ID=nexus AWS_SECRET_ACCESS_KEY=nexus_dev_s3
 services:
   postgres:
     image: postgres:17-alpine
@@ -31,5 +34,29 @@ services:
       timeout: 3s
       retries: 10
 
+  minio:
+    image: minio/minio:latest
+    container_name: nexus-minio
+    profiles: ['s3']
+    command: server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: nexus
+      MINIO_ROOT_PASSWORD: nexus_dev_s3 # dev only
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - miniodata:/data
+
+  minio-bucket:
+    image: minio/mc:latest
+    profiles: ['s3']
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "until mc alias set local http://minio:9000 nexus nexus_dev_s3; do sleep 1; done;
+      mc mb --ignore-existing local/nexus-documents"
+
 volumes:
   pgdata:
+  miniodata:

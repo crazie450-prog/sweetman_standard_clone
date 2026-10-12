@@ -17,7 +17,7 @@ export function Modal({
   title: string
   children: ReactNode
   footer?: ReactNode
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 }) {
   const ref = useRef<HTMLDialogElement>(null)
 
@@ -28,12 +28,14 @@ export function Modal({
     if (!open && dialog.open) dialog.close()
   }, [open])
 
-  const sizes = { sm: 'max-w-sm', md: 'max-w-lg', lg: 'max-w-2xl' }
+  const sizes = { sm: 'max-w-sm', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' }
 
   return (
     <dialog
       ref={ref}
-      onClose={onClose}
+      onClose={(e) => {
+        if (e.target === ref.current) onClose()
+      }}
       onClick={(e) => {
         if (e.target === ref.current) onClose()
       }}

@@ -50,12 +50,19 @@ export function Badge({
 }
 
 export type DocumentStatus =
-  'queued' | 'processing' | 'completed' | 'failed' | 'requires_review' | 'partially_processed'
+  | 'queued'
+  | 'processing'
+  | 'completed'
+  | 'confirmed'
+  | 'failed'
+  | 'requires_review'
+  | 'partially_processed'
 
 const statusMap: Record<DocumentStatus, { label: string; tone: keyof typeof tones }> = {
   queued: { label: 'Queued', tone: 'neutral' },
   processing: { label: 'Processing', tone: 'info' },
   completed: { label: 'Completed', tone: 'success' },
+  confirmed: { label: 'Confirmed', tone: 'success' },
   failed: { label: 'Failed', tone: 'danger' },
   requires_review: { label: 'Requires Review', tone: 'warning' },
   partially_processed: { label: 'Partially Processed', tone: 'warning' },

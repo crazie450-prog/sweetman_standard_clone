@@ -1,9 +1,12 @@
 import { Client } from 'pg'
+import { configWith } from './config'
 
 jest.setTimeout(30000)
 
+const OWNER_URL = configWith().getOrThrow('DATABASE_URL', { infer: true })
+
 const APP_URL = (() => {
-  const url = new URL(process.env.DATABASE_URL!)
+  const url = new URL(OWNER_URL)
   url.username = 'nexus_app'
   url.password = 'nexus_app_dev'
   return url.toString()
@@ -15,7 +18,7 @@ describe('RLS (layer 3)', () => {
   let goldenFork = ''
 
   beforeAll(async () => {
-    const owner = new Client({ connectionString: process.env.DATABASE_URL })
+    const owner = new Client({ connectionString: OWNER_URL })
     await owner.connect()
     const res = await owner.query<{ id: string; name: string }>(
       'SELECT id, name FROM "Organization" ORDER BY name',
@@ -37,7 +40,15 @@ describe('RLS (layer 3)', () => {
 
   test('without an organization context no row is visible', async () => {
     await setOrg(null)
-    for (const table of ['Vendor', 'Ingredient', 'Recipe', 'Sale', 'IngredientPriceHistory']) {
+    for (const table of [
+      'Vendor',
+      'Ingredient',
+      'Recipe',
+      'Sale',
+      'IngredientPriceHistory',
+      'VendorProduct',
+      'PurchaseDraft',
+    ]) {
       const res = await db.query<{ count: string }>(`SELECT count(*) FROM "${table}"`)
       expect(Number(res.rows[0].count)).toBe(0)
     }
@@ -51,7 +62,9 @@ describe('RLS (layer 3)', () => {
     expect(Number(res.rows[0].total)).toBeGreaterThan(0)
     expect(Number(res.rows[0].orgs)).toBe(1)
 
-    const foreign = await db.query('SELECT id FROM "Vendor" WHERE "organizationId" = $1', [bellaCucina])
+    const foreign = await db.query('SELECT id FROM "Vendor" WHERE "organizationId" = $1', [
+      bellaCucina,
+    ])
     expect(foreign.rowCount).toBe(0)
   })
 
@@ -83,17 +96,33 @@ describe('RLS (layer 3)', () => {
       'RecipeComponent',
       'Instruction',
       'MenuItemRecipe',
+      'MenuItemOnMenu',
+      'MenuOnLocation',
       'SaleItem',
       'IngredientLocationStock',
-      'IngredientLocationPricing',
+      'IngredientLocationSettings',
       'UserLocation',
       'UserSession',
       'InvoiceItem',
+      'PurchaseDraftLine',
       'Organization',
     ]) {
       const res = await db.query<{ count: string }>(`SELECT count(*) FROM "${table}"`)
       expect(Number(res.rows[0].count)).toBe(0)
     }
+  })
+
+  test('a vendor product is visible only through its own organization', async () => {
+    await setOrg(goldenFork)
+    const own = await db.query<{ count: string }>('SELECT count(*) FROM "VendorProduct"')
+    expect(Number(own.rows[0].count)).toBeGreaterThan(0)
+
+    await setOrg(bellaCucina)
+    const other = await db.query<{ count: string }>(
+      'SELECT count(*) FROM "VendorProduct" WHERE "organizationId" = $1',
+      [goldenFork],
+    )
+    expect(Number(other.rows[0].count)).toBe(0)
   })
 
   test('a sale line item is visible only through its own organization', async () => {
