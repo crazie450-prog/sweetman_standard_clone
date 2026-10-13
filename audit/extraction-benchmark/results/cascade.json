@@ -1,0 +1,322 @@
+{
+ "Cascade: Flash-Lite (low) -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.72997299729973,
+   "recall": 99.81981981981981,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 9.97697620874904,
+   "clean": 98.03921568627452,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 7.755,
+   "p95": 68.119,
+   "cost": 0.011481516176470584
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.74259974259974,
+   "recall": 99.74259974259974,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.8556701030927836,
+   "clean": 100.0,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.646,
+   "p95": 67.991,
+   "cost": 0.011044463000000003
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.73516949152543,
+   "recall": 99.78802331743508,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.511218653761548,
+   "clean": 98.76543209876543,
+   "identical": 20,
+   "cases": 27,
+   "failures": 0,
+   "p50": 4.75,
+   "p95": 67.991,
+   "cost": 0.011319644629629621
+  },
+  "escalated": 26,
+  "reasons": {
+   "flagged line": 19,
+   "possible missed line": 7
+  },
+  "eligible": 66
+ },
+ "Cascade: Flash-Lite (minimal) -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.72997299729973,
+   "recall": 99.81981981981981,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.10886469673406,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.128,
+   "p95": 61.228,
+   "cost": 0.011008238725490194
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.74259974259974,
+   "recall": 99.74259974259974,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.8672199170124482,
+   "clean": 100.0,
+   "identical": 8,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.542,
+   "p95": 69.053,
+   "cost": 0.011934737166666666
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.73516949152543,
+   "recall": 99.78802331743508,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.5777777777777775,
+   "clean": 98.76543209876543,
+   "identical": 20,
+   "cases": 27,
+   "failures": 0,
+   "p50": 4.997,
+   "p95": 61.228,
+   "cost": 0.011351386296296296
+  },
+  "escalated": 27,
+  "reasons": {
+   "flagged line": 20,
+   "possible missed line": 7
+  },
+  "eligible": 66
+ },
+ "Cascade: Haiku (no thinking) -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.45994599459947,
+   "recall": 99.54954954954955,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.0,
+   "clean": 92.15686274509804,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.975,
+   "p95": 78.73,
+   "cost": 0.007592823921568626
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.22779922779922,
+   "recall": 99.22779922779922,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.9487179487179487,
+   "clean": 90.0,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 3.599,
+   "p95": 80.29,
+   "cost": 0.0073130063333333335
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.36440677966101,
+   "recall": 99.41706412294647,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.549450549450549,
+   "clean": 91.35802469135803,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.85,
+   "p95": 78.73,
+   "cost": 0.007489187777777774
+  },
+  "escalated": 29,
+  "reasons": {
+   "flagged line": 20,
+   "possible missed line": 9
+  },
+  "eligible": 66
+ },
+ "Cascade: Haiku -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.81998199819982,
+   "recall": 99.90990990990991,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.303514376996805,
+   "clean": 98.03921568627452,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 9.318,
+   "p95": 66.683,
+   "cost": 0.00630574411764706
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.61389961389962,
+   "recall": 99.61389961389962,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.7699115044247788,
+   "clean": 90.0,
+   "identical": 8,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.3595,
+   "p95": 58.336,
+   "cost": 0.0035754216666666673
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.73516949152543,
+   "recall": 99.78802331743508,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.725417439703154,
+   "clean": 95.06172839506173,
+   "identical": 21,
+   "cases": 27,
+   "failures": 0,
+   "p50": 8.208,
+   "p95": 58.336,
+   "cost": 0.005294513580246915
+  },
+  "escalated": 18,
+  "reasons": {
+   "flagged line": 7,
+   "possible missed line": 9,
+   "empty": 2
+  },
+  "eligible": 66
+ },
+ "Cascade: Flash-Lite compact+split -> 3.8 compact+split": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.63996399639964,
+   "recall": 99.72972972972973,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.75098814229249,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 5.38,
+   "p95": 37.827,
+   "cost": 0.010780429215686277
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.48652118100128,
+   "recall": 99.74259974259974,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 1.7875920084121977,
+   "clean": 90.0,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.337,
+   "p95": 36.3,
+   "cost": 0.010828458333333334
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.57671957671958,
+   "recall": 99.73502914679385,
+   "errors": 3,
+   "unflagged": 0,
+   "review_share": 6.904332129963899,
+   "clean": 95.06172839506173,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 4.161,
+   "p95": 36.3,
+   "cost": 0.010798217777777782
+  },
+  "escalated": 25,
+  "reasons": {
+   "flagged line": 16,
+   "possible missed line": 9
+  },
+  "eligible": 66
+ },
+ "Cascade: Haiku -> 3.8 compact+split": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.81998199819982,
+   "recall": 99.90990990990991,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.702875399361023,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.801,
+   "p95": 56.657,
+   "cost": 0.005915641176470588
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.48586118251929,
+   "recall": 99.61389961389962,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 1.6574585635359116,
+   "clean": 86.66666666666667,
+   "identical": 8,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.3595,
+   "p95": 58.336,
+   "cost": 0.0035103716666666663
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.68237162519851,
+   "recall": 99.78802331743508,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.907742234585072,
+   "clean": 93.82716049382717,
+   "identical": 20,
+   "cases": 27,
+   "failures": 0,
+   "p50": 8.208,
+   "p95": 56.657,
+   "cost": 0.005024800617283951
+  },
+  "escalated": 18,
+  "reasons": {
+   "flagged line": 7,
+   "possible missed line": 9,
+   "empty": 2
+  },
+  "eligible": 66
+ }
+}

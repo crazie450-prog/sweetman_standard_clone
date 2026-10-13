@@ -305,6 +305,7 @@ async function efGemini(model: string, input: ExtractInput, f: typeof fetch): Pr
     const body = {
       systemInstruction: { parts: [{ text: recipe ? EF_RECIPE : EF_INVOICE }] },
       contents: [{ role: 'user', parts: [...file, { text: `Transcribe the ${recipe ? 'recipe' : 'invoice'} document above following the rules.` }] }],
+      ...(process.env.GEMINI_TIER ? { serviceTier: process.env.GEMINI_TIER } : {}),
       generationConfig: {
         ...(process.env.EF_MEDIA ? { mediaResolution: `MEDIA_RESOLUTION_${process.env.EF_MEDIA}` } : {}),
         responseMimeType: 'application/json',
@@ -375,6 +376,285 @@ async function efClaude(model: string, input: ExtractInput, f: typeof fetch): Pr
   return out
 }
 
+/* ---------- Line-reference (LR) mode: numbered text in, line numbers out ----------
+ * For inputs the app can read as text (Word, workbooks, digital PDFs) the model returns line numbers instead of
+ * copying evidence; code resolves the numbers to the printed lines, so the proof is exact and output is smaller.
+ * Photos and PDFs without a usable text layer (or carrying photos) fall back to the evidence-first route. */
+const LR_RULE2 = `2. LINE NUMBERS. The document arrives with a number in square brackets before each printed line
+   ("[12] 2 cups sugar"). For every entry give in "lines" the number of the printed line it comes
+   from; if its name and its amount are printed on different lines (a table read column by
+   column), give both numbers. Never copy the line itself.`
+const LR_RECIPE = EF_RECIPE
+  .replace(/2\. EVIDENCE\.[\s\S]*?do not join two printed lines\./, LR_RULE2)
+  .replace('and the whole printed line as the evidence of each.', 'and the same line number.')
+const LR_INVOICE = EF_INVOICE
+  .replace('- "evidence": the whole printed row exactly as on the page; "page".', '- "lines": the number(s) of the printed line(s) the row comes from (never copy the row).')
+  .replace('copy what is\nprinted;', 'copy what is\nprinted;')
+const INTS = { type: 'ARRAY', items: { type: 'INTEGER' } }
+const LR_RECIPE_SCHEMA = obj({
+  documentKind: { type: 'STRING', enum: KINDS },
+  recipes: {
+    type: 'ARRAY',
+    items: obj({
+      titleText: S(true), yieldText: S(true), portionsText: S(true),
+      components: { type: 'ARRAY', items: obj({ nameText: S(), yieldText: S(true), usedAsText: S(true) }) },
+      lines: {
+        type: 'ARRAY',
+        items: obj({
+          lines: INTS, section: S(true), nameText: S(), quantityText: S(true), unitText: S(true), amountNote: S(true),
+          legibility: { type: 'STRING', enum: ['clear', 'unclear'] },
+        }),
+      },
+    }),
+  },
+})
+const LR_INVOICE_SCHEMA = obj({
+  documentKind: { type: 'STRING', enum: KINDS },
+  invoices: {
+    type: 'ARRAY',
+    items: obj({
+      vendorText: S(true), invoiceNumberText: S(true), invoiceDateText: S(true),
+      rows: {
+        type: 'ARRAY',
+        items: obj({
+          lines: INTS,
+          kind: { type: 'STRING', enum: ['item', 'fee', 'deposit', 'credit', 'discount', 'other'] },
+          itemCodeText: S(true), descriptionText: S(), qtyOrderedText: S(true), qtyShippedText: S(true),
+          unitText: S(true), packText: S(true), unitPriceText: S(true), priceUnitText: S(true), weightText: S(true),
+          extendedPriceText: S(true), legibility: { type: 'STRING', enum: ['clear', 'unclear'] },
+        }),
+      },
+      subtotalText: S(true), taxText: S(true), otherChargesText: S(true), totalText: S(true),
+    }),
+  },
+})
+
+/* LR_CHUNK=<chars>: split a long text at blank lines into pieces of about that size, read them in parallel and
+ * stitch recipes back together (line numbers stay global, so proof and order are preserved). */
+function splitLong(text: string, size: number): string[] {
+  if (!size || text.length <= size * 1.3) return [text]
+  const blocks = text.split(/\n\s*\n/)
+  const parts: string[] = []
+  let cur = ''
+  for (const b of blocks) {
+    if (cur && cur.length + b.length > size) { parts.push(cur); cur = '' }
+    cur += (cur ? '\n\n' : '') + b
+  }
+  if (cur) parts.push(cur)
+  return parts
+}
+
+/* LR_COMPACT=1: one-letter keys in the model's output (recipes), mapped back in code. */
+const CK: Record<string, string> = { t: 'titleText', y: 'yieldText', p: 'portionsText', c: 'components', i: 'lines', n: 'nameText', w: 'usedAsText', l: 'lines', s: 'section', q: 'quantityText', u: 'unitText', a: 'amountNote', g: 'legibility', k: 'documentKind', r: 'recipes' }
+const LR_COMPACT_NOTE = `\n\nOUTPUT KEYS. To keep the answer short, the JSON uses one-letter keys: k = documentKind, r = recipes;
+in a recipe t = titleText, y = yieldText, p = portionsText, c = components, i = its ingredient entries;
+in a component n = nameText, y = yieldText, w = usedAsText; in an ingredient entry l = lines, s = section,
+n = nameText, q = quantityText, u = unitText, a = amountNote, g = legibility ("c" clear, "u" unclear).`
+const compactSchema = () => {
+  const o = (props: Record<string, unknown>) => ({ type: 'OBJECT', properties: props, required: Object.keys(props), propertyOrdering: Object.keys(props) })
+  return o({
+    k: { type: 'STRING', enum: KINDS },
+    r: { type: 'ARRAY', items: o({
+      t: S(true), y: S(true), p: S(true),
+      c: { type: 'ARRAY', items: o({ n: S(), y: S(true), w: S(true) }) },
+      i: { type: 'ARRAY', items: o({ l: INTS, s: S(true), n: S(), q: S(true), u: S(true), a: S(true), g: { type: 'STRING', enum: ['c', 'u'] } }) },
+    }) },
+  })
+}
+function expandCompact(x: any): any {
+  if (Array.isArray(x)) return x.map(expandCompact)
+  if (!x || typeof x !== 'object') return x
+  const out: any = {}
+  for (const [k, v] of Object.entries(x)) out[CK[k] ?? k] = k === 'g' ? (v === 'u' ? 'unclear' : 'clear') : expandCompact(v)
+  return out
+}
+
+function numbered(text: string, start = 0): { body: string; byId: Map<number, string> } {
+  const byId = new Map<number, string>()
+  const out: string[] = []
+  let n = start
+  for (const raw of text.replace(/\f/g, '\n').split('\n')) {
+    const line = raw.replace(/\s+$/, '')
+    if (!line.trim()) continue
+    n += 1
+    byId.set(n, line)
+    out.push(`[${n}] ${line}`)
+  }
+  return { body: out.join('\n'), byId }
+}
+
+async function lrTexts(input: ExtractInput): Promise<string[] | null> {
+  if (input.mimeType.startsWith('image/')) return null
+  if (input.mimeType === 'application/pdf') {
+    const photos = pdfPhotos(input.buffer)
+    if (photos.length > 1) return null // carries photos: evidence route with the photos
+    const layer = photos[photos.length - 1]?.data.replace(/^TEXT LAYER[^\n]*\n/, '') ?? ''
+    if (layer.replace(/\s/g, '').length < 80) return null // a scan: no text to point at
+    return [layer]
+  }
+  const chunks = await textChunks(input)
+  return process.env.EF_SHEETS ? chunks.flatMap((c) => c.split(/\n\n(?=Sheet: )/)) : chunks
+}
+
+function resolveLines(answer: any, byId: Map<number, string>, recipe: boolean) {
+  const ev = (ids: unknown) =>
+    (Array.isArray(ids) ? ids : []).map((i) => byId.get(Number(i)) ?? '').filter(Boolean).join(' | ')
+  if (recipe) for (const r of answer?.recipes ?? []) for (const l of r.lines ?? []) { l.evidence = ev(l.lines); l.page = null }
+  else for (const inv of answer?.invoices ?? []) for (const row of inv.rows ?? []) { row.evidence = ev(row.lines); row.page = null }
+  return answer
+}
+
+function mergeChunks(answers: any[], recipe: boolean): any {
+  if (!recipe) return answers
+  const recipes: any[] = []
+  for (const a of answers) {
+    for (const [i, r] of (a?.recipes ?? []).entries()) {
+      if (i === 0 && !r.titleText && recipes.length) {
+        const prev = recipes[recipes.length - 1]
+        prev.lines = [...(prev.lines ?? []), ...(r.lines ?? [])]
+        prev.components = [...(prev.components ?? []), ...(r.components ?? [])]
+      } else recipes.push(r)
+    }
+  }
+  return [{ documentKind: answers.find((a) => a?.documentKind === 'recipe') ? 'recipe' : answers[0]?.documentKind, recipes }]
+}
+
+/* LR_OUTLINE=1 (with LR_CHUNK): a small first call lists the line where each recipe begins, and the long text is
+ * split only at those lines, so no recipe is cut in two. Pieces keep the global line numbers. */
+const OUTLINE_PROMPT = `The document arrives with a number in square brackets before each printed line. Give the number
+of the line where each recipe begins: the dish's title line (or its first line when it has no title). A step,
+part or component inside a recipe ("Step 2", "For the sauce") is not a new recipe. Give the numbers in order.`
+async function outlineStarts(nb: { body: string }, f: typeof fetch): Promise<number[]> {
+  const body = {
+    systemInstruction: { parts: [{ text: OUTLINE_PROMPT }] },
+    contents: [{ role: 'user', parts: [{ text: `DOCUMENT:\n${nb.body}` }] }],
+    ...(process.env.GEMINI_TIER ? { serviceTier: process.env.GEMINI_TIER } : {}),
+    generationConfig: {
+      responseMimeType: 'application/json',
+      responseSchema: obj({ starts: INTS }),
+      thinkingConfig: { thinkingLevel: 'minimal' },
+    },
+  }
+  const model = process.env.LR_OUTLINE_MODEL ?? 'gemini-3.5-flash-lite'
+  const res = await f(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  })
+  const raw = await res.text()
+  if (!res.ok) throw new Error(`Gemini ${res.status}: ${raw.slice(0, 300)}`)
+  const t = (JSON.parse(raw).candidates?.[0]?.content?.parts ?? []).filter((p: { thought?: boolean; text?: string }) => !p.thought && p.text).map((p: { text: string }) => p.text).join('')
+  return (JSON.parse(t).starts ?? []).map(Number).filter((n: number) => Number.isInteger(n))
+}
+function splitAtStarts(nb: { body: string; byId: Map<number, string> }, starts: number[], size: number) {
+  const cut = new Set(starts)
+  const segs: string[][] = [[]]
+  for (const line of nb.body.split('\n')) {
+    const id = Number(line.slice(1, line.indexOf(']')))
+    if (cut.has(id) && segs[segs.length - 1].length) segs.push([])
+    segs[segs.length - 1].push(line)
+  }
+  const groups: string[][] = []
+  let cur: string[] = []
+  let len = 0
+  for (const s of segs) {
+    const n = s.join('\n').length
+    if (cur.length && len + n > size) { groups.push(cur); cur = []; len = 0 }
+    cur.push(...s)
+    len += n + 1
+  }
+  if (cur.length) groups.push(cur)
+  return groups.map((g) => ({ body: g.join('\n'), byId: nb.byId }))
+}
+
+async function lrGemini(model: string, input: ExtractInput, f: typeof fetch): Promise<unknown[]> {
+  const texts = await lrTexts(input)
+  if (!texts) return efGemini(model, input, f)
+  const recipe = input.type === 'recipe'
+  const size = Number(process.env.LR_CHUNK ?? 0)
+  if (process.env.LR_OUTLINE && recipe) {
+    return Promise.all(texts.map(async (whole) => {
+      const nb = numbered(whole)
+      if (!size || nb.body.length <= size * 1.3) return lrGeminiCall(model, nb, recipe, f)
+      const groups = splitAtStarts(nb, await outlineStarts(nb, f), size)
+      const answers: any[] = await Promise.all(groups.map((g) => lrGeminiCall(model, g, recipe, f)))
+      return { documentKind: answers.find((a) => a?.documentKind === 'recipe') ? 'recipe' : answers[0]?.documentKind, recipes: answers.flatMap((a) => a?.recipes ?? []) }
+    }))
+  }
+  const results = await Promise.all(texts.map(async (whole) => {
+    const pieces = recipe ? splitLong(whole, size) : [whole]
+    let start = 0
+    const jobs = pieces.map((piece, k) => {
+      const nb = numbered(piece, start)
+      start += nb.byId.size
+      return lrGeminiCall(model, nb, recipe, f, pieces.length > 1 ? k + 1 : 0, pieces.length)
+    })
+    const answers = await Promise.all(jobs)
+    return pieces.length > 1 ? mergeChunks(answers, recipe)[0] : answers[0]
+  }))
+  return results
+}
+
+async function lrGeminiCall(model: string, nb: { body: string; byId: Map<number, string> }, recipe: boolean, f: typeof fetch, part = 0, of = 1): Promise<unknown> {
+  {
+    const { body: doc, byId } = nb
+    const partNote = part
+      ? `This is part ${part} of ${of} of a longer document. If the part begins in the middle of a recipe, return those lines in a first recipe with titleText null.\n`
+      : ''
+    const body = {
+      systemInstruction: { parts: [{ text: recipe ? LR_RECIPE + (process.env.LR_COMPACT ? LR_COMPACT_NOTE : '') : LR_INVOICE }] },
+      contents: [{ role: 'user', parts: [{ text: `${partNote}DOCUMENT:\n${doc}` }, { text: `Transcribe the ${recipe ? 'recipe' : 'invoice'} document above following the rules.` }] }],
+      ...(process.env.GEMINI_TIER ? { serviceTier: process.env.GEMINI_TIER } : {}),
+      generationConfig: {
+        responseMimeType: 'application/json',
+        responseSchema: recipe ? (process.env.LR_COMPACT ? compactSchema() : LR_RECIPE_SCHEMA) : LR_INVOICE_SCHEMA,
+        thinkingConfig: { thinkingLevel: process.env.LR_THINK ?? 'low' },
+        maxOutputTokens: 32768,
+      },
+    }
+    const res = await f(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+    })
+    const raw = await res.text()
+    if (!res.ok) throw new Error(`Gemini ${res.status}: ${raw.slice(0, 300)}`)
+    const j = JSON.parse(raw)
+    const t = (j.candidates?.[0]?.content?.parts ?? []).filter((p: { thought?: boolean; text?: string }) => !p.thought && p.text).map((p: { text: string }) => p.text).join('')
+    if (!t) throw new Error(`Gemini returned no content (${j.candidates?.[0]?.finishReason})`)
+    const parsed = recipe && process.env.LR_COMPACT ? expandCompact(JSON.parse(t)) : JSON.parse(t)
+    return resolveLines(parsed, byId, recipe)
+  }
+}
+
+function lrClaudeSchema(recipe: boolean): unknown {
+  return lowerTypes(recipe ? LR_RECIPE_SCHEMA : LR_INVOICE_SCHEMA)
+}
+
+async function lrClaude(model: string, input: ExtractInput, f: typeof fetch): Promise<unknown[]> {
+  const texts = await lrTexts(input)
+  if (!texts) return efClaude(model, input, f)
+  const recipe = input.type === 'recipe'
+  return Promise.all(texts.map(async (text) => {
+    const { body: doc, byId } = numbered(text)
+    const prompt = recipe ? LR_RECIPE : LR_INVOICE
+    const body: Record<string, unknown> = {
+      model,
+      max_tokens: 32000,
+      system: process.env.CL_CACHE ? [{ type: 'text', text: prompt, cache_control: { type: 'ephemeral' } }] : prompt,
+      messages: [{ role: 'user', content: [{ type: 'text', text: `DOCUMENT:\n${doc}` }, { type: 'text', text: `Transcribe the ${recipe ? 'recipe' : 'invoice'} document above following the rules.` }] }],
+      output_config: { effort: process.env.CL_EFFORT ?? 'low', format: { type: 'json_schema', schema: lrClaudeSchema(recipe) } },
+      ...(process.env.CL_THINK === 'disabled' ? { thinking: { type: 'disabled' } } : {}),
+    }
+    const res = await f('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-api-key': ANTHROPIC_KEY, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify(body),
+    })
+    const raw = await res.text()
+    if (!res.ok) throw new Error(`Claude ${res.status}: ${raw.slice(0, 300)}`)
+    const j = JSON.parse(raw)
+    const t = (j.content ?? []).filter((b: { type: string }) => b.type === 'text').map((b: { text: string }) => b.text).join('')
+    return resolveLines(JSON.parse(t), byId, recipe)
+  }))
+}
+
 /* ---------- jobs ---------- */
 type Case = { id: string; path: string; type: DocumentType }
 const cases: Case[] = JSON.parse(readFileSync(casesFile, 'utf8'))
@@ -388,7 +668,10 @@ async function job(c: Case, run: number) {
   const f = recordingFetch(calls)
   const input = await prepareInput({ type: c.type, fileName: basename(c.path), mimeType: '', buffer: readFileSync(c.path) })
   const t0 = Date.now()
-  const rec: Record<string, unknown> = { arm, case: c.id, run, type: c.type }
+  const rec: Record<string, unknown> = {
+    arm, case: c.id, run, type: c.type,
+    settings: Object.fromEntries(['EF_SHEETS', 'EF_IMAGES', 'EF_MEDIA', 'LR_THINK', 'LR_CHUNK', 'LR_OUTLINE', 'LR_COMPACT', 'GEMINI_TIER', 'CL_THINK', 'CL_CACHE', 'CL_EFFORT'].map((k) => [k, process.env[k] ?? null])),
+  }
   try {
     const [kind, model] = arm.split(':')
     if (kind === 'm3-gemini' || kind === 'm3-pair' || kind === 'm3-claude') {
@@ -405,6 +688,10 @@ async function job(c: Case, run: number) {
       rec.ef = await efGemini(model, input, f)
     } else if (kind === 'ef-claude') {
       rec.ef = await efClaude(model, input, f)
+    } else if (kind === 'lr-gemini') {
+      rec.ef = await lrGemini(model, input, f)
+    } else if (kind === 'lr-claude') {
+      rec.ef = await lrClaude(model, input, f)
     } else throw new Error(`unknown arm ${arm}`)
   } catch (e) {
     rec.error = redact(String((e as Error)?.message ?? e)).slice(0, 600)

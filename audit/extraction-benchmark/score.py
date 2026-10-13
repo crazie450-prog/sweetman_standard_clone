@@ -14,6 +14,9 @@ CHECK_SRC = {
     "invoice_photo": None,
     "synthetic_invoice": TXT + "synthetic_invoice.pdf.txt",
 }
+if hasattr(gold, "HO"):
+    CHECK_SRC.update({k: gold.HO + "/%s.pdf.txt" % k for k in ("h1_template_invoice", "h2_distributor_invoice", "h4_credit_memo")})
+    CHECK_SRC["h3_produce_photo"] = None
 SCORE_SRC = dict(gold.CASES)
 SCORE_SRC["synthetic_invoice"] = dict(gold.CASES["synthetic_invoice"], src=TXT + "synthetic_invoice.pdf.txt")
 
@@ -66,6 +69,7 @@ UNIT = {
     "clove": "clove", "cloves": "clove", "bunch": "bunch", "bunches": "bunch", "slice": "slice",
     "slices": "slice", "pinch": "pinch", "pinches": "pinch", "cs": "case", "case": "case", "cases": "case",
     "can": "can", "pack": "pack", "packs": "pack", "bag": "bag", "bx": "box", "box": "box",
+    "floz": "floz", "fl.oz": "floz", "fl.oz.": "floz", "fluidounce": "floz", "fluidounces": "floz",
 }
 COUNT = {None, "ea"}
 
@@ -85,6 +89,19 @@ def canon_unit(u):
         return UNIT[lo]
     if lo.endswith("s") and lo[:-1] in UNIT:
         return UNIT[lo[:-1]]
+    # unit phrases copied verbatim: "(1 Gallon) Ziplock Bags", "ears of", "one Gallon Ziplock Bags"
+    words = [w for w in re.sub(r"\(.*?\)", " ", s.lower()).replace(",", " ").split() if w not in ("of", "a", "the")]
+    for w in reversed(words):
+        w2 = w.rstrip(".")
+        if w2 in UNIT:
+            return UNIT[w2]
+        if w2.endswith("s") and w2[:-1] in UNIT:
+            return UNIT[w2[:-1]]
+        if w2 in ("ear", "ears", "bag", "bags", "bottle", "bottles", "flat", "flats", "clamshell", "head", "heads",
+                  "stick", "sticks", "bone", "bones", "scoop", "scoops", "sheet", "sheets"):
+            return w2.rstrip("s") if w2.endswith("s") and len(w2) > 3 else w2
+    if not words:
+        return None
     return lo[:-1] if lo.endswith("s") and len(lo) > 3 else lo
 
 
@@ -216,18 +233,35 @@ def m3_recipe_lines(payloads):
     return lines, recipes
 
 
+
+
 def ef_recipe_lines(efs, check_src, textual=True):
     lines, recipes, kinds = [], 0, []
     for doc in efs or []:
         kinds.append(doc.get("documentKind"))
         for r in doc.get("recipes") or []:
             recipes += 1
-            for ln in r.get("lines") or []:
+            entries = r.get("lines") or []
+            claimed = Counter(ln.get("evidence") for ln in entries if ln.get("quantityText"))
+            for ln in entries:
                 q = parse_qty(ln.get("quantityText"))
                 u = canon_unit(ln.get("unitText"))
-                lines.append(dict(name=ln.get("nameText", ""), qty=q, unit=u, flag=ef_flag(ln, q, check_src, textual),
+                flag = ef_flag(ln, q, check_src, textual)
+                # Line accounting: an entry with no amount on a shared printed line ("..., Veal Demi, Rosemary") is
+                # only suspect when the line shows more amounts than its sibling entries claim.
+                if CHECKS_V2 and flag == "evidence shows an amount the line lacks" and \
+                        len(re.findall(_QU, ln.get("evidence") or "", re.I)) <= claimed[ln.get("evidence")]:
+                    flag = None
+                lines.append(dict(name=ln.get("nameText", ""), qty=q, unit=u, flag=flag,
                                   section=ln.get("section"), ev=ln.get("evidence")))
     return lines, recipes, kinds
+
+
+CHECKS_V2 = os.environ.get("CHECKS_V2") == "1"  # line accounting + unit-inside-name (added after round 2)
+UNIT_WORDS = set("""slice slices bunch bunches ear ears cup cups clove cloves pinch head heads stick sticks bag bags sheet
+sheets can cans oz ounce ounces lb lbs pound pounds sprig sprigs dash piece pieces scoop scoops bottle bottles tbsp tsp
+tablespoon tablespoons teaspoon teaspoons quart quarts pint pints gallon gallons qt qts pt gal g kg ml liter liters pack
+packs packet packets box boxes case cases jar jars container containers clamshell clamshells flat flats""".split())
 
 
 def ef_flag(ln, q, src, textual=True):
@@ -251,6 +285,8 @@ def ef_flag(ln, q, src, textual=True):
         return "name not in evidence"
     if merged(nm):
         return "several amounts in one line"
+    if CHECKS_V2 and not ut and nm.split() and nm.split()[0].lower().strip("(,.") in UNIT_WORDS:
+        return "unit inside name"
     if not qt and not ln.get("amountNote") and re.search(_QU, ev, re.I):
         return "evidence shows an amount the line lacks"
     if src is None:
@@ -302,6 +338,8 @@ def ef_invoice_lines(efs, check_src):
                     price, flag = round(total / qty, 4), "computed price"
                 if qty is not None and price is not None and total is not None and abs(qty * price - total) > max(0.02, abs(total) * 0.005):
                     flag = flag or "qty x price != total"
+                if r.get("kind") in ("item", "credit") and qty is None and price is None and total is None:
+                    flag = flag or "row has no amounts"
                 if check_src is None:
                     flag = flag or "no text layer"
                 elif norm_src(r.get("evidence"))[:25] not in norm_src(check_src) and not (
@@ -330,11 +368,13 @@ def score_recipe(case, lines, src_text):
         ref = autoref.reference(case)
         res["ref_total"] = len(ref)
         taken = set()
-        for (rn, rq, ru) in ref:
+        for (rn, rq, ru, rline) in ref:
             for i, ln in enumerate(lines):
                 if i in taken or merged(ln["name"]):
                     continue
-                u_ok = ln["unit"] == ru or (ru in COUNT and ln["unit"] in COUNT)
+                # a count item may be read with any unit word printed on its own line ("4 ... Ziplock Bags")
+                u_ok = ln["unit"] == ru or (ru in COUNT and ln["unit"] in COUNT) or (
+                    ru is None and ln["unit"] and ln["unit"][:3] in norm_src(rline))
                 if num_eq(ln["qty"], rq) and u_ok and sim(ln["name"], rn) >= 0.5:
                     taken.add(i)
                     res["ref_found"] += 1
@@ -436,7 +476,7 @@ def score_invoice(case, lines, hdr):
         used.add(best)
         ln = lines[best]
         if gl["kind"] == "fee":
-            if ln.get("kind") == "fee":
+            if ln.get("kind") in ("fee", "deposit", "discount", "other"):
                 res["fee_separated"] += 1
                 det.append(("fee_separated", ln))
             else:
@@ -456,8 +496,12 @@ def score_invoice(case, lines, hdr):
         det.append((c, ln, gl))
     for i, ln in enumerate(lines):
         if i not in used:
-            res["invented"] += 1
-            det.append(("invented", ln))
+            if ln.get("kind") not in ("item", "credit"):
+                res["non_stock_row"] += 1  # fee/discount/other rows never become stock lines
+                det.append(("non_stock_row", ln))
+            else:
+                res["invented"] += 1
+                det.append(("invented", ln))
     res["gold_required"] = sum(1 for x in g["lines"] if x["kind"] in ("item", "credit"))
     # header
     hd = hdr[0] if hdr else (None, None, None)
@@ -480,13 +524,16 @@ def cost_of(calls):
         if not key:
             continue
         pin, pout = PRICE[key]
-        if "promptTokenCount" in u:
-            i = u.get("promptTokenCount", 0)
-            o = u.get("candidatesTokenCount", 0) + u.get("thoughtsTokenCount", 0)
-        else:
-            i = u.get("input_tokens", 0) + u.get("cache_read_input_tokens", 0) + u.get("cache_creation_input_tokens", 0)
+        if "promptTokenCount" in u:  # Gemini: implicit-cache hits are billed at 10% of input
+            cached = u.get("cachedContentTokenCount", 0) or 0
+            i = u.get("promptTokenCount", 0) - cached + 0.1 * cached
+            o = u.get("candidatesTokenCount", 0) + (u.get("thoughtsTokenCount", 0) or 0)
+        else:  # Claude: cache reads 0.1x, 5-minute cache writes 1.25x
+            i = (u.get("input_tokens", 0) or 0) + 0.1 * (u.get("cache_read_input_tokens", 0) or 0) + \
+                1.25 * (u.get("cache_creation_input_tokens", 0) or 0)
             o = u.get("output_tokens", 0)
-        total += i / 1e6 * pin + o / 1e6 * pout
+        tier = 0.5 if u.get("serviceTier") == "flex" else 1.0  # Gemini Flex: half price, best-effort queue
+        total += tier * (i / 1e6 * pin + o / 1e6 * pout)
     return total
 
 
@@ -571,3 +618,29 @@ if __name__ == "__main__":
         rows = evaluate(d)
         print("==", os.path.basename(d), len(rows), "jobs")
         print(dict(summarize(rows)))
+
+
+# ---------------- missed-line check (recall guard, production-style) ----------------
+_LEAD = re.compile(r"^\s*[-•*]?\s*(?:\d+\s+\d/\d|\d+-\d/\d|\d*\.?\d+/\d+|\d*\.\d+|\d+|[½¼¾⅓⅔⅛])\s*(?:[a-zA-Z#\"”]|\()")
+
+
+def ingredient_like(line):
+    """A printed line that starts with an amount, as ingredient lines do (method sentences start with a verb)."""
+    t = line.strip()
+    if len(t) > 90 or not _LEAD.match(t):
+        return False
+    return not re.match(r"^\s*\d+\s*(?:min|minutes|hours?|degrees|°|servings?|guests?|portions?|tartlets?)\b", t, re.I)
+
+
+def missed_lines(source_text, evidences):
+    """Ingredient-like source lines that no extracted entry points at."""
+    if not source_text:
+        return []
+    covered = norm_src(" || ".join(e or "" for e in evidences))
+    out = []
+    for line in source_text.splitlines():
+        if ingredient_like(line):
+            key = norm_src(line).strip()[:40]
+            if key and key not in covered:
+                out.append(line.strip())
+    return out

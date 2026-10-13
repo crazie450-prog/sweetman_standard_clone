@@ -3,3 +3,9 @@ cases.json
 keys.env
 *.env
 __pycache__/
+cases_all.json
+cases_holdout.json
+/review.json
+/study.json
+/cascade.json
+/costmodel.json

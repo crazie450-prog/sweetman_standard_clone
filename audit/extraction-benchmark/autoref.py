@@ -15,9 +15,11 @@ def parse_item(seg):
         return None
     q = score.parse_qty(m.group(1))
     name = re.sub(r"\(.*?\)", "", m.group(3)).strip(" .:-")
+    # "Ziplock Bags of Collard Greens" -> "Collard Greens": a container phrase is not part of the ingredient
+    name = re.sub(r"^.*?\b(?:bags?|pieces?|ears?|cans?|boxes|box|cases?|packs?|bunch(?:es)?)\s+of\s+", "", name, flags=re.I)
     if q is None or not score.toks(name) or len(name) > 60:
         return None
-    return (name, q, score.canon_unit(m.group(2)) if m.group(2) else None)
+    return (name, q, score.canon_unit(m.group(2)) if m.group(2) else None, seg)
 
 
 def ref_text_lists(text):
@@ -45,22 +47,27 @@ def ref_bonds(text):
             if m:
                 q = score.parse_qty(m.group(1))
                 u = score.canon_unit(m.group(2).rstrip(".")) if m.group(2) else None
-                out.append((cols[2].strip(), q, u))
+                out.append((cols[2].strip(), q, u, line))
     return out
 
 
-BAD = ("guests", "b&b recipe", "batch", "pie per order", "raw pie shells", "morel spice", "cinnamon coffee rub",
-       "turnip and", "cake: see", "of corn", "crushed small")
+BAD = ("guests", "b&b recipe", "v&c recipe", "batch", "pie per order", "raw pie shells", "morel spice",
+       "chanterelle spice", "cinnamon coffee rub", "cocoa chili rub", "turnip and", "cake: see", "of corn",
+       "crushed small")
+# items hidden by the parsing artefacts above ("5” Raw Pie Shells" is a size, not a count, so it is not an item)
 EXTRA = {"bnb_event": [("Morel Powder", 1.0, "qt"), ("Cinnamon Coffee Rub", 1.0, "qt"), ("Turnip", 10.0, "lb"),
-                       ("Mustard Greens", 10.0, "lb"), ("Raw Pie Shells", 5.0, None)],
-         "collard": [("Corn", 2.0, "ear")]}
+                       ("Mustard Greens", 10.0, "lb")],
+         "collard": [("Corn", 2.0, "ear")],
+         "h_vc_event": [("Chanterelle Powder", 2.0, "qt"), ("Cocoa Chili Rub", 2.0, "qt"), ("Turnip", 14.0, "lb"),
+                        ("Mustard Greens", 14.0, "lb")],
+         "h_chard": [("Corn", 2.0, "ear")]}
 
 
 def reference(case):
     src = open(score.SCORE_SRC[case]["src"]).read()
     ref = ref_bonds(src) if case == "bonds_sheet" else ref_text_lists(src)
     ref = [r for r in ref if not any(b in r[0].lower() for b in BAD)]
-    return ref + EXTRA.get(case, [])
+    return ref + [(n, q, u, n) for (n, q, u) in EXTRA.get(case, [])]
 
 
 if __name__ == "__main__":

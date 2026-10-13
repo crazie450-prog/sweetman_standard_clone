@@ -217,9 +217,108 @@ INV["synthetic_invoice"] = dict(vendor="coastline", number="CF-0098812", date="2
 ])
 
 
-if __name__ == "__main__":  # writes cases.json for runner.ts (absolute paths for this checkout)
+# =============================================================== HOLDOUT SET (never used to tune prompts or checks)
+HO = DOC + "/holdout"
+HOLDOUT = {
+    "h_kanpachi": dict(path=HO + "/kanpachi.txt", type="recipe", src=HO + "/kanpachi.txt", kind="word"),
+    "h_leek": dict(path=HO + "/leek.txt", type="recipe", src=HO + "/leek.txt", kind="word"),
+    "h_roe": dict(path=HO + "/roe.txt", type="recipe", src=HO + "/roe.txt", kind="word"),
+    "h_quail": dict(path=HO + "/quail.docx", type="recipe", src=HO + "/quail.docx.txt", kind="word"),
+    "h_vc_event": dict(path=HO + "/vc_event.txt", type="recipe", src=HO + "/vc_event.txt", kind="word"),
+    "h_chard": dict(path=HO + "/chard.txt", type="recipe", src=HO + "/chard.txt", kind="word"),
+    "h1_template_invoice": dict(path=HO + "/h1_template_invoice.pdf", type="invoice", src=None, kind="invoice"),
+    "h2_distributor_invoice": dict(path=HO + "/h2_distributor_invoice.pdf", type="invoice", src=None, kind="invoice"),
+    "h3_produce_photo": dict(path=HO + "/h3_produce_photo.jpg", type="invoice", src=None, kind="invoice"),
+    "h4_credit_memo": dict(path=HO + "/h4_credit_memo.pdf", type="invoice", src=None, kind="invoice"),
+}
+CASES.update(HOLDOUT)
+
+R["h_kanpachi"] = dict(recipes=(1, 2), lines=[
+    (["soy sauce"], 1 / 3, "cup", ""),
+    (["lime juice"], 1 / 3, "cup", ""),
+    (["cashew oil"], 1 / 3, "cup", ""),
+    (["rice wine vinegar"], 1 / 3, "cup", ""),
+    (["scallions", "scallion"], 2, "ea", ""),
+    (["garlic"], (2, 4), "clove", ""),
+    (["shallots", "shallot"], (2, 4), "ea", ""),
+    (["ginger root", "ginger"], 2, "ea", ""),
+    (["jalapeno pepper", "jalapeño pepper", "jalapeno"], 2, "ea", ""),
+    (["raw kanpachi", "kanpachi"], 1, "lb", "opt"),
+    (["taro root"], 1, "ea", "opt"),
+    (["black roe", "roe"], 1, "oz", "opt"),
+    (["salt"], None, None, "opt"),
+    (["pepper", "black pepper"], None, None, "opt"),
+    (["fried nori", "nori", "seaweed"], None, None, "opt"),
+    (["cashew oil for frying"], None, None, "opt"),
+    (["soy-lime vinaigrette", "soy lime vinaigrette", "vinaigrette"], None, None, "opt"),
+    (["cucumber and red onion salad"], None, None, "opt"),
+], unlisted=[])
+R["h_leek"] = dict(recipes=1, lines=[
+    (["butter"], 1, "tbsp", ""),
+    (["leeks", "leek", "musselburgh leeks"], 2, "ea", ""),
+    (["sugar"], 2, "tsp", ""),
+    (["eggs", "egg"], 5, "ea", ""),
+    (["heavy cream"], 0.5, "cup", ""),
+    (["dijon mustard"], 1, "tbsp", ""),
+    (["celery salt"], 1, "pinch", "alt_none"),
+    (["cayenne pepper", "cayenne"], 1, "pinch", "alt_none"),
+    (["basic pie dough", "pie dough"], None, None, "opt"),
+    (["caramelized leeks"], None, None, "opt"),
+    (["custard"], None, None, "opt"),
+], unlisted=["nonstick cooking spray", "cooking spray", "pie weights", "dried beans"])
+R["h_roe"] = dict(recipes=(1, 2), lines=[
+    (["active dry yeast", "yeast"], 1 / 3, "tsp", ""),
+    (["warm milk"], 1 / 3, "cup", ""),
+    (["egg", "large egg"], 1, "ea", ""),
+    (["sugar"], 2, "tsp", ""),
+    (["kosher salt"], 1 / 3, "tsp", ""),
+    (["ap flour", "all-purpose flour", "all purpose flour"], 0.5, "cup", ""),
+    (["cold whole milk", "whole milk"], 1, "cup", ""),
+    (["clarified butter"], 2 / 3, "cup", ""),
+    (["smoked whitefish"], 6, "slice", ""),
+    (["smoked steelhead"], 6, "slice", ""),
+    (["home-cured steelhead", "cured steelhead"], 6, "slice", ""),
+    (["sour cream"], None, None, ""),
+    (["steelhead roe"], 1, "oz", ""),
+    (["chives"], 1 / 3, "bunch", ""),
+], unlisted=["buckwheat flour"])
+R["h_quail"] = dict(recipes=(1, 2), lines=[
+    (["eggs"], 6, "ea", ""),
+    (["whole milk"], 10, "cup", ""),
+    (["cream"], 4, "cup", ""),
+    (["a.p. flour", "ap flour", "flour"], 13, "cup", ""),
+    (["clarified butter"], 9, "tbsp", ""),
+    (["sesame oil"], 2, "tbsp", ""),
+    (["green onions"], 2, "bunch", ""),
+    (["salt"], None, None, ""),
+    (["white pepper"], None, None, ""),
+    (["quail meat", "quail meat shredded"], 1, ("ea", "whole"), ""),
+    (["plum sauce"], 1, "oz", ""),
+    (["hoisin sauce"], 2, "tbsp", ""),
+    (["chopped cilantro", "cilantro"], 1 / 3, "tbsp", ""),
+    (["pancake batter"], None, None, "opt"),
+    (["quail filling"], None, None, "opt"),
+], unlisted=[])
+R["h_vc_event"] = dict(recipes=(1, 40), lines=None, unlisted=[])
+R["h_chard"] = dict(recipes=(5, 22), lines=None, unlisted=[])
+import json as _json
+INV.update(_json.load(open(HO + "/gold_invoices.json")))
+for _g in INV.values():
+    for _l in _g["lines"]:
+        _l["ok"] = [tuple(x) for x in _l["ok"]]
+
+
+if __name__ == "__main__":  # writes the case lists for runner.ts (absolute paths for this checkout)
     import json
-    json.dump([dict(id=k, path=v["path"], type=v["type"]) for k, v in CASES.items()],
-              open(os.path.join(DOCS, "cases.json"), "w"), indent=1)
+
+    def dump(name, cases):
+        json.dump([dict(id=k, path=v["path"], type=v["type"]) for k, v in cases.items()],
+                  open(os.path.join(DOCS, name), "w"), indent=1)
+
+    dev = {k: v for k, v in CASES.items() if k not in HOLDOUT}
+    dump("cases.json", dev)
+    dump("cases_holdout.json", HOLDOUT)
+    dump("cases_all.json", CASES)
     missing = [k for k, v in CASES.items() if not os.path.exists(v["path"])]
-    print(len(CASES), "cases written to cases.json", "MISSING: %s" % missing if missing else "(all files present)")
+    print("%d dev + %d held-out cases written (cases.json, cases_holdout.json, cases_all.json)" % (len(dev), len(HOLDOUT)),
+          "MISSING: %s" % missing if missing else "(all files present)")
