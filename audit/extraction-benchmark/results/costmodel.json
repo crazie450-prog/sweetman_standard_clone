@@ -1,0 +1,405 @@
+{
+ "M3 today": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.00125381,
+    "p50": 1.4905,
+    "max": 2.914
+   },
+   "Long multi-recipe document": {
+    "cost": 0.015364925,
+    "p50": 9.741,
+    "max": 14.13
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.007814053333333333,
+    "p50": 5.185,
+    "max": 6.077
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.0017594455555555554,
+    "p50": 1.88,
+    "max": 3.766
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0012612533333333333,
+    "p50": 1.466,
+    "max": 4.994
+   },
+   "Invoice photo": {
+    "cost": 0.0011373666666666666,
+    "p50": 1.3565,
+    "max": 1.559
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.00125381,
+    "p50": 1.4905,
+    "max": 2.914
+   },
+   "Long multi-recipe document": {
+    "cost": 0.015364925,
+    "p50": 9.741,
+    "max": 14.13
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.007814053333333333,
+    "p50": 5.185,
+    "max": 6.077
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.0017594455555555554,
+    "p50": 1.88,
+    "max": 3.766
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0012612533333333333,
+    "p50": 1.466,
+    "max": 4.994
+   },
+   "Invoice photo": {
+    "cost": 0.0011373666666666666,
+    "p50": 1.3565,
+    "max": 1.559
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 0.3715347488888888,
+   "One location, a normal month": 0.18081516166666667,
+   "100 locations, a normal month (+8 onboardings)": 21.053794157777777
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 0.3715347488888888,
+   "One location, a normal month": 0.18081516166666667,
+   "100 locations, a normal month (+8 onboardings)": 21.053794157777777
+  }
+ },
+ "Evidence-first + 3.8 Flash (audit brief)": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.00405565,
+    "p50": 6.406,
+    "max": 9.839
+   },
+   "Long multi-recipe document": {
+    "cost": 0.037251175,
+    "p50": 54.337,
+    "max": 73.16
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.0317095,
+    "p50": 23.826,
+    "max": 25.151
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.006977016666666666,
+    "p50": 8.653,
+    "max": 13.473
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.00407877,
+    "p50": 5.214,
+    "max": 11.62
+   },
+   "Invoice photo": {
+    "cost": 0.003306,
+    "p50": 4.823,
+    "max": 6.552
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.0081113,
+    "p50": 6.406,
+    "max": 9.839
+   },
+   "Long multi-recipe document": {
+    "cost": 0.07450235,
+    "p50": 54.337,
+    "max": 73.16
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.063419,
+    "p50": 23.826,
+    "max": 25.151
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.013954033333333333,
+    "p50": 8.653,
+    "max": 13.473
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.00815754,
+    "p50": 5.214,
+    "max": 11.62
+   },
+   "Invoice photo": {
+    "cost": 0.006612,
+    "p50": 4.823,
+    "max": 6.552
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 1.1287436666666668,
+   "One location, a normal month": 0.565008025,
+   "100 locations, a normal month (+8 onboardings)": 65.53075183333333
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 2.2574873333333336,
+   "One location, a normal month": 1.13001605,
+   "100 locations, a normal month (+8 onboardings)": 131.06150366666665
+  }
+ },
+ "A. Recommended": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.002640925,
+    "p50": 4.068,
+    "max": 8.153
+   },
+   "Long multi-recipe document": {
+    "cost": 0.025497431666666667,
+    "p50": 23.1725,
+    "max": 48.319
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.0189115,
+    "p50": 11.279,
+    "max": 11.428
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.007967988888888888,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.00283585,
+    "p50": 4.643,
+    "max": 7.648
+   },
+   "Invoice photo": {
+    "cost": 0.004081266666666666,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.00528185,
+    "p50": 4.068,
+    "max": 8.153
+   },
+   "Long multi-recipe document": {
+    "cost": 0.05035024416666667,
+    "p50": 23.1725,
+    "max": 48.319
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.037823,
+    "p50": 11.279,
+    "max": 11.428
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.013829255555555555,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0056717,
+    "p50": 4.643,
+    "max": 7.648
+   },
+   "Invoice photo": {
+    "cost": 0.007175516666666667,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 0.8278195388888889,
+   "One location, a normal month": 0.45347514833333336,
+   "100 locations, a normal month (+8 onboardings)": 51.97007114444444
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 1.5965248305555557,
+   "One location, a normal month": 0.8703750108333334,
+   "100 locations, a normal month (+8 onboardings)": 99.80969972777778
+  }
+ },
+ "B. Haiku for text": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.0011454100000000001,
+    "p50": 7.5685,
+    "max": 10.935
+   },
+   "Long multi-recipe document": {
+    "cost": 0.008539541666666668,
+    "p50": 53.164,
+    "max": 58.336
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.006830466666666667,
+    "p50": 18.776,
+    "max": 19.354
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.007967988888888888,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0009934466666666666,
+    "p50": 6.159,
+    "max": 8.38
+   },
+   "Invoice photo": {
+    "cost": 0.004081266666666666,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.0011454100000000001,
+    "p50": 7.5685,
+    "max": 10.935
+   },
+   "Long multi-recipe document": {
+    "cost": 0.008539541666666668,
+    "p50": 53.164,
+    "max": 58.336
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.006830466666666667,
+    "p50": 18.776,
+    "max": 19.354
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.013829255555555555,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0009934466666666666,
+    "p50": 6.159,
+    "max": 8.38
+   },
+   "Invoice photo": {
+    "cost": 0.007175516666666667,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 0.44253573888888886,
+   "One location, a normal month": 0.2557458083333333,
+   "100 locations, a normal month (+8 onboardings)": 29.11486674444444
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 0.5890674055555556,
+   "One location, a normal month": 0.3661571083333333,
+   "100 locations, a normal month (+8 onboardings)": 41.32825007777778
+  }
+ },
+ "C. Flash-Lite for text": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.002326186666666667,
+    "p50": 1.9405,
+    "max": 2.456
+   },
+   "Long multi-recipe document": {
+    "cost": 0.022977594166666667,
+    "p50": 7.47,
+    "max": 15.275
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.0166591,
+    "p50": 6.402,
+    "max": 6.587
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.007967988888888888,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0025267066666666664,
+    "p50": 1.848,
+    "max": 3.315
+   },
+   "Invoice photo": {
+    "cost": 0.004081266666666666,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.002326186666666667,
+    "p50": 1.9405,
+    "max": 2.456
+   },
+   "Long multi-recipe document": {
+    "cost": 0.022977594166666667,
+    "p50": 7.47,
+    "max": 15.275
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.0166591,
+    "p50": 6.402,
+    "max": 6.587
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.013829255555555555,
+    "p50": 18.136,
+    "max": 25.94
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.0025267066666666664,
+    "p50": 1.848,
+    "max": 3.315
+   },
+   "Invoice photo": {
+    "cost": 0.007175516666666667,
+    "p50": 8.98,
+    "max": 20.448
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 0.758095363888889,
+   "One location, a normal month": 0.41998502749999994,
+   "100 locations, a normal month (+8 onboardings)": 48.06326566111111
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 0.9046270305555556,
+   "One location, a normal month": 0.5303963275,
+   "100 locations, a normal month (+8 onboardings)": 60.27664899444444
+  }
+ },
+ "_scenarios": {
+  "Onboard one restaurant (one-off)": {
+   "Short recipe (Word/PDF text)": 120,
+   "Long multi-recipe document": 10,
+   "Workbook (recipe sheets)": 3,
+   "Handwritten recipe photo": 25
+  },
+  "One location, a normal month": {
+   "Short recipe (Word/PDF text)": 10,
+   "Long multi-recipe document": 1,
+   "Handwritten recipe photo": 3,
+   "Invoice PDF (text layer)": 90,
+   "Invoice photo": 30
+  },
+  "100 locations, a normal month (+8 onboardings)": {
+   "Short recipe (Word/PDF text)": 1960,
+   "Long multi-recipe document": 180,
+   "Workbook (recipe sheets)": 24,
+   "Handwritten recipe photo": 500,
+   "Invoice PDF (text layer)": 9000,
+   "Invoice photo": 3000
+  }
+ }
+}

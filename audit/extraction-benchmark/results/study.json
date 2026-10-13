@@ -1,0 +1,1073 @@
+{
+ "M3 today (gemini mode, default alias)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 85.00428449014568,
+   "recall": 89.36936936936937,
+   "errors": 57,
+   "unflagged": 57,
+   "review_share": 0.0,
+   "clean": 47.05882352941177,
+   "identical": 7,
+   "cases": 17,
+   "failures": 0,
+   "p50": 1.495,
+   "p95": 11.385,
+   "cost": 0.003194861764705881
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 85.13189448441247,
+   "recall": 91.37709137709138,
+   "errors": 57,
+   "unflagged": 57,
+   "review_share": 0.0,
+   "clean": 26.666666666666668,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 1.7655,
+   "p95": 14.079,
+   "cost": 0.0042626439999999995
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 85.05747126436782,
+   "recall": 90.19607843137256,
+   "errors": 114,
+   "unflagged": 114,
+   "review_share": 0.0,
+   "clean": 39.50617283950617,
+   "identical": 11,
+   "cases": 27,
+   "failures": 0,
+   "p50": 1.598,
+   "p95": 13.261,
+   "cost": 0.0035903366666666654,
+   "ci": [
+    66.50485436893204,
+    92.45498713918262
+   ]
+  }
+ },
+ "Evidence-first + Gemini 3.8 Flash (brief's recommendation)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.72997299729973,
+   "recall": 99.81981981981981,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.496794871794872,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.331,
+   "p95": 39.029,
+   "cost": 0.00964410588235294
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.22879177377892,
+   "recall": 99.35649935649936,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 1.5544041450777202,
+   "clean": 96.66666666666667,
+   "identical": 5,
+   "cases": 10,
+   "failures": 0,
+   "p50": 6.943,
+   "p95": 60.336,
+   "cost": 0.01077643
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.52355743779778,
+   "recall": 99.6290408055114,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.597379123361952,
+   "clean": 97.53086419753086,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.727,
+   "p95": 58.267,
+   "cost": 0.010063485185185187,
+   "ci": [
+    98.92328398384926,
+    100.0
+   ]
+  }
+ },
+ "Evidence-first + Gemini 3.5 Flash-Lite": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 95.93998234774934,
+   "recall": 97.92792792792793,
+   "errors": 23,
+   "unflagged": 0,
+   "review_share": 10.543933054393305,
+   "clean": 84.31372549019608,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.628,
+   "p95": 21.546,
+   "cost": 0.006621096078431369
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 90.18867924528301,
+   "recall": 92.27799227799228,
+   "errors": 18,
+   "unflagged": 0,
+   "review_share": 2.6448362720403025,
+   "clean": 63.333333333333336,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.795,
+   "p95": 23.353,
+   "cost": 0.006988247999999999
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 93.56846473029046,
+   "recall": 95.60148383677796,
+   "errors": 41,
+   "unflagged": 0,
+   "review_share": 7.390648567119156,
+   "clean": 76.54320987654322,
+   "identical": 15,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.709,
+   "p95": 23.074,
+   "cost": 0.006757078271604938,
+   "ci": [
+    85.81632653061224,
+    98.0849790544584
+   ]
+  }
+ },
+ "Evidence-first + Claude Haiku 5.5": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 96.41255605381166,
+   "recall": 96.84684684684684,
+   "errors": 5,
+   "unflagged": 0,
+   "review_share": 10.856658184902459,
+   "clean": 84.31372549019608,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 7.908,
+   "p95": 62.539,
+   "cost": 0.0026529392156862744
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 94.98069498069498,
+   "recall": 94.98069498069498,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.7793594306049823,
+   "clean": 76.66666666666667,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.8245,
+   "p95": 68.593,
+   "cost": 0.0031028733333333335
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 95.8245243128964,
+   "recall": 96.07843137254902,
+   "errors": 5,
+   "unflagged": 0,
+   "review_share": 7.072205736894164,
+   "clean": 81.48148148148148,
+   "identical": 20,
+   "cases": 27,
+   "failures": 0,
+   "p50": 7.885,
+   "p95": 63.851,
+   "cost": 0.0028195814814814804,
+   "ci": [
+    90.94339622641509,
+    99.17141377524598
+   ]
+  }
+ },
+ "Line-reference + Gemini 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.72997299729973,
+   "recall": 99.81981981981981,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 9.95405819295559,
+   "clean": 98.03921568627452,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.308,
+   "p95": 45.334,
+   "cost": 0.007295304411764706
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.61389961389962,
+   "recall": 99.61389961389962,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.934826883910387,
+   "clean": 100.0,
+   "identical": 5,
+   "cases": 10,
+   "failures": 0,
+   "p50": 6.515,
+   "p95": 48.138,
+   "cost": 0.007970209999999998
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.6822033898305,
+   "recall": 99.73502914679385,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.5122377622377625,
+   "clean": 98.76543209876543,
+   "identical": 16,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.308,
+   "p95": 46.131,
+   "cost": 0.007545269444444447,
+   "ci": [
+    99.36350777934936,
+    100.0
+   ]
+  }
+ },
+ "Line-reference + Gemini 3.5 Flash-Lite (low)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 98.03220035778175,
+   "recall": 98.73873873873873,
+   "errors": 8,
+   "unflagged": 0,
+   "review_share": 10.65907241659886,
+   "clean": 92.15686274509804,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.388,
+   "p95": 22.785,
+   "cost": 0.006095576862745099
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.84763124199743,
+   "recall": 99.35649935649936,
+   "errors": 4,
+   "unflagged": 0,
+   "review_share": 2.1541950113378685,
+   "clean": 93.33333333333333,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.585,
+   "p95": 21.573,
+   "cost": 0.006678318000000002
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 98.36756187467088,
+   "recall": 98.99311075781664,
+   "errors": 12,
+   "unflagged": 0,
+   "review_share": 7.105637138796779,
+   "clean": 92.5925925925926,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.458,
+   "p95": 21.86,
+   "cost": 0.006311406913580245,
+   "ci": [
+    96.00840336134453,
+    99.40636805180787
+   ]
+  }
+ },
+ "Line-reference + Gemini 3.5 Flash-Lite (minimal)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 98.30053667262969,
+   "recall": 99.009009009009,
+   "errors": 8,
+   "unflagged": 0,
+   "review_share": 10.530546623794212,
+   "clean": 92.15686274509804,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.285,
+   "p95": 25.713,
+   "cost": 0.006256593921568627
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.71959026888604,
+   "recall": 99.22779922779922,
+   "errors": 4,
+   "unflagged": 0,
+   "review_share": 2.2678185745140387,
+   "clean": 96.66666666666667,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.473,
+   "p95": 21.224,
+   "cost": 0.0073739846666666655
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 98.4728804634018,
+   "recall": 99.09909909909909,
+   "errors": 12,
+   "unflagged": 0,
+   "review_share": 7.0046082949308754,
+   "clean": 93.82716049382717,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.432,
+   "p95": 21.224,
+   "cost": 0.006670442345679009,
+   "ci": [
+    95.97000937207123,
+    99.6316758747698
+   ]
+  }
+ },
+ "Line-reference + Claude Haiku 5.5": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 98.30205540661305,
+   "recall": 99.09909909909909,
+   "errors": 9,
+   "unflagged": 0,
+   "review_share": 9.91869918699187,
+   "clean": 88.23529411764706,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.349,
+   "p95": 55.039,
+   "cost": 0.002413080392156863
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.09909909909909,
+   "recall": 99.09909909909909,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.6853932584269662,
+   "clean": 83.33333333333333,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.3595,
+   "p95": 56.146,
+   "cost": 0.00253089
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 98.62869198312237,
+   "recall": 99.09909909909909,
+   "errors": 9,
+   "unflagged": 0,
+   "review_share": 6.462264150943396,
+   "clean": 86.41975308641975,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 7.748,
+   "p95": 55.039,
+   "cost": 0.0024567135802469114,
+   "ci": [
+    95.92875318066157,
+    99.76156413924654
+   ]
+  }
+ },
+ "Line-reference + Claude Haiku 5.5 (no thinking, cached prompt)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 96.89165186500888,
+   "recall": 98.28828828828829,
+   "errors": 16,
+   "unflagged": 0,
+   "review_share": 10.670978172999192,
+   "clean": 78.43137254901961,
+   "identical": 10,
+   "cases": 17,
+   "failures": 0,
+   "p50": 4.062,
+   "p95": 33.396,
+   "cost": 0.0015167018627450979
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 96.93486590038314,
+   "recall": 97.68339768339769,
+   "errors": 6,
+   "unflagged": 0,
+   "review_share": 2.5813692480359145,
+   "clean": 80.0,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 3.599,
+   "p95": 32.152,
+   "cost": 0.001546698
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 96.90937663698271,
+   "recall": 98.03921568627452,
+   "errors": 22,
+   "unflagged": 0,
+   "review_share": 7.283834586466165,
+   "clean": 79.01234567901234,
+   "identical": 16,
+   "cases": 27,
+   "failures": 0,
+   "p50": 3.832,
+   "p95": 32.152,
+   "cost": 0.0015278115432098766,
+   "ci": [
+    94.17721518987342,
+    98.2703395259449
+   ]
+  }
+ },
+ "Line-reference + Claude Sonnet 5.5 (cached prompt)": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 81.63082437275986,
+   "recall": 82.07207207207207,
+   "errors": 6,
+   "unflagged": 0,
+   "review_share": 13.163481953290871,
+   "clean": 88.23529411764706,
+   "identical": 16,
+   "cases": 17,
+   "failures": 0,
+   "p50": 5.092,
+   "p95": 52.694,
+   "cost": 0.0230067705882353
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 88.54568854568855,
+   "recall": 88.54568854568855,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.219140083217753,
+   "clean": 83.33333333333333,
+   "identical": 8,
+   "cases": 10,
+   "failures": 0,
+   "p50": 4.873,
+   "p95": 62.004,
+   "cost": 0.027398473333333336
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 84.46909667194929,
+   "recall": 84.73767885532591,
+   "errors": 6,
+   "unflagged": 0,
+   "review_share": 8.418520745640409,
+   "clean": 86.41975308641975,
+   "identical": 24,
+   "cases": 27,
+   "failures": 0,
+   "p50": 4.886,
+   "p95": 61.372,
+   "cost": 0.02463332716049383,
+   "ci": [
+    60.506502395619435,
+    99.70193740685544
+   ]
+  }
+ },
+ "LR + 3.8 Flash, compact output keys": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.46043165467626,
+   "recall": 99.63963963963964,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 10.168195718654435,
+   "clean": 96.07843137254902,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 5.502,
+   "p95": 40.004,
+   "cost": 0.006463026470588238
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.74259974259974,
+   "recall": 99.74259974259974,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.836734693877551,
+   "clean": 100.0,
+   "identical": 5,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.1055,
+   "p95": 42.078,
+   "cost": 0.006884475000000002
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.57649550026468,
+   "recall": 99.68203497615262,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.59965034965035,
+   "clean": 97.53086419753086,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.32,
+   "p95": 40.634,
+   "cost": 0.0066191185185185165,
+   "ci": [
+    99.11373707533235,
+    99.92846924177397
+   ]
+  }
+ },
+ "LR + 3.8 Flash, long text split at recipe starts": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.63996399639964,
+   "recall": 99.72972972972973,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.061443932411674,
+   "clean": 98.03921568627452,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.308,
+   "p95": 38.494,
+   "cost": 0.007600724901960787
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.74259974259974,
+   "recall": 99.74259974259974,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.8556701030927836,
+   "clean": 100.0,
+   "identical": 5,
+   "cases": 10,
+   "failures": 0,
+   "p50": 6.515,
+   "p95": 29.924,
+   "cost": 0.00899867566666667
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.6822033898305,
+   "recall": 99.73502914679385,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.558098591549296,
+   "clean": 98.76543209876543,
+   "identical": 16,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.308,
+   "p95": 29.924,
+   "cost": 0.008118484444444447,
+   "ci": [
+    99.40017137960582,
+    100.0
+   ]
+  }
+ },
+ "LR + 3.8 Flash, compact + split": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.63996399639964,
+   "recall": 99.72972972972973,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.725552050473187,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 4.761,
+   "p95": 28.823,
+   "cost": 0.0066813621568627465
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.3581514762516,
+   "recall": 99.61389961389962,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 1.8711018711018712,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 28.225,
+   "cost": 0.007751862000000003
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.52380952380952,
+   "recall": 99.68203497615262,
+   "errors": 3,
+   "unflagged": 0,
+   "review_share": 6.9058295964125564,
+   "clean": 96.29629629629629,
+   "identical": 16,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.024,
+   "p95": 28.225,
+   "cost": 0.007077843580246913,
+   "ci": [
+    99.21259842519684,
+    99.85507246376811
+   ]
+  }
+ },
+ "LR + 3.8 Flash, photos at medium resolution": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.90990990990991,
+   "recall": 99.90990990990991,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 10.007639419404125,
+   "clean": 100.0,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.571,
+   "p95": 45.334,
+   "cost": 0.007104627941176471
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.61389961389962,
+   "recall": 99.61389961389962,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.934826883910387,
+   "clean": 100.0,
+   "identical": 5,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.0135,
+   "p95": 48.138,
+   "cost": 0.007930659999999999
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.78802331743508,
+   "recall": 99.78802331743508,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 6.547359231776517,
+   "clean": 100.0,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.712,
+   "p95": 46.131,
+   "cost": 0.007410565740740743,
+   "ci": [
+    99.5575221238938,
+    100.0
+   ]
+  }
+ },
+ "Route: text -> Flash-Lite LR (minimal); photos -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.37050359712231,
+   "recall": 99.54954954954955,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 11.012861736334406,
+   "clean": 96.07843137254902,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.468,
+   "p95": 27.012,
+   "cost": 0.006652893137254903
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.71959026888604,
+   "recall": 99.22779922779922,
+   "errors": 4,
+   "unflagged": 0,
+   "review_share": 2.2678185745140387,
+   "clean": 96.66666666666667,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.473,
+   "p95": 21.224,
+   "cost": 0.007435394666666666
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.10195456946646,
+   "recall": 99.41706412294647,
+   "errors": 6,
+   "unflagged": 0,
+   "review_share": 7.28110599078341,
+   "clean": 96.29629629629629,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.47,
+   "p95": 22.404,
+   "cost": 0.006942708518518519,
+   "ci": [
+    98.07395993836671,
+    99.6325780771586
+   ]
+  }
+ },
+ "Route: text -> Flash-Lite LR compact + split; photos -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.10071942446044,
+   "recall": 99.27927927927928,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 10.64,
+   "clean": 96.07843137254902,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.378,
+   "p95": 18.917,
+   "cost": 0.006345702352941178
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.58429858429858,
+   "recall": 98.58429858429858,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.810810810810811,
+   "clean": 96.66666666666667,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.2695,
+   "p95": 8.075,
+   "cost": 0.006493633666666668
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 98.88830068819482,
+   "recall": 98.99311075781664,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 7.310344827586207,
+   "clean": 96.29629629629629,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.331,
+   "p95": 15.275,
+   "cost": 0.006400491728395061,
+   "ci": [
+    98.22878228782288,
+    99.57127545551982
+   ]
+  }
+ },
+ "Route: text -> Haiku LR; photos -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.72997299729973,
+   "recall": 99.81981981981981,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.56910569105691,
+   "clean": 98.03921568627452,
+   "identical": 10,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.349,
+   "p95": 55.039,
+   "cost": 0.0033739647058823527
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.09909909909909,
+   "recall": 99.09909909909909,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.6853932584269662,
+   "clean": 83.33333333333333,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.3595,
+   "p95": 56.146,
+   "cost": 0.0028088966666666663
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.47033898305085,
+   "recall": 99.52305246422894,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.839622641509434,
+   "clean": 92.5925925925926,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 7.748,
+   "p95": 55.039,
+   "cost": 0.0031646802469135794,
+   "ci": [
+    98.53801169590643,
+    99.92922859164898
+   ]
+  }
+ },
+ "Route: text -> Haiku LR (no thinking); photos -> 3.8 Flash": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 97.94642857142857,
+   "recall": 98.82882882882883,
+   "errors": 10,
+   "unflagged": 0,
+   "review_share": 11.156022635408245,
+   "clean": 86.27450980392157,
+   "identical": 10,
+   "cases": 17,
+   "failures": 0,
+   "p50": 4.084,
+   "p95": 33.396,
+   "cost": 0.0024952724509803917
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 96.93486590038314,
+   "recall": 97.68339768339769,
+   "errors": 6,
+   "unflagged": 0,
+   "review_share": 2.5813692480359145,
+   "clean": 80.0,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 3.599,
+   "p95": 32.152,
+   "cost": 0.0018295213333333331
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 97.5302154492906,
+   "recall": 98.35718071012188,
+   "errors": 16,
+   "unflagged": 0,
+   "review_share": 7.565789473684211,
+   "clean": 83.95061728395062,
+   "identical": 16,
+   "cases": 27,
+   "failures": 0,
+   "p50": 4.041,
+   "p95": 32.152,
+   "cost": 0.0022486979629629624,
+   "ci": [
+    95.64755838641189,
+    98.61796643632773
+   ]
+  }
+ },
+ "A. 3.8 Flash LR compact + split; photos 3.8 medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.81981981981981,
+   "recall": 99.81981981981981,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 10.778914240755311,
+   "clean": 100.0,
+   "identical": 14,
+   "cases": 17,
+   "failures": 0,
+   "p50": 4.751,
+   "p95": 25.94,
+   "cost": 0.006490685686274511
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.3581514762516,
+   "recall": 99.61389961389962,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 1.8711018711018712,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 28.225,
+   "cost": 0.007712312000000002
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.6294335627316,
+   "recall": 99.73502914679385,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.941334527541424,
+   "clean": 97.53086419753086,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.024,
+   "p95": 26.954,
+   "cost": 0.006943139876543212,
+   "ci": [
+    99.41348973607037,
+    100.0
+   ]
+  }
+ },
+ "B. Haiku LR text; photos 3.8 medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.90990990990991,
+   "recall": 99.90990990990991,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 10.62449310624493,
+   "clean": 100.0,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.354,
+   "p95": 55.039,
+   "cost": 0.003183288235294118
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.09909909909909,
+   "recall": 99.09909909909909,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.6853932584269662,
+   "clean": 83.33333333333333,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.7025,
+   "p95": 56.146,
+   "cost": 0.002769346666666666
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.57604663487017,
+   "recall": 99.57604663487017,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 6.877060763071126,
+   "clean": 93.82716049382717,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 8.096,
+   "p95": 55.039,
+   "cost": 0.0030299765432098757,
+   "ci": [
+    98.75283446712018,
+    100.0
+   ]
+  }
+ },
+ "C. Flash-Lite LR compact + split text; photos 3.8 medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.27992799279927,
+   "recall": 99.36936936936937,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.694333599361533,
+   "clean": 98.03921568627452,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 2.378,
+   "p95": 20.448,
+   "cost": 0.006155025882352942
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.58429858429858,
+   "recall": 98.58429858429858,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.810810810810811,
+   "clean": 96.66666666666667,
+   "identical": 6,
+   "cases": 10,
+   "failures": 0,
+   "p50": 2.2695,
+   "p95": 14.056,
+   "cost": 0.006454083666666667
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 98.99364406779661,
+   "recall": 99.04610492845786,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 7.3461891643709825,
+   "clean": 97.53086419753086,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 2.331,
+   "p95": 18.473,
+   "cost": 0.006265788024691356,
+   "ci": [
+    98.34212509419744,
+    99.70930232558139
+   ]
+  }
+ }
+}

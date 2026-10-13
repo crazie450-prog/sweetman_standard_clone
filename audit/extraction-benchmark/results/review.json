@@ -1,0 +1,71 @@
+{
+ "A. Recommended": {
+  "v1": {
+   "lines": 2233,
+   "amber": 236,
+   "amber_pct": 10.568741603224362,
+   "amber_ok": 234,
+   "green_err": 0
+  },
+  "v2": {
+   "lines": 2233,
+   "amber": 163,
+   "amber_pct": 7.299596954769369,
+   "amber_ok": 161,
+   "green_err": 0
+  },
+  "v2+agree": {
+   "lines": 2233,
+   "amber": 34,
+   "amber_pct": 1.522615315718764,
+   "amber_ok": 32,
+   "green_err": 0
+  }
+ },
+ "B. Haiku for text": {
+  "v1": {
+   "lines": 2123,
+   "amber": 226,
+   "amber_pct": 10.64531323598681,
+   "amber_ok": 226,
+   "green_err": 0
+  },
+  "v2": {
+   "lines": 2123,
+   "amber": 152,
+   "amber_pct": 7.159679698539803,
+   "amber_ok": 152,
+   "green_err": 0
+  },
+  "v2+agree": {
+   "lines": 2123,
+   "amber": 23,
+   "amber_pct": 1.0833725859632595,
+   "amber_ok": 23,
+   "green_err": 0
+  }
+ },
+ "C. Flash-Lite for text": {
+  "v1": {
+   "lines": 2178,
+   "amber": 231,
+   "amber_pct": 10.606060606060606,
+   "amber_ok": 230,
+   "green_err": 0
+  },
+  "v2": {
+   "lines": 2178,
+   "amber": 169,
+   "amber_pct": 7.75941230486685,
+   "amber_ok": 168,
+   "green_err": 0
+  },
+  "v2+agree": {
+   "lines": 2178,
+   "amber": 40,
+   "amber_pct": 1.8365472910927456,
+   "amber_ok": 39,
+   "green_err": 0
+  }
+ }
+}
