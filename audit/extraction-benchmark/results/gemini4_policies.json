@@ -1,0 +1,134 @@
+{
+ "A as deployed": {
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.6294335627316,
+   "recall": 99.73502914679385,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.941334527541424,
+   "clean": 97.53086419753086,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.024,
+   "p95": 26.97,
+   "cost": 0.007250332469135804
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.3581514762516,
+   "recall": 99.61389961389962,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 1.8711018711018712,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 28.225,
+   "cost": 0.007816155333333335
+  },
+  "escalated": 0
+ },
+ "A -> Argon, any trigger": {
+  "all": {
+   "jobs": 81,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 6.748466257668712,
+   "clean": 100.0,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.177,
+   "p95": 67.001,
+   "cost": 0.021616416049382716
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.1450459652706844,
+   "clean": 100.0,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 62.708,
+   "cost": 0.02346314766666666
+  },
+  "escalated": 23
+ },
+ "A -> Argon, recipe docs, any trigger": {
+  "all": {
+   "jobs": 81,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 6.754385964912281,
+   "clean": 100.0,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.211,
+   "p95": 67.001,
+   "cost": 0.02082594691358024
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.1450459652706844,
+   "clean": 100.0,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 62.708,
+   "cost": 0.02346314766666666
+  },
+  "escalated": 17
+ },
+ "A -> Argon, possible missed line only": {
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.6294335627316,
+   "recall": 99.73502914679385,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.993318485523385,
+   "clean": 97.53086419753086,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.211,
+   "p95": 36.278,
+   "cost": 0.010508530000000002
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.3581514762516,
+   "recall": 99.61389961389962,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 2.05761316872428,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 48.319,
+   "cost": 0.009396755333333335
+  },
+  "escalated": 7
+ }
+}

@@ -8,6 +8,7 @@ CONFIGS = {
     "A. Recommended": [("study/lr-g38-fast", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
     "B. Haiku for text": [("study/lr-haiku", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
     "C. Flash-Lite for text": [("study/lr-g35-fast", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
+    "G4. Gemini 4 Argon": [("study/lr-g4-fast", study.TEXT), ("study/photo-g4-medium", study.PHOTO)],
 }
 OKK = ("correct", "grounded", "fee_separated")
 

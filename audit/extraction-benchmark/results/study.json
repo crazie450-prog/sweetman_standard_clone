@@ -1069,5 +1069,158 @@
     99.70930232558139
    ]
   }
+ },
+ "G4. Gemini 4 Argon, pipeline A settings": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.73021582733813,
+   "recall": 99.90990990990991,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 10.022779043280183,
+   "clean": 96.07843137254902,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 9.254,
+   "p95": 54.061,
+   "cost": 0.02214760666666667
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.140672782874618,
+   "clean": 100.0,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 8.9455,
+   "p95": 34.483,
+   "cost": 0.024022858999999997
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.84118581259926,
+   "recall": 99.94700582935877,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.657963446475196,
+   "clean": 97.53086419753086,
+   "identical": 18,
+   "cases": 27,
+   "failures": 0,
+   "p50": 9.254,
+   "p95": 44.405,
+   "cost": 0.022842144567901235,
+   "ci": [
+    99.4142259414226,
+    100.0
+   ]
+  }
+ },
+ "Route: text -> Gemini 4 Argon; photos -> 3.8 Flash medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.9099909990999,
+   "recall": 100.0,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.075757575757576,
+   "clean": 98.03921568627452,
+   "identical": 12,
+   "cases": 17,
+   "failures": 0,
+   "p50": 9.254,
+   "p95": 54.061,
+   "cost": 0.01954466352941177
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 100.0,
+   "recall": 100.0,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 2.140672782874618,
+   "clean": 100.0,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 8.8315,
+   "p95": 34.483,
+   "cost": 0.023106225666666657
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.94703389830508,
+   "recall": 100.0,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 6.692742285962625,
+   "clean": 98.76543209876543,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 9.254,
+   "p95": 44.405,
+   "cost": 0.020863760617283948,
+   "ci": [
+    99.78021978021978,
+    100.0
+   ]
+  }
+ },
+ "Route: text -> 3.8 Flash (A); photos -> Gemini 4 Argon medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.63996399639964,
+   "recall": 99.72972972972973,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.725552050473187,
+   "clean": 98.03921568627452,
+   "identical": 13,
+   "cases": 17,
+   "failures": 0,
+   "p50": 5.368,
+   "p95": 31.629,
+   "cost": 0.009093628823529416
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.3581514762516,
+   "recall": 99.61389961389962,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 1.8711018711018712,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.119,
+   "p95": 28.225,
+   "cost": 0.008628945333333334
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.52380952380952,
+   "recall": 99.68203497615262,
+   "errors": 3,
+   "unflagged": 0,
+   "review_share": 6.9058295964125564,
+   "clean": 96.29629629629629,
+   "identical": 17,
+   "cases": 27,
+   "failures": 0,
+   "p50": 5.143,
+   "p95": 31.017,
+   "cost": 0.008921523827160495,
+   "ci": [
+    99.21259842519684,
+    99.85507246376811
+   ]
+  }
  }
 }

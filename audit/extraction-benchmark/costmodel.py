@@ -17,7 +17,7 @@ SCENARIOS = {  # documents per month
     "100 locations, a normal month (+8 onboardings)": None,  # built below
 }
 PRICES_NOW = dict(score.PRICE)
-PRICES_2027 = dict(score.PRICE, **{"gemini-3.8-flash": (1.50, 7.50)})
+PRICES_2027 = dict(score.PRICE, **{"gemini-3.8-flash": (1.50, 7.50), "gemini-4-argon": (4.00, 20.00)})
 
 
 def calls_for(dirs):
@@ -68,6 +68,7 @@ CANDIDATES = {
     "A. Recommended": [("study/lr-g38-fast", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
     "B. Haiku for text": [("study/lr-haiku", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
     "C. Flash-Lite for text": [("study/lr-g35-fast", study.TEXT), ("study/photo-g38-medium", study.PHOTO)],
+    "G4. Gemini 4 Argon": [("study/lr-g4-fast", study.TEXT), ("study/photo-g4-medium", study.PHOTO)],
 }
 SECOND_READER = ["study/lr-haiku"]  # Haiku 5.5 reads each photo in parallel (cross-vendor agreement)
 
@@ -76,7 +77,7 @@ if __name__ == "__main__":
     out = {}
     for label, dirs in CANDIDATES.items():
         now, later = per_type(dirs, PRICES_NOW), per_type(dirs, PRICES_2027)
-        if label[:2] in ("A.", "B.", "C."):  # add the Haiku second read on photos
+        if label[:2] in ("A.", "B.", "C.") or label.startswith("G4."):  # add the Haiku second read on photos
             sr_now, sr_later = per_type([(SECOND_READER[0], study.PHOTO)], PRICES_NOW), per_type([(SECOND_READER[0], study.PHOTO)], PRICES_2027)
             for t in ("Handwritten recipe photo", "Invoice photo"):
                 now[t]["cost"] += sr_now[t]["cost"]; later[t]["cost"] += sr_later[t]["cost"]

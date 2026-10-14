@@ -108,6 +108,9 @@ CONFIGS = {
     "A. 3.8 Flash LR compact + split; photos 3.8 medium": [("study/lr-g38-fast", TEXT), ("study/photo-g38-medium", PHOTO)],
     "B. Haiku LR text; photos 3.8 medium": [("study/lr-haiku", TEXT), ("study/photo-g38-medium", PHOTO)],
     "C. Flash-Lite LR compact + split text; photos 3.8 medium": [("study/lr-g35-fast", TEXT), ("study/photo-g38-medium", PHOTO)],
+    "G4. Gemini 4 Argon, pipeline A settings": [("study/lr-g4-fast", TEXT), ("study/photo-g4-medium", PHOTO)],
+    "Route: text -> Gemini 4 Argon; photos -> 3.8 Flash medium": [("study/lr-g4-fast", TEXT), ("study/photo-g38-medium", PHOTO)],
+    "Route: text -> 3.8 Flash (A); photos -> Gemini 4 Argon medium": [("study/lr-g38-fast", TEXT), ("study/photo-g4-medium", PHOTO)],
 }
 
 

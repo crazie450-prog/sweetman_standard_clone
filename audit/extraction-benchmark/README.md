@@ -109,7 +109,10 @@ python3 costmodel.py && python3 review.py             # Tables 4-6
 `CHECKS_V2=1` turns on the two checks added in the study (line accounting on shared lines, unit inside the name).
 They were written after the second round of runs, so confirm them on new documents before relying on them.
 
-**Testing a new model** (for example Gemini 4): run it as above into `out/study/<name>`, add its folder to
+**Testing a new model**: run it as above into `out/study/<name>`, add its folder to
 `CONFIGS` in `study.py` and its price to `PRICE` in `score.py`, and re-run `study.py`. The report's decision
 rule: at least 98% with the interval at or above 98% on both dev and held-out sets, no unflagged errors, handwriting
 no worse than 3.8 Flash, and cheaper or faster than pipeline A at equal accuracy.
+
+Gemini 4 Argon was tested this way on October 13, 2026 (`out/study/lr-g4-fast` for typed text and
+`out/study/photo-g4-medium` for photos; `results/gemini4_*.json` hold the re-read and cost simulations).

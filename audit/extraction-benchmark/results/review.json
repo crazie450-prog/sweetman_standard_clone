@@ -67,5 +67,28 @@
    "amber_ok": 39,
    "green_err": 0
   }
+ },
+ "G4. Gemini 4 Argon": {
+  "v1": {
+   "lines": 2298,
+   "amber": 236,
+   "amber_pct": 10.269799825935596,
+   "amber_ok": 234,
+   "green_err": 0
+  },
+  "v2": {
+   "lines": 2298,
+   "amber": 158,
+   "amber_pct": 6.8755439512619665,
+   "amber_ok": 156,
+   "green_err": 0
+  },
+  "v2+agree": {
+   "lines": 2298,
+   "amber": 33,
+   "amber_pct": 1.4360313315926894,
+   "amber_ok": 31,
+   "green_err": 0
+  }
  }
 }

@@ -1,0 +1,86 @@
+{
+ "now": {
+  "per_type_A": {
+   "Long multi-recipe document": 0.025497431666666667,
+   "Workbook (recipe sheets)": 0.0189115,
+   "Short recipe (Word/PDF text)": 0.002640925,
+   "Invoice PDF (text layer)": 0.00283585,
+   "Invoice photo": 0.004081266666666666,
+   "Handwritten recipe photo": 0.007967988888888888
+  },
+  "per_type_esc": {
+   "Long multi-recipe document": 0.0988046625,
+   "Workbook (recipe sheets)": 0.08264416666666667,
+   "Short recipe (Word/PDF text)": 0.0035989249999999998,
+   "Invoice PDF (text layer)": 0.007104383333333333,
+   "Invoice photo": 0.004081266666666666,
+   "Handwritten recipe photo": 0.007967988888888888
+  },
+  "month_A": {
+   "Onboard one restaurant (one-off)": 0.8278195388888889,
+   "One location, a normal month": 0.45347514833333336,
+   "100 locations, a normal month (+8 onboardings)": 51.97007114444444
+  },
+  "month_esc": {
+   "Onboard one restaurant (one-off)": 1.867049847222222,
+   "One location, a normal month": 0.9205303791666666,
+   "100 locations, a normal month (+8 onboardings)": 106.98943669444444
+  }
+ },
+ "from Dec 1 2026": {
+  "per_type_A": {
+   "Long multi-recipe document": 0.025497431666666667,
+   "Workbook (recipe sheets)": 0.0189115,
+   "Short recipe (Word/PDF text)": 0.002640925,
+   "Invoice PDF (text layer)": 0.00283585,
+   "Invoice photo": 0.004081266666666666,
+   "Handwritten recipe photo": 0.007967988888888888
+  },
+  "per_type_esc": {
+   "Long multi-recipe document": 0.1713781625,
+   "Workbook (recipe sheets)": 0.14637683333333334,
+   "Short recipe (Word/PDF text)": 0.004556925,
+   "Invoice PDF (text layer)": 0.011372916666666667,
+   "Invoice photo": 0.004081266666666666,
+   "Handwritten recipe photo": 0.007967988888888888
+  },
+  "month_A": {
+   "Onboard one restaurant (one-off)": 0.8278195388888889,
+   "One location, a normal month": 0.45347514833333336,
+   "100 locations, a normal month (+8 onboardings)": 51.97007114444444
+  },
+  "month_esc": {
+   "Onboard one restaurant (one-off)": 2.898942847222222,
+   "One location, a normal month": 1.3868518791666666,
+   "100 locations, a normal month (+8 onboardings)": 161.87673069444443
+  }
+ },
+ "from Jan 1 2027": {
+  "per_type_A": {
+   "Long multi-recipe document": 0.05035024416666667,
+   "Workbook (recipe sheets)": 0.037823,
+   "Short recipe (Word/PDF text)": 0.00528185,
+   "Invoice PDF (text layer)": 0.0056717,
+   "Invoice photo": 0.007175516666666666,
+   "Handwritten recipe photo": 0.013829255555555555
+  },
+  "per_type_esc": {
+   "Long multi-recipe document": 0.196230975,
+   "Workbook (recipe sheets)": 0.16528833333333334,
+   "Short recipe (Word/PDF text)": 0.0071978499999999996,
+   "Invoice PDF (text layer)": 0.014208766666666666,
+   "Invoice photo": 0.007175516666666666,
+   "Handwritten recipe photo": 0.013829255555555555
+  },
+  "month_A": {
+   "Onboard one restaurant (one-off)": 1.5965248305555557,
+   "One location, a normal month": 0.8703750108333334,
+   "100 locations, a normal month (+8 onboardings)": 99.80969972777778
+  },
+  "month_esc": {
+   "Onboard one restaurant (one-off)": 3.6676481388888886,
+   "One location, a normal month": 1.8037517416666669,
+   "100 locations, a normal month (+8 onboardings)": 209.71635927777777
+  }
+ }
+}

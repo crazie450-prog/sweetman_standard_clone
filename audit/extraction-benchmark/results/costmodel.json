@@ -379,6 +379,82 @@
    "100 locations, a normal month (+8 onboardings)": 60.27664899444444
   }
  },
+ "G4. Gemini 4 Argon": {
+  "per_type_now": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.008982,
+    "p50": 6.5975,
+    "max": 37.632
+   },
+   "Long multi-recipe document": {
+    "cost": 0.08062430916666667,
+    "p50": 37.6365,
+    "max": 100.726
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.06373266666666667,
+    "p50": 25.689,
+    "max": 26.822
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.0207345,
+    "p50": 23.243,
+    "max": 31.629
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.010849466666666667,
+    "p50": 8.379,
+    "max": 16.227
+   },
+   "Invoice photo": {
+    "cost": 0.011639683333333333,
+    "p50": 10.266,
+    "max": 17.198
+   }
+  },
+  "per_type_2027": {
+   "Short recipe (Word/PDF text)": {
+    "cost": 0.017964,
+    "p50": 6.5975,
+    "max": 37.632
+   },
+   "Long multi-recipe document": {
+    "cost": 0.1604111425,
+    "p50": 37.6365,
+    "max": 100.726
+   },
+   "Workbook (recipe sheets)": {
+    "cost": 0.12746533333333335,
+    "p50": 25.689,
+    "max": 26.822
+   },
+   "Handwritten recipe photo": {
+    "cost": 0.03936227777777778,
+    "p50": 23.243,
+    "max": 31.629
+   },
+   "Invoice PDF (text layer)": {
+    "cost": 0.021698933333333333,
+    "p50": 8.379,
+    "max": 16.227
+   },
+   "Invoice photo": {
+    "cost": 0.02229235,
+    "p50": 10.266,
+    "max": 17.198
+   }
+  },
+  "months_now": {
+   "Onboard one restaurant (one-off)": 2.593643591666667,
+   "One location, a normal month": 1.5582903091666667,
+   "100 locations, a normal month (+8 onboardings)": 176.57817965
+  },
+  "months_2027": {
+   "Onboard one restaurant (one-off)": 5.126244369444445,
+   "One location, a normal month": 3.079812475833333,
+   "100 locations, a normal month (+8 onboardings)": 348.9912025388889
+  }
+ },
  "_scenarios": {
   "Onboard one restaurant (one-off)": {
    "Short recipe (Word/PDF text)": 120,

@@ -21,7 +21,7 @@ SCORE_SRC = dict(gold.CASES)
 SCORE_SRC["synthetic_invoice"] = dict(gold.CASES["synthetic_invoice"], src=TXT + "synthetic_invoice.pdf.txt")
 
 PRICE = {  # USD per 1M tokens: input, output (thinking billed as output)
-    "gemini-3.5-flash-lite": (0.30, 2.50), "gemini-3.8-flash": (0.75, 3.75), "gemini-3.1-flash-lite": (0.25, 1.50),
+    "gemini-3.5-flash-lite": (0.30, 2.50), "gemini-4-argon": (2.00, 10.00), "gemini-3.8-flash": (0.75, 3.75), "gemini-3.1-flash-lite": (0.25, 1.50),
     "claude-opus-5-5": (4.0, 20.0), "claude-sonnet-5-5": (2.0, 10.0), "claude-haiku-5-5": (0.10, 0.50),
 }
 
