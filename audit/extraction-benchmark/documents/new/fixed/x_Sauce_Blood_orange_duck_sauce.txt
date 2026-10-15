@@ -1,0 +1,28 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Blood Orange Duck Sauce
+	yield:
+qty.	product
+1/2 gal	blood orange juice
+3/4 can	coconut milk
+2 T	shallots, diced
+2 T	ginger, diced
+2 T	garlic, diced
+1 T	5- spice powder
+1 stick	cinnamon
+2	cloves
+pinch	cracked black pepper
+1 c	red wine
+1 c	port wine
+1 c	plum wine (optional)
+2 c	veal demi
+6 c	chicken stock
+	method:
+1	combine blood orange juice and coconut milk and reduce until thick
+2	sweat together shallot, ginger, and garlic until translucent
+3	add 5 spice powder or cinnamon stick,  2 cloves, and pinch of blk. Pepper
+4	combine wines and reduce by 3/4 to nappe
+5	add stocks
+6	combine stock/wine reduction and juice reduction
+7	finish with small amount of butter, salt and pepper
+8	strain and garnish with cracked black pepper

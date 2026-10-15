@@ -1,0 +1,65 @@
+Sheet: Recipe Template
+Recipe Name:			Corn Fritters			Recipe Type:       Batter
+Preperation Time: 20 Minutes						Temperature :     Hot
+Yields:			About 10 Portions			Season:                Summer
+Lbs	oz.	gr.	ea	Ingredient		Method	x2	x3	x4
+		=
+		336
+	12	336	3	Ears of Fresh Corn		1. Husk the corn and blanch in salted boiling water.  Refresh in cold water to stop the cooking and set aside.	672	1008	1344
+		224		Yellow Corn Meal		2. Sift the cornmeal, flour, baking powder, salt, black, and cayenne pepper together.	448	672	896
+		280		AP Flour		3. Dice the bacon. Dice the bell pepper, and grate the onion. Slice the chives.	560	840	1120
+			1 T	Baking Powder		4. Render the bacon in a pan and remove from the heat to cook. Add the bacon and the bacon fat to the dry mix.  Add the rest of the ingredients to the batter and stir.  Let the batter chill for 1 hour.  Fry fritters in 350 degree oil until crisp.			
+			1 tsp	Salt					
+			1/2 t	Pepper					
+			1/4 t	Cayenne Pepper					
+			2	Thick Slices of Bacon					
+			2	Eggs					
+		224		Milk			448	672	896
+			1	Red Bell Pepper					
+			1	Small Onion					
+			1 T	Fresh Chives					
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+				Produce
+
+Sheet: Conversions
+Ingredient		Pints	Lbs	Oz.	Kilos	Grm.	Ltrs
+					1	1000	1
+Water =		1	1	16	0.45	448	0.45
+				8		224
+				4		112
+				2		56
+				1		28
+Fl.Oz.				1		28
+				28			1
+2 Cups			1	16		448	0.5
+1 cup		0.5	0.5	8		224	0.23
+16 Tbsp		0.5	0.5	8		224
+1 Tbsp				0.5		14	0.014
+3 tsp				0.5		14	0.014
+1 tsp.						5
+1 Egg				2		56
+1 Yolk				1		26
+1 White				1		30

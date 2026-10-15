@@ -9,3 +9,12 @@ cases_holdout.json
 /study.json
 /cascade.json
 /costmodel.json
+cases_new.json
+cases_new_raw.json
+# documents carrying a third-party confidentiality notice (Compass Group recipe prints, Wolfgang Puck Fine Dining):
+# kept out of the repository until the owner confirms; supply them locally to re-run those cases
+documents/new/raw/*_Deli.pdf
+documents/new/fixed/x_*_Deli.txt
+documents/new/raw/Ricotta_Gnocchi.doc
+documents/new/fixed/x_Ricotta_Gnocchi.txt
+gold_new_private.py

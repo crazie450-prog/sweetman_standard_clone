@@ -20,6 +20,10 @@ line-reference mode and the time and cost study (see "Optimization study" below)
 | `report.py`, `final_numbers.py`, `agree.py`, `detail.py` | Summary table, the numbers used in the brief, cross-vendor agreement, and a per-line inspector. |
 | `results/` | `results.json` (the brief's numbers) and `raw-outputs.tar.gz` (every model response that was scored); `study.json`, `cascade.json`, `costmodel.json`, `review.json` and `study-outputs.tar.gz` for the optimization study. |
 | `tools/` | Helpers used to build the inputs (text dumps, workbook subset). |
+| `documents/new/` | §11 of the optimization report: real files from the owner's recipe archive (`raw/`, 53 committed of 59: Word .doc/.docx, Excel .xls/.xlsx, Compass recipe-print PDFs, a photo, non-recipes, a 66k-character banquet packet), the .xls files converted to .xlsx (`conv/`), the text each file gives with the reader fixes (`fixed/`, the scoring source), and a transcription of the one image-only Word file (`transcripts/`). Never used to tune prompts. Proprietary recipes: keep this repository private. |
+| `gold_new.py` | Answer keys for `documents/new/` (775 lines with the six confidential documents' keys in `gold_new_private.py`, which is not committed), plus `KEY_AUDIT`, the log of key corrections made after the first runs. |
+| `new_study.py`, `audit_new.py` | §11 tables (accuracy by configuration and by document kind, the long packet), and a grouped list of every scored error for auditing the key. |
+| `repair.py`, `size_route_new.py` | The two §11 experiments not adopted: a repair call on flagged lines, and routing short documents to a cheaper model. |
 | `documents/holdout/` | The 10 held-out cases: six recipe documents that keep our formats with new content, three generated invoice PDFs and a photographed produce invoice (`gen_invoices.py` draws them and writes their key, `gold_invoices.json`). Never used to tune prompts. |
 | `study.py`, `cascade.py` | Optimization study: accuracy (with a bootstrap interval over documents), time and cost per configuration, on dev and held-out sets; escalation simulations. |
 | `costmodel.py`, `review.py` | Cost per document type and per monthly scenario (today's prices and 2027's); share of lines staff must check. |
@@ -52,7 +56,8 @@ python3 report.py out/m3-gemini_gemini-flash-lite-latest out/final-gemini_gemini
 ```
 
 Setups: `m3-gemini:<model>`, `m3-pair`, `m3-claude:<model>`, `ef-gemini:<model>`, `ef-claude:<model>`,
-`lr-gemini:<model>`, `lr-claude:<model>`.
+`lr-gemini:<model>`, `lr-claude:<model>`, `lr-openai:<model>`, `ef-openai:<model>` (`OPENAI_API_KEY`), and `text`
+(no model call: records the text the line-reference route would number, or `null` for the photo route).
 Arguments after the setup: cases file, output folder, runs per case, parallel jobs. Finished jobs are skipped, so
 an interrupted run can be resumed. `ONLY=case1,case2` limits the cases.
 
@@ -116,3 +121,43 @@ no worse than 3.8 Flash, and cheaper or faster than pipeline A at equal accuracy
 
 Gemini 4 Argon was tested this way on October 13, 2026 (`out/study/lr-g4-fast` for typed text and
 `out/study/photo-g4-medium` for photos; `results/gemini4_*.json` hold the re-read and cost simulations).
+
+OpenAI models (`lr-openai:<model>`, `OA_EFFORT=low|medium|unset`, `OA_DETAIL` for photos) were tested the same
+way on October 14 (`out/study/lr-oa-*`; `results/study.json` includes them). gpt-6-luna for typed text cleared
+the bar on the 27 documents at about a quarter of pipeline A's cost, but not on the new real documents below.
+
+## New real documents (report §11)
+
+59 files from the owner's archive, keyed from the documents before any run. `READER_FIX=1` applies fixes to
+M3's file readers before extraction, so their effect can be measured: Word list numbers and line breaks rendered
+as text, an image-only Word file sent to the photo route, and a PDF whose text layer holds amounts read as text
+even when it carries a logo. M3 cannot read .xls at all, so `cases_new.json` points at the converted .xlsx files
+and `cases_new_raw.json` at the files as received.
+
+```bash
+cd audit/extraction-benchmark && python3 gold.py       # writes cases_new.json and cases_new_raw.json too
+cd ../../backend
+B=../audit/extraction-benchmark; FAST="LR_COMPACT=1 LR_OUTLINE=1 LR_CHUNK=4000"
+export EF_SHEETS=1 EF_IMAGES=auto
+env READER_FIX=1 $FAST EF_MEDIA=MEDIUM npx tsx $B/runner.ts "lr-gemini:gemini-3.8-flash" $B/cases_new.json $B/out/new/A-fixed 3 4
+env              $FAST EF_MEDIA=MEDIUM npx tsx $B/runner.ts "lr-gemini:gemini-3.8-flash" $B/cases_new_raw.json $B/out/new/A-delivered 3 4
+env READER_FIX=1 $FAST EF_MEDIA=MEDIUM npx tsx $B/runner.ts "lr-gemini:gemini-3.5-flash-lite" $B/cases_new.json $B/out/new/C-fixed 3 4
+env READER_FIX=1 npx tsx $B/runner.ts "lr-claude:claude-haiku-5-5" $B/cases_new.json $B/out/new/B-fixed 3 4
+env READER_FIX=1 npx tsx $B/runner.ts "lr-openai:gpt-6-luna" $B/cases_new.json $B/out/new/luna-fixed 3 4
+
+cd $B   # score (unpack results/new-outputs.tar.gz first to re-score the published runs)
+CHECKS_V2=1 python3 new_study.py                         # Table 9, 10: checks as frozen before this set
+CHECKS_V2=1 CHECKS_V3=1 NORMALIZE=1 python3 new_study.py # Table 11: + the two checks and the counting-word fix
+```
+
+`CHECKS_V3=1` adds two checks written after seeing this set's errors: a unit the app cannot cost (not in
+`backend/src/costing/units.ts`), and a printed number with no amount read. `NORMALIZE=1` moves a leading
+counting word ("cloves garlic") from the name to the unit. The scorer also handles what these documents print:
+compound amounts summed in one base unit (key lines flagged `"compound"`), Word's fraction slash, "<1/8", "2 Q".
+None of these changes alters a number reported for the original 27 documents.
+
+Six documents carry a third-party confidentiality notice (the five Compass Group "Recipe Print" PDFs and Ricotta
+Gnocchi, marked "Confidential Property of Wolfgang Puck Fine Dining"). They, their texts, their keys
+(`gold_new_private.py`) and their raw outputs are kept out of the repository until the owner confirms they may be
+stored here. The published tables include them; without those files the harness scores the other 52 documents. The banquet packet (`n_saucier`) is
+scored against every amount printed in it (`autoref.ref_saucier`) and reported separately from accuracy.

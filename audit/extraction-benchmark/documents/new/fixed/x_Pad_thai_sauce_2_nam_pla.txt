@@ -1,0 +1,15 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Pad Thai Sauce 2 (nam pla)
+	yield:
+qty.	product
+1 c	fish sauce
+1/4 c	rice vinegar
+1/4 c	water
+1/3 c	sugar
+1/4 c	garlic (smashed and chopped)
+1/4 c	Thai green chilies (smashed and chopped)
+1/2 c	cilantro, chopped
+	method:
+1	combine all
+2

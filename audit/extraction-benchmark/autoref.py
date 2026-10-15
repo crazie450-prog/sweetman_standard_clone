@@ -17,7 +17,7 @@ def parse_item(seg):
     name = re.sub(r"\(.*?\)", "", m.group(3)).strip(" .:-")
     # "Ziplock Bags of Collard Greens" -> "Collard Greens": a container phrase is not part of the ingredient
     name = re.sub(r"^.*?\b(?:bags?|pieces?|ears?|cans?|boxes|box|cases?|packs?|bunch(?:es)?)\s+of\s+", "", name, flags=re.I)
-    if q is None or not score.toks(name) or len(name) > 60:
+    if q is None or not score.toks(name, False) or len(name) > 60:
         return None
     return (name, q, score.canon_unit(m.group(2)) if m.group(2) else None, seg)
 
@@ -65,7 +65,7 @@ EXTRA = {"bnb_event": [("Morel Powder", 1.0, "qt"), ("Cinnamon Coffee Rub", 1.0,
 
 def reference(case):
     src = open(score.SCORE_SRC[case]["src"]).read()
-    ref = ref_bonds(src) if case == "bonds_sheet" else ref_text_lists(src)
+    ref = ref_bonds(src) if case == "bonds_sheet" else ref_saucier(src) if case == "n_saucier" else ref_text_lists(src)
     ref = [r for r in ref if not any(b in r[0].lower() for b in BAD)]
     return ref + [(n, q, u, n) for (n, q, u) in EXTRA.get(case, [])]
 
@@ -75,3 +75,29 @@ if __name__ == "__main__":
         r = reference(c)
         print("==", c, len(r))
         for x in r: print("   ", x)
+
+
+SKIP = re.compile(r"=|degrees|\bhours?\b|minutes|per person|pours|per gallon|yields?\b|^\d+\.\s", re.I)
+AMT = re.compile(r"^\s*(" + Q + r")(?:\s*-\s*" + Q + r")?\s*(.*?)\s*$")
+
+
+def ref_saucier(text):
+    """Banquet packet rows are '<amount> <unit words><TAB><ingredient>'; rows without a tab must name a known unit."""
+    out = []
+    for line in text.splitlines():
+        if not line.strip() or SKIP.search(line):
+            continue
+        if "\t" in line:
+            amt, name = [x.strip() for x in line.split("\t", 1)]
+            name = re.sub(r"\(.*?\)|\*", "", name).replace("\t", " ").strip(" .,:-")
+            m = AMT.match(amt)
+            if not m or not name or not score.toks(name, False) or len(name) > 60:
+                continue
+            q = score.parse_qty(m.group(1))
+            unit = re.sub(r"\(.*?\)", "", m.group(2)).strip(" .")
+            out.append((name, q, score.canon_unit(unit) if unit else None, line))
+        else:
+            it = parse_item(line.strip())
+            if it and it[2] is not None:
+                out.append(it)
+    return out

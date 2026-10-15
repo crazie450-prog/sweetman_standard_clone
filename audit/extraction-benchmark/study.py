@@ -7,8 +7,10 @@ import json, os, statistics, sys
 from collections import Counter, defaultdict
 import score, gold
 
-DEV = [c for c in gold.CASES if c not in getattr(gold, "HOLDOUT", {})]
+DEV = [c for c in gold.CASES if c not in getattr(gold, "HOLDOUT", {}) and c not in getattr(gold, "NEW", {})]
 HOLD = list(getattr(gold, "HOLDOUT", {}))
+NEWSET = [c for c in getattr(gold, "NEW", {}) if c not in getattr(gold, "LONG", set())]
+LONGSET = list(getattr(gold, "LONG", set()))
 ERR = ("wrong_value", "invented", "invented_amount", "merged", "fee_as_stock_item", "false_import")
 RUNS = (1, 2, 3)
 
@@ -111,6 +113,12 @@ CONFIGS = {
     "G4. Gemini 4 Argon, pipeline A settings": [("study/lr-g4-fast", TEXT), ("study/photo-g4-medium", PHOTO)],
     "Route: text -> Gemini 4 Argon; photos -> 3.8 Flash medium": [("study/lr-g4-fast", TEXT), ("study/photo-g38-medium", PHOTO)],
     "Route: text -> 3.8 Flash (A); photos -> Gemini 4 Argon medium": [("study/lr-g38-fast", TEXT), ("study/photo-g4-medium", PHOTO)],
+    "LR + OpenAI gpt-6-luna": ["study/lr-oa-gpt-6-luna"],
+    "LR + OpenAI gpt-5.6-luna": ["study/lr-oa-gpt-5.6-luna"],
+    "LR + OpenAI gpt-5.4-mini": ["study/lr-oa-gpt-5.4-mini"],
+    "LR + OpenAI gpt-5.4-nano": ["study/lr-oa-gpt-5.4-nano"],
+    "Route: text -> gpt-6-luna; photos -> 3.8 Flash medium": [("study/lr-oa-gpt-6-luna", TEXT), ("study/photo-g38-medium", PHOTO)],
+    "Route: text -> gpt-5.4-mini; photos -> 3.8 Flash medium": [("study/lr-oa-gpt-5.4-mini", TEXT), ("study/photo-g38-medium", PHOTO)],
 }
 
 

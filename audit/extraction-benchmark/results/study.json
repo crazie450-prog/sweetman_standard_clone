@@ -1222,5 +1222,311 @@
     99.85507246376811
    ]
   }
+ },
+ "LR + OpenAI gpt-6-luna": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 94.37609841827768,
+   "recall": 96.75675675675676,
+   "errors": 28,
+   "unflagged": 0,
+   "review_share": 7.8431372549019605,
+   "clean": 84.31372549019608,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.46,
+   "p95": 54.003,
+   "cost": 0.0009265743137254906
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.97172236503856,
+   "recall": 99.09909909909909,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 2.1920668058455113,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 8.506,
+   "p95": 54.299,
+   "cost": 0.001080886
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 96.24217118997912,
+   "recall": 97.72125066242714,
+   "errors": 29,
+   "unflagged": 0,
+   "review_share": 5.41871921182266,
+   "clean": 87.65432098765432,
+   "identical": 15,
+   "cases": 27,
+   "failures": 0,
+   "p50": 8.46,
+   "p95": 54.003,
+   "cost": 0.0009837267901234574,
+   "ci": [
+    88.53754940711462,
+    99.42163100057837
+   ]
+  }
+ },
+ "LR + OpenAI gpt-5.6-luna": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 91.76776429809358,
+   "recall": 95.4054054054054,
+   "errors": 44,
+   "unflagged": 0,
+   "review_share": 6.841686555290374,
+   "clean": 80.3921568627451,
+   "identical": 8,
+   "cases": 17,
+   "failures": 0,
+   "p50": 7.43,
+   "p95": 43.574,
+   "cost": 0.0020157541176470594
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 99.74259974259974,
+   "recall": 99.74259974259974,
+   "errors": 0,
+   "unflagged": 0,
+   "review_share": 1.8826135105204873,
+   "clean": 96.66666666666667,
+   "identical": 7,
+   "cases": 10,
+   "failures": 0,
+   "p50": 8.058,
+   "p95": 47.272,
+   "cost": 0.002367891999999999
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 94.97669601242879,
+   "recall": 97.19130895601484,
+   "errors": 44,
+   "unflagged": 0,
+   "review_share": 4.768518518518518,
+   "clean": 86.41975308641975,
+   "identical": 15,
+   "cases": 27,
+   "failures": 0,
+   "p50": 7.517,
+   "p95": 45.67,
+   "cost": 0.0021461755555555557,
+   "ci": [
+    84.51720310765816,
+    99.7119341563786
+   ]
+  }
+ },
+ "LR + OpenAI gpt-5.4-mini": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 90.26701119724376,
+   "recall": 94.41441441441441,
+   "errors": 51,
+   "unflagged": 1,
+   "review_share": 8.737092930897537,
+   "clean": 74.50980392156863,
+   "identical": 9,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.427,
+   "p95": 32.792,
+   "cost": 0.009111379411764703
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 92.0410783055199,
+   "recall": 92.27799227799228,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 4.631828978622328,
+   "clean": 73.33333333333333,
+   "identical": 3,
+   "cases": 10,
+   "failures": 0,
+   "p50": 5.792,
+   "p95": 33.011,
+   "cost": 0.00914466
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 90.97938144329896,
+   "recall": 93.53471118177,
+   "errors": 53,
+   "unflagged": 1,
+   "review_share": 7.091861018562589,
+   "clean": 74.07407407407408,
+   "identical": 12,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.306,
+   "p95": 32.792,
+   "cost": 0.009123705555555556,
+   "ci": [
+    80.04854368932038,
+    97.11751662971176
+   ]
+  }
+ },
+ "LR + OpenAI gpt-5.4-nano": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 73.16017316017316,
+   "recall": 76.12612612612612,
+   "errors": 45,
+   "unflagged": 2,
+   "review_share": 17.37421383647799,
+   "clean": 62.745098039215684,
+   "identical": 7,
+   "cases": 17,
+   "failures": 0,
+   "p50": 7.55,
+   "p95": 71.881,
+   "cost": 0.0033858705882352943
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 92.29813664596273,
+   "recall": 95.62419562419562,
+   "errors": 28,
+   "unflagged": 0,
+   "review_share": 17.91044776119403,
+   "clean": 63.333333333333336,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 7.6005,
+   "p95": 85.623,
+   "cost": 0.003935885000000001
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 81.0204081632653,
+   "recall": 84.1547429782724,
+   "errors": 73,
+   "unflagged": 2,
+   "review_share": 17.610891523935003,
+   "clean": 62.96296296296296,
+   "identical": 11,
+   "cases": 27,
+   "failures": 0,
+   "p50": 7.55,
+   "p95": 75.089,
+   "cost": 0.003589579629629631,
+   "ci": [
+    57.63968072976055,
+    93.3955970647098
+   ]
+  }
+ },
+ "Route: text -> gpt-6-luna; photos -> 3.8 Flash medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 99.36993699369937,
+   "recall": 99.45945945945945,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 10.18808777429467,
+   "clean": 98.03921568627452,
+   "identical": 15,
+   "cases": 17,
+   "failures": 0,
+   "p50": 8.46,
+   "p95": 54.003,
+   "cost": 0.0019248676470588232
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 98.97172236503856,
+   "recall": 99.09909909909909,
+   "errors": 1,
+   "unflagged": 0,
+   "review_share": 2.1920668058455113,
+   "clean": 93.33333333333333,
+   "identical": 4,
+   "cases": 10,
+   "failures": 0,
+   "p50": 8.3045,
+   "p95": 54.299,
+   "cost": 0.0013551293333333336
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 99.20592906299629,
+   "recall": 99.31107578166402,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 6.7591763652641,
+   "clean": 96.29629629629629,
+   "identical": 19,
+   "cases": 27,
+   "failures": 0,
+   "p50": 8.391,
+   "p95": 54.003,
+   "cost": 0.0017138534567901233,
+   "ci": [
+    98.34574028122415,
+    99.90267639902676
+   ]
+  }
+ },
+ "Route: text -> gpt-5.4-mini; photos -> 3.8 Flash medium": {
+  "dev": {
+   "jobs": 51,
+   "accuracy": 97.32620320855615,
+   "recall": 98.37837837837837,
+   "errors": 12,
+   "unflagged": 1,
+   "review_share": 12.202852614896988,
+   "clean": 86.27450980392157,
+   "identical": 11,
+   "cases": 17,
+   "failures": 0,
+   "p50": 6.78,
+   "p95": 32.792,
+   "cost": 0.008461252941176469
+  },
+  "holdout": {
+   "jobs": 30,
+   "accuracy": 92.0410783055199,
+   "recall": 92.27799227799228,
+   "errors": 2,
+   "unflagged": 0,
+   "review_share": 4.631828978622328,
+   "clean": 73.33333333333333,
+   "identical": 3,
+   "cases": 10,
+   "failures": 0,
+   "p50": 6.312,
+   "p95": 33.011,
+   "cost": 0.009014310000000001
+  },
+  "all": {
+   "jobs": 81,
+   "accuracy": 95.16044187269858,
+   "recall": 95.8664546899841,
+   "errors": 14,
+   "unflagged": 1,
+   "review_share": 9.173003802281368,
+   "clean": 81.48148148148148,
+   "identical": 14,
+   "cases": 27,
+   "failures": 0,
+   "p50": 6.447,
+   "p95": 32.792,
+   "cost": 0.008666088888888888,
+   "ci": [
+    88.7000849617672,
+    98.52164730728617
+   ]
+  }
  }
 }

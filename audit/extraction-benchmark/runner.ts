@@ -3,7 +3,7 @@
  * arms: m3-gemini:<model> | m3-pair | m3-claude:<model> | ef-gemini:<model> | ef-claude:<model>
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
-import { basename } from 'node:path'
+import { basename, resolve } from 'node:path'
 import {
   ClaudeExtractor,
   GeminiExtractor,
@@ -29,8 +29,9 @@ const CONC = Number(concArg ?? 4)
 const GEMINI_KEY = process.env.GEMINI_API_KEY ?? ''
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY ?? ''
 const WORKSPACE = process.env.ANTHROPIC_WORKSPACE_ID ?? ''
+const OPENAI_KEY = process.env.OPENAI_API_KEY ?? ''
 const redact = (s: string) =>
-  s.split(GEMINI_KEY).join('***').split(ANTHROPIC_KEY).join('***').replace(/key=[^&\s"]+/g, 'key=***')
+  [GEMINI_KEY, ANTHROPIC_KEY, OPENAI_KEY].filter(Boolean).reduce((t, k) => t.split(k).join('***'), s).replace(/key=[^&\s"]+/g, 'key=***')
 
 type Call = { model: string; ms: number; status: number; retries: number; usage?: unknown; modelVersion?: string; finish?: string }
 
@@ -63,7 +64,7 @@ function recordingFetch(calls: Call[]): typeof fetch {
         const j = JSON.parse(text)
         usage = j.usageMetadata ?? j.usage
         modelVersion = j.modelVersion ?? j.model
-        finish = j.candidates?.[0]?.finishReason ?? j.stop_reason
+        finish = j.candidates?.[0]?.finishReason ?? j.stop_reason ?? j.choices?.[0]?.finish_reason
       } catch { /* not json */ }
       calls.push({ model, ms, status: res.status, retries, usage, modelVersion, finish })
       return new Response(text, { status: res.status, headers: res.headers })
@@ -257,6 +258,66 @@ import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readdirSync, rmSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import { tmpdir } from 'node:os'
+import { createRequire } from 'node:module'
+
+/* READER_FIX=1: fixes to the delivered file readers, applied before extraction so their effect can be measured.
+ * Word: list numbers ("1 cup ..." typed into an auto-numbered list) and line breaks inside a paragraph are rendered
+ * as text; a Word file that holds only a picture goes the photo route. PDF: a text layer that holds amounts is read
+ * as text even when the PDF also carries images (logos). Old .xls files are converted to .xlsx outside the runner. */
+const BACKEND_PKG = resolve('package.json') // run from backend/, like every command in the README
+const JSZip = createRequire(BACKEND_PKG)('jszip')
+const roman = (n: number): string =>
+  [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']].reduce((acc, [v, r]) => {
+    while (n >= (v as number)) { acc += r; n -= v as number }
+    return acc
+  }, '')
+
+async function fixDocx(buffer: Buffer): Promise<{ buffer: Buffer; image?: { data: Buffer; mime: string } }> {
+  const zip = await JSZip.loadAsync(buffer)
+  const doc: string = await zip.file('word/document.xml').async('string')
+  const numbering: string = (await zip.file('word/numbering.xml')?.async('string')) ?? ''
+  const abstractOf: Record<string, string> = {}
+  for (const m of numbering.matchAll(/<w:num w:numId="(\d+)"[^>]*>[\s\S]*?<w:abstractNumId w:val="(\d+)"\/>/g)) abstractOf[m[1]] = m[2]
+  const levels: Record<string, { fmt: string; text: string; start: number }> = {}
+  for (const a of numbering.matchAll(/<w:abstractNum\b[^>]*w:abstractNumId="(\d+)"[\s\S]*?<\/w:abstractNum>/g)) {
+    for (const l of a[0].matchAll(/<w:lvl w:ilvl="(\d+)"[\s\S]*?<\/w:lvl>/g)) {
+      levels[`${a[1]}:${l[1]}`] = {
+        fmt: /<w:numFmt w:val="(\w+)"/.exec(l[0])?.[1] ?? 'decimal',
+        text: /<w:lvlText w:val="([^"]*)"/.exec(l[0])?.[1] ?? '%1',
+        start: Number(/<w:start w:val="(\d+)"/.exec(l[0])?.[1] ?? 1),
+      }
+    }
+  }
+  const label = (n: number, fmt: string) =>
+    fmt === 'bullet' ? '•' : fmt === 'lowerLetter' ? String.fromCharCode(96 + n) : fmt === 'upperLetter'
+      ? String.fromCharCode(64 + n) : fmt === 'lowerRoman' ? roman(n).toLowerCase() : fmt === 'upperRoman' ? roman(n) : String(n)
+  const counters: Record<string, number> = {}
+  let xml = doc.replace(/<w:p\b(?:[^>]*\/>|[\s\S]*?<\/w:p>)/g, (p) => {
+    const numId = /<w:numId w:val="(\d+)"/.exec(p)?.[1]
+    if (!numId || numId === '0') return p
+    const ilvl = /<w:ilvl w:val="(\d+)"/.exec(p)?.[1] ?? '0'
+    const lv = levels[`${abstractOf[numId]}:${ilvl}`] ?? { fmt: 'decimal', text: '%1', start: 1 }
+    const key = `${numId}:${ilvl}`
+    counters[key] = (counters[key] ?? lv.start - 1) + 1
+    for (const k of Object.keys(counters)) if (k.startsWith(`${numId}:`) && Number(k.split(':')[1]) > Number(ilvl)) delete counters[k]
+    const text = lv.text.replace(/%\d/g, () => label(counters[key], lv.fmt))
+    return p.replace(/<w:p\b[^>]*>/, (open) => `${open}<w:r><w:t xml:space="preserve">${text} </w:t></w:r>`)
+  })
+  xml = xml.replace(/<w:br\b[^>]*\/>/g, '</w:t></w:r></w:p><w:p><w:r><w:t>')
+  const visible = xml.replace(/<[^>]+>/g, '').replace(/\s/g, '')
+  if (visible.length < 80) {
+    const media = Object.keys(zip.files).filter((n) => /^word\/media\/.+\.(png|jpe?g)$/i.test(n))
+    if (media.length) {
+      const sized = await Promise.all(media.map(async (n) => ({ n, data: Buffer.from(await zip.file(n).async('nodebuffer')) })))
+      sized.sort((a, b) => b.data.length - a.data.length)
+      return { buffer, image: { data: sized[0].data, mime: /\.png$/i.test(sized[0].n) ? 'image/png' : 'image/jpeg' } }
+    }
+  }
+  zip.file('word/document.xml', xml)
+  return { buffer: Buffer.from(await zip.generateAsync({ type: 'nodebuffer' })) }
+}
+
+const AMOUNT_LINE = /(^|\s)(\d+(\.\d+)?|\d*\s?\d\/\d|[½¼¾⅓⅔⅛])\s*(ea|each|lb|lbs|oz|cups?|tbsp|tsp|qt|gal|slices?|g|kg|ml)\b/gim
 
 /* EF_IMAGES=1: for a PDF, send its embedded photos at native resolution plus its text layer */
 function pdfPhotos(buffer: Buffer): { kind: 'file' | 'text'; data: string; mime?: string }[] {
@@ -487,8 +548,9 @@ async function lrTexts(input: ExtractInput): Promise<string[] | null> {
   if (input.mimeType.startsWith('image/')) return null
   if (input.mimeType === 'application/pdf') {
     const photos = pdfPhotos(input.buffer)
-    if (photos.length > 1) return null // carries photos: evidence route with the photos
     const layer = photos[photos.length - 1]?.data.replace(/^TEXT LAYER[^\n]*\n/, '') ?? ''
+    const amountsInText = (layer.match(AMOUNT_LINE) ?? []).length >= 3
+    if (photos.length > 1 && !(process.env.READER_FIX && amountsInText)) return null // carries photos: evidence route with the photos
     if (layer.replace(/\s/g, '').length < 80) return null // a scan: no text to point at
     return [layer]
   }
@@ -655,6 +717,61 @@ async function lrClaude(model: string, input: ExtractInput, f: typeof fetch): Pr
   }))
 }
 
+/* ---------- OpenAI (chat completions, strict JSON schema) ----------
+ * Same prompts and schemas as the Claude arms; OA_EFFORT sets reasoning_effort (default low), OA_DETAIL the image
+ * detail (default high). No outline split here: that call runs on Gemini. */
+async function openaiCall(model: string, system: string, content: unknown[], schema: unknown, f: typeof fetch): Promise<any> {
+  const body: Record<string, unknown> = {
+    model,
+    messages: [{ role: 'system', content: system }, { role: 'user', content }],
+    response_format: { type: 'json_schema', json_schema: { name: 'extraction', strict: true, schema } },
+    max_completion_tokens: 32000,
+    ...(process.env.OA_EFFORT !== 'unset' ? { reasoning_effort: process.env.OA_EFFORT ?? 'low' } : {}),
+  }
+  const res = await f('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${OPENAI_KEY}` },
+    body: JSON.stringify(body),
+  })
+  const raw = await res.text()
+  if (!res.ok) throw new Error(`OpenAI ${res.status}: ${raw.slice(0, 300)}`)
+  const j = JSON.parse(raw)
+  const t = j.choices?.[0]?.message?.content
+  if (!t) throw new Error(`OpenAI returned no content (${j.choices?.[0]?.finish_reason})`)
+  return JSON.parse(t)
+}
+
+async function efOpenAI(model: string, input: ExtractInput, f: typeof fetch): Promise<unknown[]> {
+  const recipe = input.type === 'recipe'
+  const allParts = await efParts(input)
+  const multi = allParts[0]?.data === '__MULTI__'
+  const groups = multi ? [allParts.slice(1)] : allParts.map((p) => [p])
+  return Promise.all(groups.map((group) => {
+    const file = group.map((part) =>
+      part.kind === 'text'
+        ? { type: 'text', text: multi ? part.data : `DOCUMENT:\n${part.data}` }
+        : part.mime === 'application/pdf'
+          ? { type: 'file', file: { filename: 'document.pdf', file_data: `data:application/pdf;base64,${part.data}` } }
+          : { type: 'image_url', image_url: { url: `data:${part.mime};base64,${part.data}`, detail: process.env.OA_DETAIL ?? 'high' } })
+    return openaiCall(model, recipe ? EF_RECIPE : EF_INVOICE,
+      [...file, { type: 'text', text: `Transcribe the ${recipe ? 'recipe' : 'invoice'} document above following the rules.` }],
+      lowerTypes(recipe ? EF_RECIPE_SCHEMA : EF_INVOICE_SCHEMA), f)
+  }))
+}
+
+async function lrOpenAI(model: string, input: ExtractInput, f: typeof fetch): Promise<unknown[]> {
+  const texts = await lrTexts(input)
+  if (!texts) return efOpenAI(model, input, f)
+  const recipe = input.type === 'recipe'
+  return Promise.all(texts.map(async (text) => {
+    const { body: doc, byId } = numbered(text)
+    const answer = await openaiCall(model, recipe ? LR_RECIPE : LR_INVOICE,
+      [{ type: 'text', text: `DOCUMENT:\n${doc}` }, { type: 'text', text: `Transcribe the ${recipe ? 'recipe' : 'invoice'} document above following the rules.` }],
+      lrClaudeSchema(recipe), f)
+    return resolveLines(answer, byId, recipe)
+  }))
+}
+
 /* ---------- jobs ---------- */
 type Case = { id: string; path: string; type: DocumentType }
 const cases: Case[] = JSON.parse(readFileSync(casesFile, 'utf8'))
@@ -666,11 +783,17 @@ async function job(c: Case, run: number) {
   if (existsSync(file)) return
   const calls: Call[] = []
   const f = recordingFetch(calls)
-  const input = await prepareInput({ type: c.type, fileName: basename(c.path), mimeType: '', buffer: readFileSync(c.path) })
+  let input = await prepareInput({ type: c.type, fileName: basename(c.path), mimeType: '', buffer: readFileSync(c.path) })
+  if (process.env.READER_FIX && /\.docx$/i.test(c.path)) {
+    const fixed = await fixDocx(input.buffer)
+    input = fixed.image
+      ? await prepareInput({ type: c.type, fileName: basename(c.path) + (fixed.image.mime === 'image/png' ? '.png' : '.jpg'), mimeType: fixed.image.mime, buffer: fixed.image.data })
+      : { ...input, buffer: fixed.buffer }
+  }
   const t0 = Date.now()
   const rec: Record<string, unknown> = {
     arm, case: c.id, run, type: c.type,
-    settings: Object.fromEntries(['EF_SHEETS', 'EF_IMAGES', 'EF_MEDIA', 'LR_THINK', 'LR_CHUNK', 'LR_OUTLINE', 'LR_COMPACT', 'GEMINI_TIER', 'CL_THINK', 'CL_CACHE', 'CL_EFFORT'].map((k) => [k, process.env[k] ?? null])),
+    settings: Object.fromEntries(['EF_SHEETS', 'EF_IMAGES', 'EF_MEDIA', 'LR_THINK', 'LR_CHUNK', 'LR_OUTLINE', 'LR_COMPACT', 'GEMINI_TIER', 'READER_FIX', 'OA_EFFORT', 'OA_DETAIL', 'CL_THINK', 'CL_CACHE', 'CL_EFFORT'].map((k) => [k, process.env[k] ?? null])),
   }
   try {
     const [kind, model] = arm.split(':')
@@ -692,6 +815,13 @@ async function job(c: Case, run: number) {
       rec.ef = await lrGemini(model, input, f)
     } else if (kind === 'lr-claude') {
       rec.ef = await lrClaude(model, input, f)
+    } else if (kind === 'text') {  // no model call: the text the line-reference route would number (null = photo route)
+      rec.text = await lrTexts(input)
+      rec.ef = []
+    } else if (kind === 'lr-openai') {
+      rec.ef = await lrOpenAI(model, input, f)
+    } else if (kind === 'ef-openai') {
+      rec.ef = await efOpenAI(model, input, f)
     } else throw new Error(`unknown arm ${arm}`)
   } catch (e) {
     rec.error = redact(String((e as Error)?.message ?? e)).slice(0, 600)

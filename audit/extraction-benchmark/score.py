@@ -1,5 +1,5 @@
 """Score live extraction benchmark outputs against the hand-labelled key in gold.py."""
-import glob, json, os, re, statistics, sys, unicodedata, difflib
+import glob, json, os, re, statistics, sys, unicodedata, difflib, functools
 from collections import defaultdict, Counter
 import gold
 
@@ -17,12 +17,13 @@ CHECK_SRC = {
 if hasattr(gold, "HO"):
     CHECK_SRC.update({k: gold.HO + "/%s.pdf.txt" % k for k in ("h1_template_invoice", "h2_distributor_invoice", "h4_credit_memo")})
     CHECK_SRC["h3_produce_photo"] = None
+CHECK_SRC.update({"n_trap_dish_photo": None, "n_meatball": None})  # photos: no text layer to check against
 SCORE_SRC = dict(gold.CASES)
 SCORE_SRC["synthetic_invoice"] = dict(gold.CASES["synthetic_invoice"], src=TXT + "synthetic_invoice.pdf.txt")
 
 PRICE = {  # USD per 1M tokens: input, output (thinking billed as output)
     "gemini-3.5-flash-lite": (0.30, 2.50), "gemini-4-argon": (2.00, 10.00), "gemini-3.8-flash": (0.75, 3.75), "gemini-3.1-flash-lite": (0.25, 1.50),
-    "claude-opus-5-5": (4.0, 20.0), "claude-sonnet-5-5": (2.0, 10.0), "claude-haiku-5-5": (0.10, 0.50),
+    "claude-opus-5-5": (4.0, 20.0), "gpt-6-luna": (0.10, 0.50), "gpt-5.6-luna": (0.20, 1.20), "gpt-5.4-mini": (0.75, 4.50), "gpt-5.4-nano": (0.20, 1.25), "gpt-6.1-sol": (2.00, 10.00), "claude-sonnet-5-5": (2.0, 10.0), "claude-haiku-5-5": (0.10, 0.50),
 }
 
 FRAC = {"½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅛": 0.125, "⅜": 0.375, "⅝": 0.625, "⅞": 0.875}
@@ -32,7 +33,9 @@ def parse_qty(t):
     """First figure of a printed amount: '1 1/2', '½', '2 or 3', '2-3', '4ea', '1-1/2'."""
     if t is None:
         return None
-    s = str(t).strip()
+    s = str(t).strip().lstrip("<>~≈ ")
+    # fraction slash: Word drops the space before a built-up fraction, so "11⁄4" is 1 1/4 and "1⁄2" is 1/2
+    s = re.sub(r"(\d*?)(\d)\u2044(\d+)", lambda m: (m.group(1) + " " if m.group(1) else "") + m.group(2) + "/" + m.group(3), s)
     for k, v in FRAC.items():
         s = re.sub(r"(\d)\s*" + k, lambda m: f"{m.group(1)} {v}", s)
         s = s.replace(k, str(v))
@@ -69,6 +72,7 @@ UNIT = {
     "clove": "clove", "cloves": "clove", "bunch": "bunch", "bunches": "bunch", "slice": "slice",
     "slices": "slice", "pinch": "pinch", "pinches": "pinch", "cs": "case", "case": "case", "cases": "case",
     "can": "can", "pack": "pack", "packs": "pack", "bag": "bag", "bx": "box", "box": "box",
+    "q": "qt", "tblsp": "tbsp", "tblsps": "tbsp", "teasp": "tsp", "teasps": "tsp",
     "floz": "floz", "fl.oz": "floz", "fl.oz.": "floz", "fluidounce": "floz", "fluidounces": "floz",
 }
 COUNT = {None, "ea"}
@@ -102,7 +106,36 @@ def canon_unit(u):
             return w2.rstrip("s") if w2.endswith("s") and len(w2) > 3 else w2
     if not words:
         return None
+    if len(words) == 1:  # "sprigs of", "wedge of": the unit word without the "of"
+        w = words[0].rstrip(".")
+        return w[:-1] if w.endswith("s") and len(w) > 3 else w
     return lo[:-1] if lo.endswith("s") and len(lo) > 3 else lo
+
+
+# Compound amounts ("1 lb, 2 oz", "1/3 cup, 2 tbsp, 1-1/4 tsp", "1 T + 2 tsp") are summed in one base unit.
+BASE = {"oz": ("oz", 1), "lb": ("oz", 16), "g": ("g", 1), "kg": ("g", 1000), "tsp": ("tsp", 1), "tbsp": ("tsp", 3),
+        "cup": ("tsp", 48), "floz": ("tsp", 6), "pt": ("tsp", 96), "qt": ("tsp", 192), "gal": ("tsp", 768),
+        "ml": ("ml", 1), "l": ("ml", 1000)}
+_GRP = re.compile(r"(\d+\s*-\s*\d+/\d+|\d+\s+\d+/\d+|\d*\.?\d+/\d+|\d*\.\d+|\d+)\s*(lbs?|#|oz|ounces?|pounds?|cups?|c|"
+                  r"tbsp|tablespoons?|tbs|tbl|tsp|teaspoons?|t)\b\.?", re.I)
+
+
+def to_base(q, u):
+    if q is None or u not in BASE:
+        return None
+    b, f = BASE[u]
+    return q * f, b
+
+
+def compound_total(text):
+    """(total, base unit) when the text holds two or more amounts of one kind, else None."""
+    groups = [(parse_qty(m.group(1)), canon_unit(m.group(2))) for m in _GRP.finditer(text or "")]
+    if len(groups) < 2:
+        return None
+    based = [to_base(q, u) for q, u in groups]
+    if any(b is None for b in based) or len({b[1] for b in based}) != 1:
+        return None
+    return sum(b[0] for b in based), based[0][1]
 
 
 STOP = set("of and the a an fresh large small medium chopped sliced minced diced cubed thinly very preferably "
@@ -110,7 +143,7 @@ STOP = set("of and the a an fresh large small medium chopped sliced minced diced
 UNITWORDS = set(UNIT.keys()) | {"t", "T"}
 
 
-def toks(name):
+def toks(name, fallback=True):
     s = re.sub(r"\(\$?[\d.,]+\)|\$[\d.,]+", " ", deaccent(str(name or "")).lower())
     out = []
     for w in re.findall(r"[a-z]+", s):
@@ -121,7 +154,15 @@ def toks(name):
         elif len(w) > 3 and w.endswith("s"):
             w = w[:-1]
         out.append(w)
+    if not out and fallback:  # a name made only of unit words ("cloves", "whole cloves") is still a name
+        out = [w[:-2] if len(w) > 3 and w.endswith("es") and not w.endswith("ses") else w[:-1] if len(w) > 3 and w.endswith("s") else w
+               for w in re.findall(r"[a-z]+", s) if w not in STOP]
     return out
+
+
+def jac(a, b):
+    A, B = set(toks(a)), set(toks(b))
+    return len(A & B) / len(A | B) if A and B else 0.0
 
 
 def sim(a, b):
@@ -169,6 +210,7 @@ def deaccent(t):
     return "".join(ch for ch in unicodedata.normalize("NFKD", t) if not unicodedata.combining(ch))
 
 
+@functools.lru_cache(maxsize=256)
 def norm_src(t):
     return re.sub(r"\s+", " ", deaccent(t or "").lower())
 
@@ -212,9 +254,13 @@ def name_in(src, name):
 _QU = r"(?:\d|[½¼¾⅓⅔⅛])[\d/.\s]*\s*(?:cups?|c|tbsp|tsp|t|oz|lbs?|pints?|quarts?|qts?|g|kg|ml|each|ea|bunch|cloves?)\b"
 
 
-def merged(name):
-    """A line whose name holds another ingredient with its own amount ("Hot Water, 1 pint Coconut Milk, ...")."""
+def merged(name, strict=False):
+    """A line whose name holds another ingredient with its own amount ("Hot Water, 1 pint Coconut Milk, ...").
+    strict (scoring): a size printed in a product name ("Croissant, 2.5 oz", "salmon pieces, 2 oz ea, skinless")
+    is not a second ingredient; the amount must be followed by an ingredient word."""
     n = str(name or "")
+    if strict:
+        return bool(re.search(r"[,;]\s*" + _QU + r"\s+(?!ea\b|each\b|ct\b)[a-z]{3,}", n, re.I)) or len(re.findall(_QU, n, re.I)) >= 2
     return bool(re.search(r"[,;]\s*" + _QU, n, re.I)) or len(re.findall(_QU, n, re.I)) >= 2
 
 
@@ -243,21 +289,57 @@ def ef_recipe_lines(efs, check_src, textual=True):
             recipes += 1
             entries = r.get("lines") or []
             claimed = Counter(ln.get("evidence") for ln in entries if ln.get("quantityText"))
+            joined = lambda ln: " ".join(x for x in (ln.get("quantityText"), ln.get("unitText"), ln.get("amountNote")) if x)
+            read = Counter()
             for ln in entries:
+                if ln.get("quantityText"):
+                    read[ln.get("evidence")] += max(1, len(re.findall(_QU, joined(ln), re.I)))
+            start = len(lines)
+            for ln in entries:
+                if NORMALIZE and ln.get("quantityText") and not ln.get("unitText"):
+                    # "3 cloves garlic" read with the counting word in the name: move it to the unit (code, no model)
+                    m = re.match(r"^\s*((?:large|medium|small|whole)\s+)?([A-Za-z]+)\.?\s+(?:of\s+)?(.+)$", ln.get("nameText") or "")
+                    if m and canon_unit(m.group(2)) in APP_UNITS - {"ea"} and m.group(2).lower() in UNIT_WORDS:
+                        ln = dict(ln, unitText=m.group(2), nameText=((m.group(1) or "") + m.group(3)).strip())
                 q = parse_qty(ln.get("quantityText"))
                 u = canon_unit(ln.get("unitText"))
+                ct = compound_total(joined(ln))
+                if ct:
+                    q, u = ct
                 flag = ef_flag(ln, q, check_src, textual)
+                # V3: a printed line with more amounts than its entries read ("2 lb, 4 oz" read as "2 lb")
+                if CHECKS_V3 and flag is None and ln.get("quantityText") and \
+                        len(re.findall(_QU, ln.get("evidence") or "", re.I)) > read[ln.get("evidence")]:
+                    flag = "line shows more amounts than were read"
+                # V3: the app can only cost units in its unit table (backend/src/costing/units.ts)
+                if CHECKS_V3 and flag is None and ln.get("unitText") and u not in APP_UNITS:
+                    flag = "unit the app cannot cost"
+                # V3: a printed number but no amount read ("Juice of 1 orange")
+                if CHECKS_V3 and flag is None and not ln.get("quantityText") and not ln.get("amountNote") and \
+                        re.search(r"\d", ln.get("evidence") or ""):
+                    flag = "line shows a number but no amount was read"
+                # one compound amount returned as two entries of the same ingredient on the same line: add them up
+                prev = lines[-1] if len(lines) > start else None
+                if prev and prev["ev"] == ln.get("evidence") and norm_src(prev["name"]) == norm_src(ln.get("nameText", "")):
+                    a, b = to_base(prev["qty"], prev["unit"]), to_base(q, u)
+                    if a and b and a[1] == b[1]:
+                        prev["qty"], prev["unit"] = a[0] + b[0], a[1]
+                        continue
                 # Line accounting: an entry with no amount on a shared printed line ("..., Veal Demi, Rosemary") is
                 # only suspect when the line shows more amounts than its sibling entries claim.
                 if CHECKS_V2 and flag == "evidence shows an amount the line lacks" and \
                         len(re.findall(_QU, ln.get("evidence") or "", re.I)) <= claimed[ln.get("evidence")]:
                     flag = None
                 lines.append(dict(name=ln.get("nameText", ""), qty=q, unit=u, flag=flag,
-                                  section=ln.get("section"), ev=ln.get("evidence")))
+                                  section=ln.get("section"), ev=ln.get("evidence"), raw=ln))
     return lines, recipes, kinds
 
 
 CHECKS_V2 = os.environ.get("CHECKS_V2") == "1"  # line accounting + unit-inside-name (added after round 2)
+APP_UNITS = {"mg", "g", "kg", "oz", "lb", "ml", "cl", "l", "tsp", "tbsp", "floz", "cup", "pt", "qt", "gal", "pinch", "dash",
+             "ea", "dozen", "bunch", "clove", "sprig", "head", "slice", "sheet", "can", "jar", "bottle", "bag", "pack", "case"}
+CHECKS_V3 = os.environ.get("CHECKS_V3") == "1"
+NORMALIZE = os.environ.get("NORMALIZE") == "1"  # move a leading counting word from the name to the unit (post-hoc, NEW set)  # compound-amount accounting (added for the NEW set; tuned on nothing)
 UNIT_WORDS = set("""slice slices bunch bunches ear ears cup cups clove cloves pinch head heads stick sticks bag bags sheet
 sheets can cans oz ounce ounces lb lbs pound pounds sprig sprigs dash piece pieces scoop scoops bottle bottles tbsp tsp
 tablespoon tablespoons teaspoon teaspoons quart quarts pint pints gallon gallons qt qts pt gal g kg ml liter liters pack
@@ -370,7 +452,7 @@ def score_recipe(case, lines, src_text):
         taken = set()
         for (rn, rq, ru, rline) in ref:
             for i, ln in enumerate(lines):
-                if i in taken or merged(ln["name"]):
+                if i in taken or merged(ln["name"], True):
                     continue
                 # a count item may be read with any unit word printed on its own line ("4 ... Ziplock Bags")
                 u_ok = ln["unit"] == ru or (ru in COUNT and ln["unit"] in COUNT) or (
@@ -380,7 +462,7 @@ def score_recipe(case, lines, src_text):
                     res["ref_found"] += 1
                     break
         for ln in lines:
-            if merged(ln["name"]):
+            if merged(ln["name"], True):
                 c = "merged"
             elif not name_in(src_text, ln["name"]):
                 c = "invented"
@@ -399,15 +481,17 @@ def score_recipe(case, lines, src_text):
             if s >= 0.5:
                 gqs = gq if isinstance(gq, tuple) else (gq,)
                 bonus = 0.3 if any(num_eq(ln["qty"], x) for x in gqs if x is not None) else 0
-                pairs.append((s + bonus, i, j))
+                # on a tie a required key line wins over an optional one ("salt and pepper" -> salt, pepper optional)
+                # then the closer name ("Roasted Garlic Aioli" -> "roasted garlic aioli", not "roasted garlic")
+                pairs.append((s + bonus, "opt" not in fl, max(jac(ln["name"], n) for n in names), i, j))
     pairs.sort(reverse=True)
     used_i, used_j, match = set(), set(), {}
-    for s, i, j in pairs:
+    for s, _req, _jac, i, j in pairs:
         if i in used_i or j in used_j:
             continue
         used_i.add(i); used_j.add(j); match[i] = j
     for i, ln in enumerate(lines):
-        if merged(ln["name"]):
+        if merged(ln["name"], True):
             res["merged"] += 1
             det.append(("merged", ln))
             used_j.discard(match.pop(i)) if i in match else None
@@ -416,13 +500,16 @@ def score_recipe(case, lines, src_text):
             names, gq, gu, fl = golds[match[i]]
             gqs = gq if isinstance(gq, tuple) else (gq,)
             gus = gu if isinstance(gu, tuple) else (gu,)
-            if gq is None and "opt" in fl and ln["qty"] is not None:
+            if "compound" in fl:
+                b = to_base(ln["qty"], ln["unit"])
+                q_ok = b is not None and b[1] == gu and num_eq(b[0], gq)
+            elif gq is None and "opt" in fl and ln["qty"] is not None:
                 q_ok = near(src_text, ln["name"], ln["qty"])  # component line: amount must be printed nearby
             elif gq is None:
                 q_ok = ln["qty"] is None
             else:
                 q_ok = any(num_eq(ln["qty"], x) for x in gqs) or ("alt_none" in fl and ln["qty"] is None)
-            if gq is None or (ln["qty"] is None and "alt_none" in fl):
+            if "compound" in fl or gq is None or (ln["qty"] is None and "alt_none" in fl):
                 u_ok = True
             elif "ea" in gus:
                 u_ok = ln["unit"] in COUNT or ln["unit"] in gus
@@ -524,7 +611,11 @@ def cost_of(calls):
         if not key:
             continue
         pin, pout = PRICE[key]
-        if "promptTokenCount" in u:  # Gemini: implicit-cache hits are billed at 10% of input
+        if "prompt_tokens" in u:  # OpenAI: cached input billed at 10%; reasoning tokens are part of completion_tokens
+            cached = (u.get("prompt_tokens_details") or {}).get("cached_tokens", 0) or 0
+            i = u.get("prompt_tokens", 0) - cached + 0.1 * cached
+            o = u.get("completion_tokens", 0)
+        elif "promptTokenCount" in u:  # Gemini: implicit-cache hits are billed at 10% of input
             cached = u.get("cachedContentTokenCount", 0) or 0
             i = u.get("promptTokenCount", 0) - cached + 0.1 * cached
             o = u.get("candidatesTokenCount", 0) + (u.get("thoughtsTokenCount", 0) or 0)
@@ -532,7 +623,7 @@ def cost_of(calls):
             i = (u.get("input_tokens", 0) or 0) + 0.1 * (u.get("cache_read_input_tokens", 0) or 0) + \
                 1.25 * (u.get("cache_creation_input_tokens", 0) or 0)
             o = u.get("output_tokens", 0)
-        tier = 0.5 if u.get("serviceTier") == "flex" else 1.0  # Gemini Flex: half price, best-effort queue
+        tier = 0.5 if (u.get("serviceTier") == "flex" or u.get("service_tier") == "flex") else 1.0  # Gemini Flex: half price, best-effort queue
         total += tier * (i / 1e6 * pin + o / 1e6 * pout)
     return total
 

@@ -1,0 +1,20 @@
+Sheet: Sheet1
+recipe:	FALAFAL
+qty.	product
+18C (10#)	IQF FRESH CHICKPEAS
+2C	ROUGH CHOPPED PARLSEY
+2C	ROUGH CHOPPED CILANTRO
+2EA	JALEPENO
+6T	CH GARLIC
+6t	SALT
+3t	CAYENNE
+6T	CUMIN (TOASTED AND GROUND)
+12T	CORRIANDO (TOASTED AND WHOLE)
+6t	BAKING POWDER
+3C	AP FLOUR
+yield:
+method:
+1	Mix everything exept baking powder and flour.
+2	Grind through a 5/16 die.
+3	Incorporate flour and baking podwer.
+4	Season and Fry at 300'.

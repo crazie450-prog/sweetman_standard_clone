@@ -1,0 +1,17 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  cider glaze
+	yield:
+qty.	product
+2 Q	cider vinegar
+12 oz	dark brown sugar
+2 cups	demi
+2 sprigs	thyme
+5 ea	shallots, sliced
+2 ea	bay leaves
+1 t	cracked black pepper
+1 t	salt
+1 Q	chicken stock
+	method:
+1	place all ingredients in a pot and reduce to a glace
+2	pass through chinois and cool

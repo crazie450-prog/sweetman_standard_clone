@@ -307,6 +307,11 @@ for _g in INV.values():
     for _l in _g["lines"]:
         _l["ok"] = [tuple(x) for x in _l["ok"]]
 
+# =============================================================== NEW SET (real archive documents; see gold_new.py)
+from gold_new import NEW, R as _R_NEW, LONG
+CASES.update(NEW)
+R.update(_R_NEW)
+
 
 if __name__ == "__main__":  # writes the case lists for runner.ts (absolute paths for this checkout)
     import json
@@ -315,10 +320,13 @@ if __name__ == "__main__":  # writes the case lists for runner.ts (absolute path
         json.dump([dict(id=k, path=v["path"], type=v["type"]) for k, v in cases.items()],
                   open(os.path.join(DOCS, name), "w"), indent=1)
 
-    dev = {k: v for k, v in CASES.items() if k not in HOLDOUT}
+    dev = {k: v for k, v in CASES.items() if k not in HOLDOUT and k not in NEW}
     dump("cases.json", dev)
     dump("cases_holdout.json", HOLDOUT)
-    dump("cases_all.json", CASES)
+    dump("cases_all.json", {k: v for k, v in CASES.items() if k not in NEW})
+    dump("cases_new.json", NEW)  # readers fixed: .xls as converted .xlsx (run with READER_FIX=1)
+    json.dump([dict(id=k, path=v["raw"], type=v["type"]) for k, v in NEW.items()],
+              open(os.path.join(DOCS, "cases_new_raw.json"), "w"), indent=1)  # the files as received
     missing = [k for k, v in CASES.items() if not os.path.exists(v["path"])]
-    print("%d dev + %d held-out cases written (cases.json, cases_holdout.json, cases_all.json)" % (len(dev), len(HOLDOUT)),
-          "MISSING: %s" % missing if missing else "(all files present)")
+    print("%d dev + %d held-out + %d new cases written (cases.json, cases_holdout.json, cases_all.json, cases_new.json, "
+          "cases_new_raw.json)" % (len(dev), len(HOLDOUT), len(NEW)), "MISSING: %s" % missing if missing else "(all files present)")
