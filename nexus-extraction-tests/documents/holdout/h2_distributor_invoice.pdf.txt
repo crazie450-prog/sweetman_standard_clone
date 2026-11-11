@@ -1,0 +1,38 @@
+HARBOR FOODSERVICE DIST. CO.
+Invoice 0094417726 Inv Date 10/02/26 Cust 7781-GF Route 14 Page 1 of 2
+
+
+ORD   SHP   UM   PACK/SIZE      BRAND       DESCRIPTION                  ITEM#    PRICE       EXTENSION
+
+1     1     CS   4/5 LB         PACKER      CHICKEN BREAST BNLS SKNLS    553120     3.19/LB           63.80
+                                            CATCH WEIGHT 20.0 LB
+
+2     2     CS   6/#10          SYSCO       BEANS CANNELLINI             418833      42.10            84.20
+1     1     CS   1/14 LB AVG    BUTCHER     PORK BELLY SKIN-ON           609112     4.25/LB           61.20
+                                            CATCH WEIGHT 14.4 LB
+
+3     3     CS   12/1 QT        IMPERIAL    CREAM HEAVY 40%              220076      38.95           116.85
+2     1     CS   25 LB          AREZZIO     FLOUR 00 PIZZA               771209      27.60            27.60
+
+
+
+
+CONTINUED ON NEXT PAGE
+HARBOR FOODSERVICE DIST. CO.
+Invoice 0094417726 Inv Date 10/02/26 Cust 7781-GF Route 14 Page 2 of 2
+
+
+ORD   SHP   UM   PACK/SIZE      BRAND       DESCRIPTION                  ITEM#    PRICE       EXTENSION
+
+4     4     EA   1 EA           WHLFCLS     BASIL FRESH BUNCH            102344        1.85               7.40
+1     1     CS   2/5 LB         AREZZIO     MOZZARELLA FIOR DI LATTE     330981       36.75           36.75
+1     1     CS   6/1 GAL        ROLAND      VINEGAR RED WINE             514470       29.90           29.90
+
+                                            FUEL SURCHARGE                                                6.50
+
+
+
+                                                                          INVOICE SUBTOTAL           434.20
+                                                                                       TAX             0.00
+                                                                                     TOTAL           434.20
+

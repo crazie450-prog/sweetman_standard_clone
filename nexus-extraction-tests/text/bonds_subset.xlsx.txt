@@ -1,0 +1,262 @@
+Sheet: Sysco Order Guide - Kitchen
+Sysco Order Guide									
+REP- PHONE NUMBER: Richard Boston												
+Sku	ITEM NAME	PACK SIZE	Par	Sunday		Tuesday		Thursday	
+	Paper & Disposable			On-Hand	Order	On-Hand	Order	On-Hand	Order
+7224627	9x9 to go container	case	3 cs						
+7091041	6x6 to go container	case	3 cs						
+1440229	4" Knot Skewer	100ct	1cs						
+4913093	1 Gallon Ziplock Bags	144ct	1cs						
+1288192	Beverage Napkins	250ct	5 cs									
+7163346	C-Fold Towels	16/135ct	1cs						
+8231512	32 oz Deli Containers	240	1cs						
+8018838	16 oz Deli Containers	240	1cs						
+8231967	8 oz Deli Containers	240	1cs						
+2099341	Hairnet	144ct	1ea									
+3290097	Beard Guard	100	1cs						
+1438924	Piping Bags	100 ct	1cs						
+4685594	Nitrile Black Gloves Med	10/100ct	1cs
+4685614	Nitrile Black Gloves Large	10/100ct	1cs						
+4685621	Nitrile Black Gloves XL	10/100ct	1cs						
+7274085	To-Go Bags Small	1/200ct	1cs
+6436059	Trash Bags	100 ct	2cs						
+7435266	18" Plastic Wrap	each	1ea						
+496026	12" Plastic Wrap	each	1ea						
+6938336	18" Foil	each	1ea						
+7200759	Pink Chix Towels	200ct	2cs									
+8003422	Plastic Tasting Spoons	100ct	.25cs						
+4220580	Label Roll	500ct	3ea									
+5974290	Pan Liner, parchment	16x24	1cs									
+7096905	Pan Liner Bags	100 ct	2cs									
+6885703	Brown Basket Liner 12x12	1/2000ct	1cs
+5950688	Filter Coffee Tea 1.5 Gallon 13x5	2/250ct	1cs
+7498660	1 Ply Printer Paper 3"	50ct	1 cs
+8195794	Dinner Napkins 17x17	4/75ct	1cs
+1995663	Coffee Cup 12oz	20/50ct	2cs
+2000513	Coffe Cup Lids 12oz	10/100ct	1cs
+4471223	Thermal Paper 3 1/8"	50ct	1 cs
+4528461	Dispenser Napkin	24/250ct	1 cs
+5467881	Java Jackets	1300ct	1 cs
+Sku	ITEM NAME	PACK SIZE	Par	Sunday		Tuesday		Thursday	
+	Chemicals			On-Hand	Order	On-Hand	Order	On-Hand	Order
+5636568	True Power Detergent	Gallon	2ea							Bar?
+5636469	True Power Rinse Additive	Gallon	2ea							Bar?
+4294874	Nexa Hand Soap	750ml	6ea						
+7237403	Rapid MS Disenfectant Cleaner	2.5 gallon	2ea						
+7006331	Oasis Multi Quat	2.5 gallon	2ea						
+7115226	No rinse ALK Floor Cleaner	2.5 gallon	2ea						
+5365077	Pantastic	4/1gal	2ea
+8458856	Pot and Pan Green	4/1gal	3ea						
+1326507	Grease Strip	4/32oz	2ea						
+3976277	Delimer	4/1gal	2ea						
+
+Sheet: Recipe Bible Table of Contents
+Recipe Bible Table of Contents						
+#	Line Check	Prep Time	Shelf Life	Recipe	Used For	Shift
+2		10 minutes	7 days	Jerk BBQ Sauce	Wings/Leg Quarters	lunch/dinner
+3		50 minutes	7 days	Black Pepper Queso	Shrimp & Grits/Mac	Breakfast/Lunch
+4		1 hour	7 days	Smoked Jerk Chicken Wings	Wings	lunch/dinner
+		30 minutes	30 days	Pickled Red Onions	Flounder/Brisket	lunch/dinner
+		20 minutes	14 days	Florida Citrus Mop	Pork Burnt Ends	lunch/dinner
+		15 minutes	14 days	Alabama White BBQ Sauce	Loaded Fries/Flounder	lunch/dinner
+		15 minutes	30 days	Fried Chicken Dredge	Fried Chicken Breast	B/L/D
+		30 minutes	7 days	Biscuit Croutons	Caesar Salad	lunch/dinner
+		25 minutes	7 days	Carolina Gold Rice	Hoppin John	B/L/D
+		1 hour	7 days	Black Eyed Peas	Hoppin John	B/L/D
+		10 minutes	30 days	Fry Seasoning	Waffle Fries	lunch/dinner
+		30 minutes	30 days	Pickled Pineapple	Wings/Leg Quarters	lunch/dinner
+		30 minutes	7 days	Blanched Shell Pasta	Mac and Cheese	lunch/dinner
+		20 minutes	7 days	Marinated Par Cooked Chicken Breasts	Chicken Sando	lunch/dinner
+		20 minutes	7 days	Buttermilk Egg Battered Chicken Breasts	Chicken Sando	lunch/dinner
+		30 minutes	7 days	Black Pepper Milk Gravy	Biscuits & Gravy	Breakfast
+		1 hour	14 days	Smoked Bacon Onion Jam	Smash Burger	lunch/dinner
+		10 minutes	2 days	Vanilla Whipped Cream	Root Beer Float	lunch/dinner
+		10 minutes	2 days	Creamy BBQ Slaw	Side	lunch/dinner
+
+
+													0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sheet: Prep Sheets
+Prep Sheets																	
+#	Prep Time	Item	Par	Monday		Tuesday		Wednesday		Thursday		Friday		Saturday		Saturday	
+				On-Hand	Order	On-Hand	Order	On-Hand	Order	On-Hand	Order	On-Hand	Order	On-Hand	Order	On-Hand	Order
+1	10 minutes	Jerk BBQ Sauce	8 quarts
+2	50 minutes	Black Pepper Queso	22 quart
+3	1 hour	Smoked Jerk Chicken Wings	3 cases
+4	30 minutes	Pickled Red Onions	4 quarts
+5	30 minutes	Sliced Andouille Sausage	2 cases
+6	30 minutes	Chop Smoked Beef Brisket	4 cases
+7	20 minutes	Florida Citrus Mop	8 quarts
+8	15 minutes	Alabama White BBQ Sauce	10 quarts
+9	15 minutes	Fried Chicken Dredge	1 batch
+10	30 minutes	Biscuit Croutons	3 gallon bags
+11	25 minutes	Carolina Gold Rice	6 gallons
+12	1 hour	Black Eyed Peas	6 gallons
+13	20 minutes	Baby Gem Lettuce, cleaned	3 cases
+14	10 minutes	Fry Seasoning	4 quarts
+15	30 minutes	Pickled Pineapple	6 gallons
+16	30 minutes	Blanched Shell Pasta	2 cases
+17	30 minutes	Load up 600 pans - Burgers	3 (600 pans)
+18	20 minutes	Marinated Par Cooked Chicken Breasts	4 quarts
+19	20 minutes	Buttermilk Egg Battered Chicken Breasts	2 quarts
+20	20 minutes	Tray up Smoked Bacon	2 cases
+21	30 minutes	Black Pepper Milk Gravy	12 quarts
+22	10 minutes	Creamy BBQ Slaw	4 bags
+23			
+
+Sheet: Pantry
+Pantry									
+Dish Name: Pimento Cheese Jar| Assorted Veggies, Crackers $14									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					3.3531578947368423	13.41263157894737			
+2		Persian Cucumber		0.5	0.3	0.25			
+3		Sweet Baby Peppers		1 each	0.3				
+4		Baby Carrot, halved		1 each	0.3				
+5		Artisan Crackers		3 pcs	0.2				
+6		Breakfast Radish		1 each	0.15				
+7		Pimento Cheese		4 oz.	2.1031578947368423	Profit			
+					0	10.059473684210527			
+Pantry									
+Dish Name: Buttermilk Drop Biscuits| Honey Butter, Strawberry Jam $12									Allergen code:	KEVIN LOOK>>>>>>
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					2.699375	11.73641304347826			
+2		Buttermilk Drop Biscuits		2 ea	1.7	0.23			
+3		Honey Butter		1 oz	0.499375				
+4		Strawberry Jam		1 oz.	0.5				
+5					0				
+6					0				
+7					0	Profit			
+						9.03703804347826			
+Pantry									
+Dish Name: Caesar Salad| Oven Dried Tomatoes, Kalamatta Olives, Biscuit Croutons, Parmesan 14									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					2.7831249999999996	13.915624999999997			
+2		Baby Gem Lettuce		1 Head	0.68	0.2			
+3		Parmesan		1/4 cup	0.3				
+4		Oven Dried Tomatoes		2 oz.	0.74875				
+5		Kalamatta Olives		1 oz.	0.374375				
+6		Biscuit Croutons		1/4 cup	0.28				
+7		Caesar Dressing		4 oz.	0.4						Retail
+8		Add on Grilled Chicken Breast		6 oz	2.6525					10.61	11
+9		Add Chopped Brisket		6 oz.	3.62125					14.485	15
+10		Add Pork Burnt Ends		6 oz	3.12125	Profit				12.485	13
+11		Add Flounder, Fried		6 oz.	2.6525	11.132499999999997				10.61	12
+Dish Name: Sides: Creamy BBQ Slaw $8									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1		Shaved Cabbage		6 oz.	1	5			
+2		Alabama White BBQ		2 oz.	0.35	0.2			
+3		Sugar		1 Tb.	0.15				
+4									
+5									
+Dish Name: Root Beer Float| Vanilla Ice Cream, Root Beer, Whipped Cream $11									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					2.6	10.4			
+2		Root Beer		6 oz	0.65				
+3		Vanilla Ice Cream		3 oz	1.7				
+4		Whipped Cream		1 oz	0.25				
+5									
+6									
+7					0	Profit			
+8						7.800000000000001			
+Dish Name: Vanilla Ice Cream| Two Scoops $9									Allergen code:
+ct	Line Check	Ingredients		Par	Cost	Price			
+1		Vanilla Ice Cream		2 (3 oz) Scoops	1.7	8.409090909090908			
+2		Mint Leaves		3 each	0.15	0.22			
+3					0	Profit			
+4						6.709090909090908			
+
+Sheet: GrillPlancha
+Grill/Plancha									
+Name of Dish: Chargrilled Jerk Chicken Wings| Jerk BBQ Sauce, Pickled Pineapple, Cilantro $18									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					4.297499999999999	17.189999999999998			
+2		Par Cooked Jerk Chicken Wings		6 pcs	3.6375	0.25			
+3		Jerk BBQ Sauce		3 oz.	0.25				
+4		Pickled Pineapple		2 oz.	0.35				
+5		Cilantro Leaves		3 pcs	0.04				
+6		CKG Jerk Spice		sprinkle	0.02				
+7					0	Profit			
+8						12.892499999999998			
+Grill/Plancha									
+Name of Dish: Smashburger|Pretzel Bun, Smoked Gouda Cheese, Bacon Onion Jam $24									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					5.455	23.717391304347824			
+2		Smoked Gouda Cheese		2 slice	0.29	0.23			
+3		Bacon Onion Jam		2 oz.	0.75				
+4		2 (4 oz.) Burgers		8 oz.	2.625				
+5		House Pickles		2 ea	0.4				
+6		Choice of Side		6 oz.	0.51				
+7		Pretzel Bun		1ea	0.88	Profit			
+8					0	18.262391304347823			
+Grill/Plancha									
+Name of Dish: Smokehouse Smash Burger|Smash Burger, Brisket + Pork Burnt Ends, Half and Half BBQ Sauce, Pickled Jalapeños on Pretzel Bun $27									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					5.75625	26.164772727272727			
+2		Half and Half BBQ Sauce		1 oz	0.29	0.22			
+3		Chopped Drunk Beef Brisket		2 oz	1.49				
+4		Pork Burnt Ends		2 oz	0.87375				
+4		1 (4 oz.) Burgers		4 oz.	1.3125				
+5		House Pickles		2 ea	0.4				
+6		Choice of Side		6 oz.	0.51				
+7		Pretzel Bun		1ea	0.88	Profit			
+8					0	20.408522727272725			
+Grill/Plancha									
+Name of Dish: Chopped Smoked Beef Brisket Sandwich| Pretzel Bun, Pickled Onions + Jalapeno Peppers, Sweet Tomato Molasses BBQ Sauce $22									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					5.43	21.72			
+2		Chopped Smoked Beef Brisket		4 oz.	3.19	0.25			
+3		Pickled Red Onions		1 oz.	0.25				
+4		Pickled Jalapeno Peppers		1 oz.	0.25				
+5		Pretzel Bun		1 each	0.88				
+6		Choice of 1 side		6 oz.	0.51	Profit			
+7		Sweet Tomato Molasses BBQ Sauce		2 oz.	0.35	16.29			
+Grill/Plancha									
+Name of Dish: Smoked Pork Burnt End Sandwich| Pretzel Bun, Mop + Mustard BBQ Sauce $18									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					3.6375	18.1875			
+2		Smoked Pork Burnt Ends		4 oz.	1.7475	0.2			
+3		FL Citrus Mop		1 oz.	0.25				
+4		SC Mustard BBQ Sauce		1 oz.	0.25				
+5		Pretzel Bun		1 each	0.88	Profit			
+6		Choice of 1 side		6 oz.	0.51	14.55			
+Grill/Plancha									
+Smoked Rib Platter| Half Slab Smoked Ribs, Seasoned waffle Fries, Creamy BBQ Slaw, House Pickles, BBQ Sauce $25									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					5.592499999999999	24.315217391304344			
+2		Half Slab Smoked Ribs		7 bones	4.4925	0.23			
+3		Seasoned Waffle Fries		4 oz.	0.25				
+4		Creamy BBQ Slaw		2 oz.	0.25				
+5		House Pickles		1 oz.	0.25	Profit			
+6		Sweet Tomato Molasses BBQ Sauce		2 oz.	0.35	18.722717391304343			
+Grill/Plancha									
+Name of dish: Grilled Chicken & Biscuit Sandwich| Jalapeno Cheddar Drop Biscuit, Datil Pepper Jelly $21									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					4.6625	20.27173913043478			
+2		Grilled Chicken Breast, PC		6 oz.	2.4025	0.23			
+3		Jalapeno Cheddar Drop Biscuit		4 oz.	1.25				
+4		Datil Pepper Jelly		2 oz.	0.25				
+5		House Pickles		1 oz.	0.25	Profit			
+6		Choice of 1 side		6 oz.	0.51	15.609239130434782			
+Sides									
+Name of dish: Hoppin John									Allergen code:
+ct	Line Check	Ingredients		Amount	Cost	Price			
+1					4.6625	20.27173913043478			
+2		Braised Black Eyed Peas			2.4025	0.23			
+3		Buttery  Carolina Gold Rice			1.25				
+4					0.25				
+5					0.25	Profit			
+6					0.51	15.609239130434782			

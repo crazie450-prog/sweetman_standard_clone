@@ -1,0 +1,27 @@
+COASTLINE FOODSERVICE INC.                                                                                            INVOICE
+4410 Harbor Blvd, Long Beach, CA 90802 (562) 555-0148                                               Invoice No.: CF-0098812
+                                                                                                  Invoice Date: 09/22/26
+                                                                                                      Customer: Golden Fork - Downtown
+                                                                                                         Terms: Net 14
+
+
+
+Item #            Ord         Ship         U/M        Description                     Pack/Size         Unit Price     Extended
+204417            2           2            CS         OLIVE OIL POMACE BLEND          6/1 LT                  48.50        97.00
+611093            1           1            CS         BEEF TENDERLOIN PSMO CH         41.6 LB              12.89/LB       536.22
+300120            3           3            EA         LEMONS FANCY 115CT                                                    2.40
+518800            4           3            CS         TOMATO DICED IN JUICE           6/#10                   31.75        95.25
+102230            10          10           LB         ONION YELLOW JUMBO              50 LB                    0.62         6.20
+                                                      FUEL SURCHARGE                                                        4.95
+771054            1           -1           CS         CR RETURN ROMAINE HEARTS 24CT   24 CT                   32.10       -32.10
+
+
+                                                                                                       Subtotal:          709.92
+                                                                                                      Sales Tax:            0.00
+                                                                                                  Invoice Total:          709.92
+
+
+
+
+Catch-weight items are billed by actual weight. Returns credited at invoice price.
+

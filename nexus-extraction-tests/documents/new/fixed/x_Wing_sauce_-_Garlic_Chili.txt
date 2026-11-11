@@ -1,0 +1,24 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  garlic-lemon-chili wing sauce
+	yield:  1 1/2 quarts
+qty.	product
+2 c	garlic, chopped
+1 c	shallot, chopped
+3 c	lemon juice
+1 c	white wine
+1/2 c	rice wine vinegar
+1 1/2 c	sugar
+1 T	chili flake
+2 c	chicken stock
+2 T	olive oil blend
+1 t	salt
+1/2 t	cracked black pepper
+	method:
+1	on low, low, low, low heat caramelize shallots and garlic with oil
+2	add sugar and stir until lightly caramelized
+3	add lemon juice, white wine and vinegar and turn heat to medium
+4	reduce by one half, add chicken stock
+5	reduce to a glaze consistency
+6	add chili, salt, sugar
+7	cool

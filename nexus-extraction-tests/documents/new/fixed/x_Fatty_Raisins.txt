@@ -1,0 +1,17 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Fatty Raisins
+	yield:
+qty.	product
+10 lb	raisins, Thompson Seedless (white Raisins)
+1 gal	white wine
+8 oz	orange juice
+8 oz	Myers Rum
+1 lb	sugar
+	method:
+1	In a heavy metal saucepan, add all ingredients in the order given
+2	place over a medium flame, stir
+3	cook for 10 minutes, stir, raisins should just come to a boil
+4	lower the flame and continue to poach for 20 minutes
+5	remove from heat, cover with plastic wrap
+6	cool to room temperature

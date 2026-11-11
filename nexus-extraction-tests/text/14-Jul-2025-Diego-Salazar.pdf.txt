@@ -1,0 +1,132 @@
+Recipe Testing Template
+14 Jul 2025 / Diego Salazar                                                    Complete
+
+
+ Score                0 / 0 (0%)   Flagged items   0   Actions                         0
+
+
+ Site conducted                                                   14.07.2025 22:28 EDT
+
+
+ New Dish
+
+
+                                                         Testing new pasta dishes since
+ What dish is this replacing                                 Sardinia is currently closed
+
+
+ Conducted on                                                     14.07.2025 22:28 EDT
+
+
+ Prepared by                                                              Diego Salazar
+
+
+                                                        350 NW 4th St, Miami, FL 33128,
+ Location                                                                          USA
+                                                             (25.7779468, -80.2005172)
+1.NameofDish
+                                   Name of Dish
+
+
+                                   Name of Dish: List each recipe by component: ie: Spicy Tuna   3 mushroom lasagna, shiitake
+                                   Tartare, Pickled Persian Cucumbers, Togarashi Miso Crema,     mushrooms, morrels, truffle,
+                                   Sesame Tuille.                                                         ricotta, mozzarella
+1.1.Recipe#1
+                                   Recipe #1
+
+
+
+
+                                   Photo 1
+1.1.1.Recipe#2
+                                   Recipe #2
+1.1.1.1.Recipe#3
+                                   Recipe #3
+1.1.1.1.1.Recipe#4
+                                   Recipe #4
+1.1.1.1.1.1.Pic/Video:Recipe#1
+                                   Pic/Video: Recipe #1
+
+
+
+
+                                   Photo 2
+1.1.1.1.1.2.Pic/Video:Recipe#2
+                                   Pic/Video: Recipe #2
+
+
+
+
+                                   Photo 3
+1.1.1.1.1.2.1.Pic/Video:Recipe#3
+                                   Pic/Video: Recipe #3
+                                                                                                 Photo 4          Photo 5
+1.1.1.1.1.2.1.1.Pic/Video:Recipe#4
+                                                                                                 Pic/Video: Recipe #4
+
+
+
+
+                                                                                                 Photo 6
+1.1.1.1.2.MiscNotes:
+                                                                                                 Misc Notes:
+1.1.1.1.2.1.Foodcost:Listcostofeachcomponent.Providenotesfromwhereingredientsarepurchasedfrom.
+                                                                                                 Foodcost: List cost of each component. Provide notes from
+                                                                                                 where ingredients are purchased from.
+
+
+                                                                                                                                                                    Pasta ordered from Mr. Pasta
+
+
+
+
+                                                                                                 Photo 7
+1.1.1.1.2.1.1.CompletedDish
+                                                                                                 Completed Dish
+
+
+                                                                                                 Final Name of Dish with Price, Allergen Code, Station Assignment
+
+                                                                                                 3 mushroom lasagna $32
+                                                                                                 Dairy allergy
+                                                                                                 Gluten allergy
+                                                                                                 Eggs allergy
+
+                                                                                                 Station saute
+
+
+
+
+                                                                                                 Photo 8          Photo 9         Photo 10        Photo 11
+1.1.1.1.2.1.1.1.Final
+                                                                                                 Final
+
+
+                                                                                                 Name & Date completed
+                                 Diego Salazar
+                                 15.07.2025 15:51 EDT
+2.Mediasummary
+                 Media summary
+
+
+
+
+                 Photo 1                           Photo 2
+
+
+
+
+                 Photo 3                           Photo 4
+Photo 5   Photo 6
+
+
+
+
+Photo 7   Photo 8
+Photo 9    Photo 10
+
+
+
+
+Photo 11
+

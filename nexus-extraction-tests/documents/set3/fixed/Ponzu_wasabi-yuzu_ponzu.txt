@@ -1,0 +1,16 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:Wasabi- Yuzu Ponzu
+	yield:
+qty.	product
+2 ea	Yuzu zest, grated
+1/4 c	fresh wasabi
+1/4 c	powder wasabi paste
+1 c	yuzu juice
+1 c	soy sauce
+1/4 c	pickled ginger vinrgar
+2 tsp	sesame oil
+	method:
+1
+2
+3

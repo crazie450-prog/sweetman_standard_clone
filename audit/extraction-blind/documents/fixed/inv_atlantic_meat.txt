@@ -1,0 +1,26 @@
+ATLANTIC MEAT COMPANY
+Invoice 00618842 Inv Date 10/26/26 Cust 2207 Route 3
+
+
+
+ITEM #        DESCRIPTION                              QTY   U/M   PRICE            AMOUNT
+
+40112         BEEF SHORT RIB BNLS CHOICE               1     CS       9.45/LB          301.46
+              CATCH WEIGHT 31.9 LB
+
+40377         LAMB RACK FRENCHED 16/20 OZ              2     CS        212.00          424.00
+
+40510         CHICKEN THIGH BNLS 4/10 LB               2     CS            74.80       149.60
+
+40688         PORK SHOULDER BONE-IN                    1     CS       2.35/LB          140.06
+              CATCH WEIGHT 59.6 LB
+
+40902         BACON APPLEWOOD 15 LB                    3     CS            61.25       183.75
+
+              FUEL SURCHARGE                           1                    7.25         7.25
+
+
+                                                                       Subtotal          1,206.12
+                                                                              Tax               0.00
+                                                                            Total        1,206.12
+

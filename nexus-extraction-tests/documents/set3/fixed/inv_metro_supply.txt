@@ -1,0 +1,11 @@
+Sheet: sheet1
+Vendor	Metro Restaurant Supply
+Invoice	MRS-2026-8841
+Date	10/22/2026
+sku	description	qty	uom	unit_price	extended
+88120	Olive Oil Extra Virgin 6/1 GAL	1	CS	142.00	142.00
+88344	Kosher Salt 12/3 LB	2	CS	31.25	62.50
+88901	Black Peppercorns Whole 5 LB	1	EA	46.80	46.80
+88410	Canola Oil 35 LB	3	EA	38.90	116.70
+	Delivery charge	1		8.00	8.00
+				Total	376.00

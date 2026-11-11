@@ -1,0 +1,26 @@
+INVOICE                                                                              Invoice No. TP-22841
+                                                                                        Date: Sept 9, 2026
+Tuscan Pantry Wholesale · 88 Mercer St, Newark NJ 07102
+
+
+Bill to: Golden Fork - Downtown
+
+
+
+DESCRIPTION                                               QTY   UNIT         RATE             AMOUNT
+
+Arborio Rice 10 lb bag                                    6     BAG          $18.40           $110.40
+
+San Marzano Tomatoes #10                                  12    CAN          $7.85            $94.20
+
+Parmigiano Reggiano wedge                                 4     LB           $21.50           $86.00
+
+Delivery & Handling                                       1                  $35.00           $35.00
+
+
+
+                                                                            Subtotal              $325.60
+                                                                       Discount (5%)              -$16.28
+                                                                 Sales Tax 6.625%                  $20.49
+                                                                        TOTAL DUE                 $329.81
+

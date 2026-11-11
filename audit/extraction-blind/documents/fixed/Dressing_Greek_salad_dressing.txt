@@ -1,0 +1,24 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Greek Dressing
+	yield:
+qty.	product
+1/2 c	lemon juice, fresh
+1/2 c	red wine vinegar
+1/2 c	dijon mustard
+1/3 c	garlic, chopped
+1/3 c	shallots, chopped
+1.5 T	thyme, chopped
+2.5 T	parsley, chopped
+2.5 T	dill, chopped
+2.5 T	oregano, chopped
+2 c	olive oil
+1 c	peanut oil
+1 c	yogurt
+	*water ((if needed)
+TT	Salt
+TT	Pepper
+TT	Sugar
+	method:
+1	combine first 8 ingredients
+2	emulsify with remaining 3 ingredients

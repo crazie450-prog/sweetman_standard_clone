@@ -1,0 +1,14 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Pad Thai Sauce 1
+	yield:
+qty.	product
+3 c	Ketchup
+1 c	Lime juice
+1 c	tamarind paste
+1 T	paprika
+2 1/2 c	palm sugar
+1/4 c	salt
+	method:
+1	combine and reduce by half
+2

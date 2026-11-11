@@ -1,0 +1,15 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name: Cognac Sauce- Lobster
+	yield:
+qty.	product
+3 ea	garlic cloves
+3 #	mushrooms
+1 #	butter
+1 C	sherry
+1 C	cognac
+2 C	cream
+	method:
+1	weat mushrooms and butter, deglaze with sherry and cognac
+2	allow to reduce, add cream and reduce again, season with salt and pepper
+3	strain through chinoise

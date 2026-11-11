@@ -1,0 +1,21 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	RECIPE : Cherry Port Wine Glaze
+	yield:
+qty.	product
+1 G	Port
+1 lb.	dried cherry
+4 c	chicken stock
+2 C	balsamic
+1/2 c sugar	brown sugar
+2 sticks	cinnamon
+10 ea	clove
+	method:
+1	Combine all ingredients in a pot.	.
+2	Reduce by half.
+3	Puree mixture in blender until smooth.
+4	Reduce to glaze consistency
+5
+6
+7
+8

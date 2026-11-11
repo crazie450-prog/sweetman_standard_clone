@@ -1,0 +1,22 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  lemon aioli
+	yield:  2 quarts
+qty.	product
+2 cloves	garlic
+3 ea	egg yolk
+1/4  c	lemon juice
+2 c	olive oil blend
+4 T	cool water
+l ea	zest from one lemon
+1 t	dijon
+1 T	parsley, chopped
+to taste	salt
+to taste	pepper
+	method:
+1	in a robot coupe, place garlic, zest, dijon, and yolk
+2	blend, slowly emulsifying in oil
+3	as aioli thickens, use the water to thin, keeping a "saucy"
+	consistency
+4	after all  oil is added, add lemon juice and parsley, mix briefly
+5	season and cool

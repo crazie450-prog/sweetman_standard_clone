@@ -1,0 +1,11 @@
+SIERRA DAIRY & PROVISIONS - CREDIT MEMO
+Credit Memo CR-55120 Date 10/27/2026 Ref. Invoice 2026-331904
+
+
+ITEM #      DESCRIPTION                                         QTY   U/M   PRICE          AMOUNT
+D305        Eggs Large Grade A 15 DZ                            -1    CS        42.75        -42.75
+D412        Yogurt Greek Plain 4/5 LB                           -2    CS        38.60        -77.20
+            Handling fee                                        1                 6.00        6.00
+
+                                                                            Total credit       -113.95
+

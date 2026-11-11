@@ -1,0 +1,129 @@
+Recipe Testing Template
+1 Jul 2025 / Diego Salazar                                                   Complete
+
+
+ Score                0 / 0 (0%)   Flagged items   0   Actions                      0
+
+
+ Site conducted                                                  01.07.2025 15:26 EDT
+
+
+ New Dish
+
+
+ What dish is this replacing
+
+ Conducted on                                                    01.07.2025 15:26 EDT
+
+
+ Prepared by                                                             Diego Salazar
+
+
+                                                       1787 Purdy Ave, Miami Beach, FL
+ Location                                                                   33139, USA
+                                                              (25.793243, -80.1441449)
+1.NameofDish
+                                   Name of Dish
+
+
+                                   Name of Dish: List each recipe by component: ie: Spicy Tuna
+                                                                                                      Mango Tide, pavlova, fresh
+                                   Tartare, Pickled Persian Cucumbers, Togarashi Miso Crema,     mango, whipped cream, coconut
+                                   Sesame Tuille.
+1.1.Recipe#1
+                                   Recipe #1
+
+
+
+
+                                   Photo 1         Photo 2
+1.1.1.Recipe#2
+                                   Recipe #2
+1.1.1.1.Recipe#3
+                                   Recipe #3
+1.1.1.1.1.Recipe#4
+                                   Recipe #4
+1.1.1.1.1.1.Pic/Video:Recipe#1
+                                   Pic/Video: Recipe #1
+
+
+
+
+                                   Photo 3
+1.1.1.1.1.2.Pic/Video:Recipe#2
+                                   Pic/Video: Recipe #2
+
+
+
+
+                                   Photo 4
+1.1.1.1.1.2.1.Pic/Video:Recipe#3
+                                   Pic/Video: Recipe #3
+                                                                                                 Photo 5
+1.1.1.1.1.2.1.1.Pic/Video:Recipe#4
+                                                                                                 Pic/Video: Recipe #4
+
+
+
+
+                                                                                                 Photo 6
+1.1.1.1.2.MiscNotes:
+                                                                                                 Misc Notes:
+1.1.1.1.2.1.Foodcost:Listcostofeachcomponent.Providenotesfromwhereingredientsarepurchasedfrom.
+                                                                                                 Foodcost: List cost of each component. Provide notes from
+                                                                                                 where ingredients are purchased from.
+
+
+                                                                                                                                                              Ingredients purchased from sysco
+                                                                                                                                                                                and freshpoint
+
+
+
+
+                                                                                                 Photo 7          Photo 8
+1.1.1.1.2.1.1.CompletedDish
+                                                                                                 Completed Dish
+
+
+                                                                                                 Final Name of Dish with Price, Allergen Code, Station Assignment
+
+                                                                                                 Mango Tide $15
+
+                                                                                                 Allergies
+                                                                                                 Dairy
+
+                                                                                                 Station
+                                                                                                 Garmo
+
+
+
+
+                                                                                                 Photo 9
+1.1.1.1.2.1.1.1.Final
+                                                                                                 Final
+
+
+                                                                                                 Name & Date completed
+
+                                                                                                                                 Diego Salazar
+                                 01.07.2025 15:32 EDT
+2.Mediasummary
+                 Media summary
+
+
+
+
+                 Photo 1                           Photo 2
+
+
+
+
+                 Photo 3                           Photo 4
+Photo 5   Photo 6
+
+
+
+
+Photo 7   Photo 8
+Photo 9
+

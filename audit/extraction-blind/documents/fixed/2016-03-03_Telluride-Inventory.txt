@@ -1,0 +1,39 @@
+Sheet: Sheet1
+Telluride Inventory Book 2		Tableware
+Brand	Item	Amount	Photo
+	Placemat round	6 ea
+	White napkin cloth	4
+Ralph Lauren	Placemat rectangle	6
+Ralph Lauren	Napkins square	6 ea
+	Salad bowl with tools	1 ea
+Telluride Inventory Book 2		Baking:
+Brand	Item	Amount	Photo
+Williams Sanoma	Oven mitt	2
+	Pot holders	2
+	Side towel	4
+	Kitchen towel	4
+	Glass pie tins	2
+	Spring form cheese cake pan	1
+	Cake pans glass rectangle	3
+	Muffin tins	3
+	Coffee cake pans	2
+	Measuring spoons	1 set
+	Measuring cups	1 set
+	Grater	1
+	Tongs	1
+	Carving fork	1
+	Plastic spoons & spatula	1 set of 4
+Telluride Inventory Book 2		Kitchen Cooking Line
+Brand	Item	Amount	Photo
+Calphalon	Steaming pan	1
+	Poached egg pan	1
+calphalon	Sauce pot 3qt	1 ea
+	Sauce pan 3 at	1 ea
+	Sauce pan 2 at	1 ea
+	Egg pans	2 ea
+	Stock pot 8 at	1 ea
+	Sauce pot 4 1/2 at	1 ea
+	Wok	1 ea
+	Large sauté pan	1 ea
+	Tea kettle	1 ea
+	Spoon rest	1 ea

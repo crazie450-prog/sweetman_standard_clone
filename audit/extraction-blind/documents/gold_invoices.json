@@ -1,0 +1,461 @@
+{
+ "b_inv_meat": {
+  "vendor": "atlantic meat",
+  "number": "00618842",
+  "date": "2026-10-26",
+  "lines": [
+   {
+    "names": [
+     "beef short rib bnls",
+     "beef short rib"
+    ],
+    "sku": "40112",
+    "ok": [
+     [
+      31.9,
+      "lb",
+      9.45
+     ],
+     [
+      1,
+      "case",
+      301.46
+     ]
+    ],
+    "total": 301.46,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "lamb rack frenched",
+     "lamb rack"
+    ],
+    "sku": "40377",
+    "ok": [
+     [
+      2,
+      "case",
+      212.0
+     ]
+    ],
+    "total": 424.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "chicken thigh bnls",
+     "chicken thigh"
+    ],
+    "sku": "40510",
+    "ok": [
+     [
+      2,
+      "case",
+      74.8
+     ]
+    ],
+    "total": 149.6,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "pork shoulder bone-in",
+     "pork shoulder"
+    ],
+    "sku": "40688",
+    "ok": [
+     [
+      59.6,
+      "lb",
+      2.35
+     ],
+     [
+      1,
+      "case",
+      140.06
+     ]
+    ],
+    "total": 140.06,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "bacon applewood",
+     "bacon"
+    ],
+    "sku": "40902",
+    "ok": [
+     [
+      3,
+      "case",
+      61.25
+     ]
+    ],
+    "total": 183.75,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "fuel surcharge"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      7.25
+     ]
+    ],
+    "total": 7.25,
+    "kind": "fee"
+   }
+  ]
+ },
+ "b_inv_credit": {
+  "vendor": "sierra dairy",
+  "number": "CR-55120",
+  "date": "2026-10-27",
+  "lines": [
+   {
+    "names": [
+     "eggs large grade a",
+     "eggs large"
+    ],
+    "sku": "D305",
+    "ok": [
+     [
+      -1,
+      "case",
+      42.75
+     ],
+     [
+      1,
+      "case",
+      -42.75
+     ],
+     [
+      -1,
+      "case",
+      -42.75
+     ]
+    ],
+    "total": -42.75,
+    "kind": "credit"
+   },
+   {
+    "names": [
+     "yogurt greek plain",
+     "yogurt greek"
+    ],
+    "sku": "D412",
+    "ok": [
+     [
+      -2,
+      "case",
+      38.6
+     ],
+     [
+      2,
+      "case",
+      -38.6
+     ],
+     [
+      -2,
+      "case",
+      -38.6
+     ]
+    ],
+    "total": -77.2,
+    "kind": "credit"
+   },
+   {
+    "names": [
+     "handling fee"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      6.0
+     ]
+    ],
+    "total": 6.0,
+    "kind": "fee"
+   }
+  ]
+ },
+ "b_inv_mushroom_photo": {
+  "vendor": "hillside mushroom",
+  "number": "HM-3391",
+  "date": "2026-10-28",
+  "lines": [
+   {
+    "names": [
+     "shiitake mushrooms",
+     "shiitake"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      6,
+      "lb",
+      9.25
+     ]
+    ],
+    "total": 55.5,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "oyster mushrooms"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      3,
+      "case",
+      21.0
+     ]
+    ],
+    "total": 63.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "king trumpet"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      4.5,
+      "lb",
+      11.4
+     ]
+    ],
+    "total": 51.3,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "maitake clusters",
+     "maitake"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      2,
+      "lb",
+      14.75
+     ]
+    ],
+    "total": 29.5,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "box deposit",
+     "deposit"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      3,
+      "ea",
+      1.5
+     ]
+    ],
+    "total": 4.5,
+    "kind": "fee"
+   }
+  ]
+ },
+ "b_inv_import_docx": {
+  "vendor": "olive branch",
+  "number": "OB-90417",
+  "date": "2026-10-29",
+  "lines": [
+   {
+    "names": [
+     "olives castelvetrano",
+     "olives"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      2,
+      "case",
+      64.0
+     ]
+    ],
+    "total": 128.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "capers nonpareil",
+     "capers"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      "case",
+      58.2
+     ]
+    ],
+    "total": 58.2,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "anchovy fillets in oil",
+     "anchovy fillets"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      "case",
+      133.0
+     ]
+    ],
+    "total": 133.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "sherry vinegar reserva",
+     "sherry vinegar"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      "case",
+      97.5
+     ]
+    ],
+    "total": 97.5,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "saffron spanish",
+     "saffron"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      2,
+      "ea",
+      74.0
+     ]
+    ],
+    "total": 148.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "shipping"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      18.0
+     ]
+    ],
+    "total": 18.0,
+    "kind": "fee"
+   }
+  ]
+ },
+ "b_inv_drygoods_xlsx": {
+  "vendor": "coastal dry goods",
+  "number": "CDG-77203",
+  "date": "2026-10-30",
+  "lines": [
+   {
+    "names": [
+     "rice jasmine",
+     "rice"
+    ],
+    "sku": "C-210",
+    "ok": [
+     [
+      3,
+      "bag",
+      41.2
+     ]
+    ],
+    "total": 123.6,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "lentils green",
+     "lentils"
+    ],
+    "sku": "C-355",
+    "ok": [
+     [
+      1,
+      "bag",
+      36.9
+     ]
+    ],
+    "total": 36.9,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "quinoa white",
+     "quinoa"
+    ],
+    "sku": "C-402",
+    "ok": [
+     [
+      1,
+      "bag",
+      68.4
+     ]
+    ],
+    "total": 68.4,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "panko breadcrumbs",
+     "panko"
+    ],
+    "sku": "C-518",
+    "ok": [
+     [
+      2,
+      "case",
+      29.75
+     ]
+    ],
+    "total": 59.5,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "pallet fee"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      5.0
+     ]
+    ],
+    "total": 5.0,
+    "kind": "fee"
+   }
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  remoulade
+	yield:  2 quarts
+qty.	product
+3 c	mayonnaise
+1/2 c	capers, chopped
+1/4 c	house made pickle, chopped
+1 c	tomato, small diced
+1 T	garlic, chopped fine
+2 T	caper juice
+1 T	paprika
+1 T	sugar
+1 ea	zest from lemon
+2 T	parsley, chopped
+to taste	salt
+to taste	cracked black pepper
+	method:
+1	mix together all ingredients thoroughly
+2	season appropriately

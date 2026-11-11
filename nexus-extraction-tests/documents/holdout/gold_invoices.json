@@ -1,0 +1,406 @@
+{
+ "h1_template_invoice": {
+  "vendor": "tuscan pantry",
+  "number": "TP-22841",
+  "date": "2026-09-09",
+  "lines": [
+   {
+    "names": [
+     "arborio rice"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      6,
+      "bag",
+      18.4
+     ]
+    ],
+    "total": 110.4,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "san marzano tomatoes",
+     "tomatoes"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      12,
+      "can",
+      7.85
+     ]
+    ],
+    "total": 94.2,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "parmigiano reggiano"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      4,
+      "lb",
+      21.5
+     ]
+    ],
+    "total": 86.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "delivery handling",
+     "delivery"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      35.0
+     ]
+    ],
+    "total": 35.0,
+    "kind": "fee"
+   }
+  ]
+ },
+ "h2_distributor_invoice": {
+  "vendor": "harbor foodservice",
+  "number": "0094417726",
+  "date": "2026-10-02",
+  "lines": [
+   {
+    "names": [
+     "chicken breast bnls sknls",
+     "chicken breast"
+    ],
+    "sku": "553120",
+    "ok": [
+     [
+      20.0,
+      "lb",
+      3.19
+     ],
+     [
+      1,
+      "case",
+      63.8
+     ]
+    ],
+    "total": 63.8,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "beans cannellini"
+    ],
+    "sku": "418833",
+    "ok": [
+     [
+      2,
+      "case",
+      42.1
+     ]
+    ],
+    "total": 84.2,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "pork belly skin-on",
+     "pork belly"
+    ],
+    "sku": "609112",
+    "ok": [
+     [
+      14.4,
+      "lb",
+      4.25
+     ],
+     [
+      1,
+      "case",
+      61.2
+     ]
+    ],
+    "total": 61.2,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "cream heavy 40%",
+     "cream heavy"
+    ],
+    "sku": "220076",
+    "ok": [
+     [
+      3,
+      "case",
+      38.95
+     ]
+    ],
+    "total": 116.85,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "flour 00 pizza",
+     "flour"
+    ],
+    "sku": "771209",
+    "ok": [
+     [
+      1,
+      "case",
+      27.6
+     ]
+    ],
+    "total": 27.6,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "basil fresh bunch",
+     "basil"
+    ],
+    "sku": "102344",
+    "ok": [
+     [
+      4,
+      "ea",
+      1.85
+     ]
+    ],
+    "total": 7.4,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "mozzarella fior di latte",
+     "mozzarella"
+    ],
+    "sku": "330981",
+    "ok": [
+     [
+      1,
+      "case",
+      36.75
+     ]
+    ],
+    "total": 36.75,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "vinegar red wine"
+    ],
+    "sku": "514470",
+    "ok": [
+     [
+      1,
+      "case",
+      29.9
+     ]
+    ],
+    "total": 29.9,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "fuel surcharge"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      6.5
+     ]
+    ],
+    "total": 6.5,
+    "kind": "fee"
+   }
+  ]
+ },
+ "h3_produce_photo": {
+  "vendor": "valley fresh",
+  "number": "VF-50392",
+  "date": "2026-10-07",
+  "lines": [
+   {
+    "names": [
+     "heirloom tomatoes"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      12,
+      "lb",
+      3.4
+     ]
+    ],
+    "total": 40.8,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "romaine hearts"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      2,
+      "case",
+      34.5
+     ]
+    ],
+    "total": 69.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "italian parsley"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      6,
+      "bunch",
+      1.15
+     ],
+     [
+      6,
+      "bu",
+      1.15
+     ]
+    ],
+    "total": 6.9,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "meyer lemons"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      "case",
+      48.0
+     ]
+    ],
+    "total": 48.0,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "shallots"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      10,
+      "lb",
+      2.25
+     ]
+    ],
+    "total": 22.5,
+    "kind": "item"
+   },
+   {
+    "names": [
+     "pallet crate deposit",
+     "crate deposit",
+     "deposit"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      2,
+      "ea",
+      15.0
+     ]
+    ],
+    "total": 30.0,
+    "kind": "fee"
+   }
+  ]
+ },
+ "h4_credit_memo": {
+  "vendor": "coastline",
+  "number": "CM-20981",
+  "date": "2026-10-05",
+  "lines": [
+   {
+    "names": [
+     "romaine hearts"
+    ],
+    "sku": "771054",
+    "ok": [
+     [
+      -1,
+      "case",
+      32.1
+     ],
+     [
+      1,
+      "case",
+      -32.1
+     ],
+     [
+      -1,
+      "case",
+      -32.1
+     ]
+    ],
+    "total": -32.1,
+    "kind": "credit"
+   },
+   {
+    "names": [
+     "tomato diced in juice",
+     "tomato diced"
+    ],
+    "sku": "518800",
+    "ok": [
+     [
+      -2,
+      "case",
+      31.75
+     ],
+     [
+      2,
+      "case",
+      -31.75
+     ],
+     [
+      -2,
+      "case",
+      -31.75
+     ]
+    ],
+    "total": -63.5,
+    "kind": "credit"
+   },
+   {
+    "names": [
+     "restocking fee"
+    ],
+    "sku": null,
+    "ok": [
+     [
+      1,
+      null,
+      5.0
+     ]
+    ],
+    "total": 5.0,
+    "kind": "fee"
+   }
+  ]
+ }
+}

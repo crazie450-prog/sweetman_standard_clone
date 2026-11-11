@@ -1,0 +1,12 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  demi glace
+	yield:  3 gallons
+qty.	product
+50 lbs.	veal bones
+5 lbs.	carrots
+5 lbs.	celery
+10 lbs.	onion
+15 ltrs	red wine
+5 ltrs	port wine
+	method:

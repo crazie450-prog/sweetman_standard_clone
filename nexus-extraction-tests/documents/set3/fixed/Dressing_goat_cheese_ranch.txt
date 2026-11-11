@@ -1,0 +1,19 @@
+Sheet: Sheet1
+	wolfgang puck bar and grill
+	recipe name:  goat cheese ranch
+	yield:
+qty.	product
+1/2 g	buttermilk
+4 lb	goat cheese
+1/2 g	mayonnaise
+1/2 c	marjoram, chopped
+1/2 c	parsley, chopped
+1/4 c	chives, chopped
+to taste	salt
+to taste	pepper
+	method:
+1	place buttermilk, goat cheese, and mayonnaise in a plastic
+	container and blend smooth with burr mixer
+2	pass through a small hole china cap
+3	add herbs and season appropriately
+4	chill
