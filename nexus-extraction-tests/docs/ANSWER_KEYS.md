@@ -10,6 +10,11 @@ Keys for the generated invoices come from the same data that draws them (`tools/
 `python3 nexus_test.py check` verifies, for every required key line, that its ingredient name and its amount are
 really printed in the document text.
 
+The keys are then peer reviewed: three models from three vendors read every document without seeing the key, the
+readings are compared with the key line by line, and every disagreement is ruled on from the printed line and
+listed for the owner's sign-off. The procedure and its tooling are in [KEY_REVIEW.md](KEY_REVIEW.md); completed
+reviews are logged in `CHANGELOG.md`.
+
 ## Where they are
 
 | File | Documents |

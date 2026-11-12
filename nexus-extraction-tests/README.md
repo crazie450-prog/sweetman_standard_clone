@@ -47,6 +47,18 @@ show, including which lines are flagged for review.**
 
 API keys are read from the environment and are never written to disk. Do not commit keys or `out/`.
 
+### Testing a deployed application
+
+To test staging (or any running backend) from the outside, through the API the browser uses, replace step 3 with:
+
+```bash
+export NEXUS_APP_URL=https://<staging host>  NEXUS_EMAIL=<test account>  NEXUS_PASSWORD=<password>
+python3 adapters/nexus-app/run_app_test.py cases_open_raw.json out/app-run --runs 3 --parallel 3
+```
+
+It uploads each document, waits for the worker, reads what the review screen would show and deletes its uploads.
+It never confirms anything. Use a test organization. Details: [docs/APP_TEST.md](docs/APP_TEST.md).
+
 ## What is in the repository
 
 | Path | Contents |
@@ -56,10 +68,11 @@ API keys are read from the environment and are never written to disk. Do not com
 | `gold.py`, `gold_new.py`, `gold_set3.py` | The answer keys. [docs/ANSWER_KEYS.md](docs/ANSWER_KEYS.md) explains the format and how to question a key. |
 | `score.py`, `study.py`, `autoref.py` | The scorer. |
 | `tests/` | Self-tests for the scorer and consistency checks for the keys. |
-| `adapters/nexus-backend/` | Export script for the Nexus backend (the team owns and maintains it). |
+| `adapters/nexus-backend/` | Export script for the Nexus backend's extraction code (the team owns and maintains it). |
+| `adapters/nexus-app/` | Runner for a deployed application, through its API. [docs/APP_TEST.md](docs/APP_TEST.md). |
 | `reference/` | A working reference pipeline that meets the bar, with its prompts and code checks. [docs/REFERENCE_PIPELINE.md](docs/REFERENCE_PIPELINE.md). |
-| `docs/` | Test procedure, results format, key rules, document list, reference pipeline, and the optimization study report. |
-| `tools/` | Generators for the synthetic invoices. |
+| `docs/` | Test procedure, results format, key rules and their peer review, the application test, document list, reference pipeline, and the optimization study report. |
+| `tools/` | Generators for the synthetic invoices; the answer-key peer review (`tools/peer_review/`, [docs/KEY_REVIEW.md](docs/KEY_REVIEW.md)). |
 
 ## Rules of the road
 

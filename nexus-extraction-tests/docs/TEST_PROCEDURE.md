@@ -27,8 +27,10 @@ the same mix on a smaller scale. [DOCUMENTS.md](DOCUMENTS.md) lists every open d
    Files are given exactly as a user would upload them, including old .xls workbooks.
 3. Upload every document to the application under test **3 times** (3 independent runs; no result may be reused
    from an earlier run, so any "same file seen before" cache must be off or cleared between runs). Write one results
-   file per document and run ([RESULTS_FORMAT.md](RESULTS_FORMAT.md)). `adapters/nexus-backend/export-results.ts` does this for the
-   Nexus backend.
+   file per document and run ([RESULTS_FORMAT.md](RESULTS_FORMAT.md)). Two runners do this for Nexus:
+   `adapters/nexus-app/run_app_test.py` drives a deployed application through its API ([APP_TEST.md](APP_TEST.md)),
+   and `adapters/nexus-backend/export-results.ts` calls the backend's extraction code directly. **A delivery is
+   judged on the deployed application**; the direct export is for quick checks during development.
 4. `python3 nexus_test.py score <folder>` prints the report and `RESULT: PASS` or `RESULT: FAIL`. Exit code 0 means pass.
 
 Record with every reported run: the commit of the application, the model IDs, the date, and the full output of step 4.
@@ -120,6 +122,8 @@ Blind documents are never sent to the team. From time to time some are moved int
 
 ## 8. Changing the test
 
-Keys, documents, the scorer and the bar are changed only by the owner's side, with an entry in `CHANGELOG.md`. The
+Keys, documents, the scorer and the bar are changed only by the owner's side, with an entry in `CHANGELOG.md`.
+Keys are certified by an independent peer review ([KEY_REVIEW.md](KEY_REVIEW.md)); a new or replaced document goes
+through it before it is scored. The
 team proposes changes through the process in [ANSWER_KEYS.md](ANSWER_KEYS.md). After any change to keys or scorer,
 earlier results are re-scored so numbers stay comparable; saved results folders make that possible.

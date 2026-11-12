@@ -2,6 +2,15 @@
 
 Changes to documents, keys, scorer and procedure. Newest first.
 
+## 2026-11-12 — application test and key peer review
+
+- **Direct application test.** `adapters/nexus-app/run_app_test.py` tests a deployed application through its API
+  (sign in, upload, wait, read the review payload, delete). `docs/APP_TEST.md`. A delivery is judged on this run.
+- **Answer-key peer review.** Procedure (`docs/KEY_REVIEW.md`) and tooling (`tools/peer_review/`): three independent
+  readings per document, line-by-line comparison with the key, rulings with a quoted printed line, sign-off list.
+  The review itself has not been run yet; its result will be logged here.
+- No change to documents, keys, scorer or the bar.
+
 ## 2026-11-11 — first shared version
 
 - **Documents.** 130 open documents: 24 from the Milestone 3 audit, 53 archive files added in October, and 53
