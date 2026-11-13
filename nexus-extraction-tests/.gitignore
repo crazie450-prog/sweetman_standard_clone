@@ -1,6 +1,0 @@
-out/
-__pycache__/
-cases_open.json
-cases_open_raw.json
-*.env
-node_modules/

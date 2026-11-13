@@ -1,16 +1,0 @@
-PACIFIC RIM SEAFOOD CO.
-Invoice PR-48817 Date 10/21/2026 Terms Net 14 Ship to: Golden Fork - Harbor
-
-
-ITEM #       DESCRIPTION                                        QTY      U/M   PRICE           AMOUNT
-SF-1107      Salmon Fillet Atlantic PBO                         22.5     LB        11.85         266.63
-SF-2210      Shrimp 16/20 P&D IQF 5x2 LB                        2        CS        89.00         178.00
-SF-3301      Mussels PEI 10 LB bag                              3        BAG       24.50          73.50
-SF-0420      Halibut Fillet Fresh                               8.2      LB        24.90         204.18
-             Ice & packing                                      1                  12.00          12.00
-
-
-                                                                                 Subtotal           734.31
-                                                                                        Tax             0.00
-                                                                                       Total        734.31
-
