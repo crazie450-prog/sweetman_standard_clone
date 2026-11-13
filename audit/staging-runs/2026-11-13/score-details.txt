@@ -1,0 +1,895 @@
+Nexus extraction test: open set, 130 documents x 3 runs  (results: out/staging-2026-11-13)
+================================================================================================
+Line accuracy         58.15%   (95% interval 45.2-69.7)   bar: >= 98.0%, interval low end >= 98.0%
+Unflagged errors        802     bar: 0     (wrong or invented lines shown with no review flag)
+Failed/missing jobs      84     bar: 0
+Lines: 5013 expected, 3385 read exactly right, 1275 missed, 808 wrong/invented (6 of them flagged)
+Duplicate lines (a second line for an ingredient already matched; not scored): 47
+Lines a person must check: 2.9% of extracted lines   |   time per document: median 12.9 s, 95th percentile 51 s
+
+By document kind (accuracy / wrong / unflagged / missed / documents)
+  Word / text           58.68% / 741 / 735 / 684 /  72
+  Excel workbooks       46.75% /  24 /  24 / 591 /  24
+  handwritten cards     88.43% /   7 /   7 /   0 /   3
+  scans and photos      85.45% /  15 /  15 /   0 /   9
+  invoices              76.67% /  21 /  21 /   0 /  12
+  not the stated type  returned nothing in 24 of 27 jobs; 0 lines returned (0 unflagged)
+  invoice headers: number right in 36 of 36 jobs, date right in 36 of 36
+
+Long document n_saucier (reported separately): 0.0% of 840 printed amounts found, 0 wrong lines (0 unflagged)
+
+Documents with the most wrong or missed lines (all runs)
+  h_chard                            wrong/invented   0 (unflagged 0)   missed 399
+  h_vc_event                         wrong/invented   0 (unflagged 0)   missed 192
+  n_cut_sauces                       wrong/invented 156 (unflagged 156)   missed   0
+  bnb_event                          wrong/invented 144 (unflagged 144)   missed   0
+  collard                            wrong/invented  49 (unflagged 49)   missed   0
+  s_mustard_sauce                    wrong/invented   0 (unflagged 0)   missed  48
+  n_loup                             wrong/invented  47 (unflagged 47)   missed   0
+  n_blood_orange                     wrong/invented   0 (unflagged 0)   missed  42
+  h_roe                              wrong/invented   0 (unflagged 0)   missed  42
+  n_corn_fritters_xls                wrong/invented   0 (unflagged 0)   missed  39
+  s_remoulade                        wrong/invented   0 (unflagged 0)   missed  36
+  s_romesco                          wrong/invented   0 (unflagged 0)   missed  33
+  s_fried_chicken                    wrong/invented  33 (unflagged 33)   missed   0
+  n_wing_sauce                       wrong/invented   0 (unflagged 0)   missed  33
+  n_falafel                          wrong/invented   0 (unflagged 0)   missed  33
+
+Failed or missing jobs
+  h_kanpachi run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_kanpachi run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_kanpachi run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_wing_sauce run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+
+Every wrong, invented or missed line
+  tuna#1 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  tuna#2 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'peanut oil' amount=0 unit=tofry [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'Fried Nori (Seaweed)' amount=0 unit=garnish [NOT FLAGGED]  key: None None
+  tuna#3 wrong_value: 'Cucumber and Red Onion Salad' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  caramelized#1 wrong_value: 'Basic Pie Dough' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#1 wrong_value: 'Caramelized Onions' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#1 wrong_value: 'Custard' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#2 wrong_value: 'Basic Pie Dough' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#2 wrong_value: 'Caramelized Onions' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#2 wrong_value: 'Custard' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#3 wrong_value: 'Basic Pie Dough' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#3 wrong_value: 'Caramelized Onions' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caramelized#3 wrong_value: 'Custard' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caviar#1 wrong_value: 'Sour Cream' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caviar#2 wrong_value: 'Sour Cream' amount=0 unit=None [NOT FLAGGED]  key: None None
+  caviar#3 wrong_value: 'Sour Cream' amount=0 unit=None [NOT FLAGGED]  key: None None
+  collard#1 invented_amount: "Mother's Milk" amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Skillet Cornbread' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Thai Coconut Cornbread Crepe' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Thai Style Collard Green Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Collard Green Pesto' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Minestrone Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Panzanella Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Kimchi Collard Green Stems' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Cornbread Dumplings' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Kimchi Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Picked Cilantro' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Baby Radish with Tops' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Jerk Pork Chop' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Coconut Curry Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Pineapple Cornbread Gremolata' amount=0 unit=None [NOT FLAGGED]
+  collard#1 invented_amount: 'Kosher Salt' amount=0 unit=totaste [NOT FLAGGED]
+  collard#2 invented_amount: "Mother's Milk" amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Skillet Cornbread' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Thai Coconut Cornbread Crepe' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Thai Style Collard Green Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Collard Green Pesto' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Minestrone Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Panzanella Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Kimchi Collard Green Stems' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Cornbread Dumplings' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Kimchi Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Picked Cilantro' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Baby Radish with Tops' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Jerk Pork Chop' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Coconut Curry Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Pineapple Cornbread Gremolata' amount=0 unit=None [NOT FLAGGED]
+  collard#2 invented_amount: 'Kosher Salt' amount=0 unit=totaste [NOT FLAGGED]
+  collard#3 invented_amount: "Mother's Milk" amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Skillet Cornbread' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Thai Coconut Cornbread Crepe' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Thai Style Collard Green Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Collard Green Pesto' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Minestrone Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Panzanella Salad' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Kimchi Collard Green Stems' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Cornbread Dumplings' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Kimchi Soup' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Jerk Pork Chop' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Coconut Curry Collard Greens' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Pineapple Cornbread Gremolata' amount=0 unit=None [NOT FLAGGED]
+  collard#3 invented_amount: 'Kosher Salt' amount=0 unit=totaste [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Matcha Coconut Tea Granitee' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Jicama Lemongrass Mignonette' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Shumei' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Watermelon Jam' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Guava Jam Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Kimchi Watermelon Rind' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Burrata' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Papaya' amount=0 unit=ea [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Spanish Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Maldon Sea Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Morel Spice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Vanilla Morel Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Beef Tallow Caramelized Cipollini Onions' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Smoking Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Veal Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Mirepoix' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Vanilla Beans' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Anson Mill Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Grated Black Winter Truffles' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Picked Chervil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Chicken Stock' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Cream' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Lemon Juice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'mascarpone Cheese' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Black Truffle Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Diced Foie Gras' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Lemon Juice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Mothers Milk' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Cinnamon Stick' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Crushed Red Pepper Flakes' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Rutabaga' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Baby Turnips' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Pepper' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: '5” Raw Pie Shells' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Vanilla Buttermilk Sauce' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Passionfruit Ice Cream' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Powdered Sugar' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Churnless Ice Cream Recipe' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Passionfruit Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Vanilla' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#1 invented_amount: 'Fresh passionfruit' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Matcha Coconut Tea Granitee' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Jicama Lemongrass Mignonette' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Shumei' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Watermelon Jam' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Guava Jam Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Kimchi Watermelon Rind' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Burrata' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Papaya: Large Diced' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Spanish Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Maldon Sea Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Morel Spice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Vanilla Morel Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Beef Tallow Caramelized Cipollini Onions' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Smoking Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Veal Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Mirepoix' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Vanilla Beans' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Anson Mill Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Grated Black Winter Truffles' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Picked Chervil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Chicken Stock' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Cream' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Lemon Juice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'mascarpone Cheese' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Black Truffle Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Diced Foie Gras' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Mothers Milk' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Cinnamon Stick' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Crushed Red Pepper Flakes' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Rutabaga' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Baby Turnips' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Pepper' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Vanilla Buttermilk Sauce' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Passionfruit Ice Cream' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Powdered Sugar' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Churnless Ice Cream Recipe' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Passionfruit Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Vanilla' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#2 invented_amount: 'Fresh passionfruit' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Matcha Coconut Tea Granitee' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Jicama Lemongrass Mignonette' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Shumei' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Watermelon Jam' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Guava Jam Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Kimchi Watermelon Rind' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Burrata' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Papaya' amount=0 unit=ea [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Spanish Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Maldon Sea Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Morel Spice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Vanilla Morel Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Beef Tallow Caramelized Cipollini Onions' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Smoking Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Veal Demi' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Rosemary' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Mirepoix' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Vanilla Beans' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Anson Mill Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Grated Black Winter Truffles' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Picked Chervil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Chicken Stock' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Cream' amount=0 unit=half [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Lemon Juice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Butter' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Grits' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'mascarpone Cheese' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Black Truffle Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Diced Foie Gras' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Lemon Juice' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Mothers Milk' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Cinnamon Stick' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Crushed Red Pepper Flakes' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Bay Leaves' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Rutabaga' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Baby Turnips' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Olive Oil' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Salt' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Pepper' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Vanilla Buttermilk Sauce' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Passionfruit Ice Cream' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Powdered Sugar' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Churnless Ice Cream Recipe' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Passionfruit Paste' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Vanilla' amount=0 unit=None [NOT FLAGGED]
+  bnb_event#3 invented_amount: 'Fresh passionfruit' amount=0 unit=None [NOT FLAGGED]
+  pavlova_pdf#1 wrong_value: 'corn starch' amount=2 unit=tbsl [NOT FLAGGED]  key: 2 tbsp
+  pavlova_pdf#1 wrong_value: 'edible flower petals' amount=0 unit=None [NOT FLAGGED]  key: None None
+  pavlova_pdf#2 wrong_value: 'corn starch' amount=2 unit=tbsl [NOT FLAGGED]  key: 2 tbsp
+  pavlova_pdf#2 wrong_value: 'edible flower petals' amount=0 unit=None [NOT FLAGGED]  key: None None
+  pavlova_pdf#3 wrong_value: 'Corn Starch' amount=2 unit=tbsl [NOT FLAGGED]  key: 2 tbsp
+  pavlova_pdf#3 wrong_value: 'passion fruit puree' amount=3 unit=tbsp [NOT FLAGGED]  key: 3 tsp
+  pavlova_pdf#3 wrong_value: 'edible flower petals' amount=0 unit=None [NOT FLAGGED]  key: None None
+  synthetic_invoice#1 wrong_value: 'BEEF TENDERLOIN PSMO CH' amount=1 unit=case [NOT FLAGGED]
+  synthetic_invoice#2 wrong_value: 'BEEF TENDERLOIN PSMO CH' amount=1 unit=case [NOT FLAGGED]
+  synthetic_invoice#3 wrong_value: 'BEEF TENDERLOIN PSMO CH' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#1 wrong_value: 'CHICKEN BREAST BNLS SKNLS' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#1 wrong_value: 'PORK BELLY SKIN-ON' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#2 wrong_value: 'CHICKEN BREAST BNLS SKNLS' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#2 wrong_value: 'PORK BELLY SKIN-ON' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#3 wrong_value: 'CHICKEN BREAST BNLS SKNLS' amount=1 unit=case [NOT FLAGGED]
+  h2_distributor_invoice#3 wrong_value: 'PORK BELLY SKIN-ON' amount=1 unit=case [NOT FLAGGED]
+  n_brisket#1 invented_amount: 'Mexican' amount=0 unit=None [NOT FLAGGED]
+  n_brisket#1 invented_amount: 'Asian' amount=0 unit=None [NOT FLAGGED]
+  n_brisket#3 wrong_value: 'allspice' amount=0 unit=pinch [NOT FLAGGED]  key: 1 pinch
+  n_tamales#1 wrong_value: 'Jack cheese' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_tamales#2 wrong_value: 'Jack cheese' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_tamales#3 wrong_value: 'Jack cheese' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'puff pastry sheet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'egg wash' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'seasonal vegetables' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'beurre blanc sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'carrot' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'leeks' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'celery' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'black trumpet mushrooms' amount=0 unit=chopped,sautéed [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'chives' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'parsley' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'tarragon' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#1 wrong_value: 'dill' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'puff pastry sheet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 invented_amount: 'Fishmousse' amount=3 unit=oz [NOT FLAGGED]
+  n_loup#2 wrong_value: 'egg wash' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'seasonal vegetables' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'beurre blanc sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'carrot' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'leeks' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'celery' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'black trumpet mushrooms' amount=0 unit=chopped,sautéed [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'chives' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'parsley' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'tarragon' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#2 wrong_value: 'dill' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'puff pastry sheet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 invented_amount: 'Fishmousse' amount=3 unit=oz [NOT FLAGGED]
+  n_loup#3 wrong_value: 'egg wash' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'seasonal vegetables' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'beurre blanc sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'carrot' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'leeks' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'celery' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'black trumpet mushrooms' amount=0 unit=chopped,sautéed [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'chives' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'parsley' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'tarragon' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_loup#3 wrong_value: 'dill' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_tuna_tartare#1 wrong_value: 'coarse salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#1 wrong_value: 'white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#1 invented_amount: 'Herb Salad' amount=0 unit=None [NOT FLAGGED]
+  n_tuna_tartare#1 wrong_value: 'coarse salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#1 wrong_value: 'white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#2 wrong_value: 'coarse salt and white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#2 invented_amount: 'Herb Salad' amount=0 unit=None [NOT FLAGGED]
+  n_tuna_tartare#2 wrong_value: 'coarse salt and white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#3 wrong_value: 'coarse salt and white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_tuna_tartare#3 invented_amount: 'Herb Salad' amount=0 unit=None [NOT FLAGGED]
+  n_tuna_tartare#3 wrong_value: 'coarse salt and white pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_hash_cakes#1 wrong_value: 'Nutmeg' amount=0 unit=scratch [NOT FLAGGED]  key: None None
+  n_hash_cakes#1 wrong_value: 'Butter' amount=2 unit=cup [NOT FLAGGED]  key: 99 tsp
+  n_hash_cakes#1 wrong_value: 'Béarnaise Sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_hash_cakes#1 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#1 wrong_value: 'Sugar' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#1 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#2 wrong_value: 'Nutmeg' amount=0 unit=scratch [NOT FLAGGED]  key: None None
+  n_hash_cakes#2 wrong_value: 'Butter' amount=2 unit=cup [NOT FLAGGED]  key: 99 tsp
+  n_hash_cakes#2 wrong_value: 'Béarnaise Sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_hash_cakes#2 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#2 wrong_value: 'Sugar' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#2 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#3 wrong_value: 'Nutmeg' amount=0 unit=scratch [NOT FLAGGED]  key: None None
+  n_hash_cakes#3 wrong_value: 'Butter' amount=2 unit=cup [NOT FLAGGED]  key: 99 tsp
+  n_hash_cakes#3 wrong_value: 'Béarnaise Sauce' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_hash_cakes#3 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#3 wrong_value: 'Sugar' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_hash_cakes#3 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_stir_fry#1 invented_amount: 'Hot Sweet Bean Sauce' amount=0 unit=None [NOT FLAGGED]
+  n_stir_fry#1 invented_amount: 'Garnish' amount=0 unit=None [NOT FLAGGED]
+  n_stir_fry#2 invented_amount: 'Hot Sweet Bean Sauce' amount=0 unit=None [NOT FLAGGED]
+  n_stir_fry#2 invented_amount: 'Garnish' amount=0 unit=None [NOT FLAGGED]
+  n_stir_fry#3 invented_amount: 'Hot Sweet Bean Sauce' amount=0 unit=None [NOT FLAGGED]
+  n_stir_fry#3 invented_amount: 'Garnish' amount=0 unit=None [NOT FLAGGED]
+  n_octopus#1 wrong_value: 'Tuscan Evo' amount=0 unit=tsp [NOT FLAGGED]  key: 5 tsp
+  n_octopus#1 wrong_value: 'Salt' amount=0 unit=totaste [flagged: unit tsp cannot be converted to to taste]  key: None None
+  n_octopus#1 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_octopus#2 wrong_value: 'Tuscan Evo' amount=1 unit=tbsp [NOT FLAGGED]  key: 5 tsp
+  n_octopus#2 wrong_value: 'Salt' amount=0 unit=totaste [flagged: unit tsp cannot be converted to to taste]  key: None None
+  n_octopus#2 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_octopus#3 wrong_value: 'Tuscan Evo' amount=1 unit=tbsp [NOT FLAGGED]  key: 5 tsp
+  n_octopus#3 wrong_value: 'Salt' amount=0 unit=totaste [flagged: unit tsp cannot be converted to to taste]  key: None None
+  n_octopus#3 wrong_value: 'Black Pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_raita#1 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_raita#1 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_raita#2 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_raita#2 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_raita#3 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_raita#3 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#1 wrong_value: 'Block Parmesan' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#1 wrong_value: 'Tuscan Olive Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#1 wrong_value: 'Fresh Ground Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#2 wrong_value: 'Block Parmesan' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#2 wrong_value: 'Tuscan Olive Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#2 wrong_value: 'Fresh Ground Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#3 wrong_value: 'Block Parmesan' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#3 wrong_value: 'Tuscan Olive Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_polenta#3 wrong_value: 'Fresh Ground Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_spinach_dip#1 wrong_value: 'Worcestershire' amount=0 unit=dash [NOT FLAGGED]  key: 1 dash
+  n_spinach_dip#1 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_spinach_dip#1 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_spinach_dip#2 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_spinach_dip#2 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_spinach_dip#3 wrong_value: 'Worcestershire' amount=0 unit=dash [NOT FLAGGED]  key: 1 dash
+  n_spinach_dip#3 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_spinach_dip#3 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  n_confit_bacon#1 wrong_value: 'Rendered Duck Fat' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  n_confit_bacon#2 wrong_value: 'Rendered Duck Fat' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  n_confit_bacon#3 wrong_value: 'Rendered Duck Fat' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  n_primavera#1 wrong_value: 'Basil, chiffonade' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#1 wrong_value: 'Black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#1 wrong_value: 'Sea Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#1 wrong_value: 'Basil, puree' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#1 wrong_value: 'Pine nuts, toasted' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#2 wrong_value: 'Basil, chiffonade' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#2 wrong_value: 'Black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#2 wrong_value: 'Sea Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#2 wrong_value: 'Basil, puree' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#2 wrong_value: 'Pine nuts, toasted' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#3 wrong_value: 'Basil, chiffonade' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#3 wrong_value: 'Black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#3 wrong_value: 'Sea Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#3 wrong_value: 'Basil, puree' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_primavera#3 wrong_value: 'Pine nuts, toasted' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_tikka#1 invented_amount: 'chicken marinade' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#1 invented_amount: 'masala' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#1 wrong_value: 'garlic ginger onion lime puree (¼ c. each garlic, ' amount=0 unit=cup [NOT FLAGGED]  key: 1 cup
+  n_tikka#1 wrong_value: 'ground fenugreek' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#1 wrong_value: 'cayenne pepper' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_tikka#1 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#1 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
+  n_tikka#1 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#2 invented_amount: 'chicken marinade' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#2 invented_amount: 'masala' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#2 wrong_value: 'garlic ginger onion lime puree (¼ c. each garlic, ' amount=0 unit=cup [NOT FLAGGED]  key: 1 cup
+  n_tikka#2 wrong_value: 'ground fenugreek' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#2 wrong_value: 'cayenne pepper' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_tikka#2 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#2 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
+  n_tikka#2 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#3 invented_amount: 'chicken marinade' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#3 invented_amount: 'masala' amount=0 unit=None [NOT FLAGGED]
+  n_tikka#3 wrong_value: 'garlic ginger onion lime puree (¼ c. each garlic, ' amount=0 unit=cup [NOT FLAGGED]  key: 1 cup
+  n_tikka#3 wrong_value: 'ground fenugreek' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#3 wrong_value: 'cayenne pepper' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_tikka#3 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#3 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
+  n_tikka#3 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_crab_cake#1 wrong_value: 'sweet paprika' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_crab_cake#1 wrong_value: 'Old Bay Seasoning' amount=0 unit=tsp [NOT FLAGGED]  key: 2 tsp
+  n_crab_cake#2 wrong_value: 'sweet paprika' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_crab_cake#2 wrong_value: 'Old Bay Seasoning' amount=0 unit=tsp [NOT FLAGGED]  key: 2 tsp
+  n_crab_cake#3 wrong_value: 'sweet paprika' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_crab_cake#3 wrong_value: 'Old Bay Seasoning' amount=0 unit=tsp [NOT FLAGGED]  key: 2 tsp
+  n_short_ribs#1 wrong_value: 'canola oil' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#1 wrong_value: 'medium yellow onions, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ea
+  n_short_ribs#1 wrong_value: 'ribs celery, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ('ea', 'rib')
+  n_short_ribs#1 wrong_value: 'cloves of garlic, peeled, smashed' amount=0 unit=None [NOT FLAGGED]  key: 3 clove
+  n_short_ribs#1 wrong_value: 'tomato paste' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#1 wrong_value: 'Bordeaux wine' amount=0 unit=cup [NOT FLAGGED]  key: 2 cup
+  n_short_ribs#2 wrong_value: 'canola oil' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#2 wrong_value: 'medium yellow onions, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ea
+  n_short_ribs#2 wrong_value: 'ribs celery, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ('ea', 'rib')
+  n_short_ribs#2 wrong_value: 'cloves of garlic, peeled, smashed' amount=0 unit=None [NOT FLAGGED]  key: 3 clove
+  n_short_ribs#2 wrong_value: 'tomato paste' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#2 wrong_value: 'Bordeaux wine' amount=0 unit=cup [NOT FLAGGED]  key: 2 cup
+  n_short_ribs#3 wrong_value: 'canola oil' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#3 wrong_value: 'medium yellow onions, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ea
+  n_short_ribs#3 wrong_value: 'ribs celery, medium dice' amount=0 unit=None [NOT FLAGGED]  key: 2 ('ea', 'rib')
+  n_short_ribs#3 wrong_value: 'cloves of garlic, peeled, smashed' amount=0 unit=None [NOT FLAGGED]  key: 3 clove
+  n_short_ribs#3 wrong_value: 'tomato paste' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
+  n_short_ribs#3 wrong_value: 'Bordeaux wine' amount=0 unit=cup [NOT FLAGGED]  key: 2 cup
+  n_aioli#1 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#1 wrong_value: 'Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#1 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#2 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#2 wrong_value: 'Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#2 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#3 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#3 wrong_value: 'Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_aioli#3 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_bordelaise#1 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#1 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#1 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#1 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#1 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_bordelaise#2 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#2 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#2 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#2 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#2 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_bordelaise#3 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#3 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#3 wrong_value: 'SALT' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#3 wrong_value: 'PEPPER' amount=0 unit=asneeded [NOT FLAGGED]  key: None None
+  n_bordelaise#3 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_lentil#1 wrong_value: 'salt & black pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_lentil#2 wrong_value: 'salt & black pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_lentil#3 wrong_value: 'salt & black pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_meatloaf#1 wrong_value: 'Chipotle Glaze' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_meatloaf#2 wrong_value: 'Chipotle Glaze' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_meatloaf#3 wrong_value: 'Chipotle Glaze' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 wrong_value: 'pita bread chips' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
+  n_fattoush#2 wrong_value: 'pita bread chips' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#2 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#2 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#2 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#2 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
+  n_fattoush#3 wrong_value: 'pita bread chips' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#3 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#3 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#3 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#3 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
+  n_sea_bass#1 wrong_value: 'Lemon fennel chutney' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_sea_bass#2 wrong_value: 'Lemon fennel chutney' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_sea_bass#3 wrong_value: 'Lemon fennel chutney' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 invented_amount: 'Fried Chicken' amount=0 unit=None [NOT FLAGGED]
+  n_fried_chicken#1 wrong_value: 'slices of tomato' amount=4 unit=None [NOT FLAGGED]  key: 4 slice
+  n_fried_chicken#1 wrong_value: 'Iceberg lettuce leaves' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 wrong_value: 'Pickles' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 wrong_value: 'Mayonnaise' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#1 wrong_value: 'Vegetable oil' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 invented_amount: 'Fried Chicken' amount=0 unit=None [NOT FLAGGED]
+  n_fried_chicken#2 wrong_value: 'slices of tomato' amount=4 unit=None [NOT FLAGGED]  key: 4 slice
+  n_fried_chicken#2 wrong_value: 'Iceberg lettuce leaves' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 wrong_value: 'Pickles' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 wrong_value: 'Mayonnaise' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#2 wrong_value: 'Vegetable oil' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 invented_amount: 'Fried Chicken' amount=0 unit=None [NOT FLAGGED]
+  n_fried_chicken#3 wrong_value: 'slices of tomato' amount=4 unit=None [NOT FLAGGED]  key: 4 slice
+  n_fried_chicken#3 wrong_value: 'Iceberg lettuce leaves' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 wrong_value: 'Pickles' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 wrong_value: 'Mayonnaise' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_fried_chicken#3 wrong_value: 'Vegetable oil' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_scampi#1 wrong_value: 'kosher salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#1 wrong_value: 'freshly ground black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#1 wrong_value: 'large cloves garlic, finely chopped' amount=4 unit=None [NOT FLAGGED]  key: 4 clove
+  n_scampi#2 wrong_value: 'kosher salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#2 wrong_value: 'freshly ground black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#2 wrong_value: 'large cloves garlic, finely chopped' amount=4 unit=None [NOT FLAGGED]  key: 4 clove
+  n_scampi#3 wrong_value: 'kosher salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#3 wrong_value: 'freshly ground black pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_scampi#3 wrong_value: 'large cloves garlic, finely chopped' amount=4 unit=None [NOT FLAGGED]  key: 4 clove
+  n_corn_fritters_doc#1 wrong_value: 'oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_corn_fritters_doc#2 wrong_value: 'oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_corn_fritters_doc#3 wrong_value: 'oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_cocktails#1 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  n_cocktails#1 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_cocktails#1 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cocktails#2 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  n_cocktails#2 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_cocktails#2 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cocktails#3 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  n_cocktails#3 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_cocktails#3 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cut_sauces#1 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'brandy' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'grain mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Yuzu Kocho' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'yuzu juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'buerre blanc' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'oregano' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'white onion' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'red wine vinegar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'O.O.' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'thyme' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Armagnac' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'green peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'black peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Champagne vinegar and shallot reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'egg yolks' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'clarified butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'tarragon' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'ketchup' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'soy sauce' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'brown sugar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'tamarind' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'bay leaf' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'onions' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'Crème Fraiche' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'chives' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#1 invented_amount: 'horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'brandy' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'grain mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Yuzu Kocho' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'yuzu juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'buerre blanc' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'oregano' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'white onion' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'red wine vinegar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'O.O.' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'thyme' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Armagnac' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'green peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'black peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Champagne vinegar and shallot reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'egg yolks' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'clarified butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'tarragon' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'ketchup' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'soy sauce' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'brown sugar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'tamarind' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'bay leaf' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'onions' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'Crème Fraiche' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'chives' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#2 invented_amount: 'horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'brandy' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'grain mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Yuzu Kocho' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'yuzu juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'buerre blanc' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Parsley' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'oregano' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'white onion' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'red wine vinegar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'O.O.' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'thyme' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Armagnac' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'red wine & port wine reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Dijon mustard' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'cream' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'green peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'black peppercorns' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Champagne vinegar and shallot reduction' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'egg yolks' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'clarified butter' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'tarragon' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'ketchup' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'black pepper' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'soy sauce' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'brown sugar' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'tamarind' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'bay leaf' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'onions' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'Crème Fraiche' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'chives' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'shallots' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'lemon juice' amount=0 unit=None [NOT FLAGGED]
+  n_cut_sauces#3 invented_amount: 'horseradish' amount=0 unit=None [NOT FLAGGED]
+  n_seafood#1 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'garam masala' amount=0 unit=pinch [NOT FLAGGED]  key: 1 pinch
+  n_seafood#1 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'peanut oil for frying' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#1 wrong_value: 'cornstarch' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'garam masala' amount=0 unit=pinch [NOT FLAGGED]  key: 1 pinch
+  n_seafood#2 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'peanut oil for frying' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#2 wrong_value: 'cornstarch' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'garam masala' amount=0 unit=pinch [NOT FLAGGED]  key: 1 pinch
+  n_seafood#3 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'peanut oil for frying' amount=0 unit=forfrying [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'salt and pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  n_seafood#3 wrong_value: 'cornstarch' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Buttermilk' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Cayenne' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Duck Fat' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Peanut Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Flour' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Garlic Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Onion Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#1 wrong_value: 'Celery Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Buttermilk' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Cayenne' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Duck Fat' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Peanut Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Flour' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Garlic Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Onion Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#2 wrong_value: 'Celery Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Buttermilk' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Onion' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Cayenne' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Duck Fat' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Peanut Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Flour' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Garlic Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Onion Powder' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_fried_chicken#3 wrong_value: 'Celery Salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_balsamic_vinaigrette#1 wrong_value: 'olive oil' amount=0.5 unit=cup [NOT FLAGGED]  key: 30 tsp
+  s_balsamic_vinaigrette#2 wrong_value: 'olive oil' amount=0.5 unit=cup [NOT FLAGGED]  key: 30 tsp
+  s_balsamic_vinaigrette#3 wrong_value: 'olive oil, plus 2 Tbsp' amount=0.5 unit=cup [NOT FLAGGED]  key: 30 tsp
+  s_texas_toast#1 wrong_value: 'Italian bread' amount=0 unit=slice [NOT FLAGGED]  key: None None
+  s_texas_toast#2 wrong_value: 'Italian bread' amount=0 unit=slice [NOT FLAGGED]  key: None None
+  s_texas_toast#3 wrong_value: '¾ inch thick slices of Italian bread' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cesar_dressing#1 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cesar_dressing#1 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cesar_dressing#2 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cesar_dressing#2 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cesar_dressing#3 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cesar_dressing#3 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#1 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#1 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#1 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#2 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#2 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#2 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#3 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#3 wrong_value: 'Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_cilantro_mint_chutney#3 wrong_value: 'Sugar' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_melted_leeks#1 wrong_value: 'Blanching Water (Water & Salt)' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_melted_leeks#2 wrong_value: 'Blanching Water (Water & Salt)' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_melted_leeks#3 wrong_value: 'Blanching Water (Water & Salt)' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#1 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#1 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#2 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#2 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#3 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_sherry_vinaigrette#3 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_parsnip_puree#1 wrong_value: 'Sugar' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  s_parsnip_puree#2 wrong_value: 'Sugar' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  s_parsnip_puree#3 wrong_value: 'Sugar' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  s_potato_puree#1 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_potato_puree#1 wrong_value: 'Chopped Parsley' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  s_potato_puree#2 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_potato_puree#2 wrong_value: 'Chopped Parsley' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  s_potato_puree#3 wrong_value: 'Salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_potato_puree#3 wrong_value: 'Chopped Parsley' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#1 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#1 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#1 wrong_value: 'fresh thyme' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#1 wrong_value: 'fresh sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#2 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#2 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#2 wrong_value: 'fresh thyme' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#2 wrong_value: 'fresh sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#3 wrong_value: 'salt' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#3 wrong_value: 'pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#3 wrong_value: 'fresh thyme' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_apple_quince_chutney#3 wrong_value: 'fresh sage' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_chicken_noodle_soup#1 wrong_value: 'Sachet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_chicken_noodle_soup#2 wrong_value: 'Sachet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_chicken_noodle_soup#3 wrong_value: 'Sachet' amount=0 unit=None [NOT FLAGGED]  key: None None
+  s_artichoke_puree#1 wrong_value: 'heavy cream' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  s_artichoke_puree#1 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_artichoke_puree#2 wrong_value: 'heavy cream' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  s_artichoke_puree#2 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_artichoke_puree#3 wrong_value: 'heavy cream' amount=0 unit=tocover [NOT FLAGGED]  key: None None
+  s_artichoke_puree#3 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
+  s_scan_fish_batter#1 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_fish_batter#2 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_fish_batter#3 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#1 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#1 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#2 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#2 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#3 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_louie_dressing#3 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#1 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#1 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#2 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#2 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#3 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_scan_baby_artichokes#3 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_inv_supply_csv#1 wrong_value: 'Olive Oil Extra Virgin 6/1 GAL' amount=1 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#1 wrong_value: 'Kosher Salt 12/3 LB' amount=2 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#1 wrong_value: 'Black Peppercorns Whole 5 LB' amount=1 unit=ea [NOT FLAGGED]
+  s_inv_supply_csv#1 wrong_value: 'Canola Oil 35 LB' amount=3 unit=ea [NOT FLAGGED]
+  s_inv_supply_csv#2 wrong_value: 'Olive Oil Extra Virgin 6/1 GAL' amount=1 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#2 wrong_value: 'Kosher Salt 12/3 LB' amount=2 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#2 wrong_value: 'Black Peppercorns Whole 5 LB' amount=1 unit=ea [NOT FLAGGED]
+  s_inv_supply_csv#2 wrong_value: 'Canola Oil 35 LB' amount=3 unit=ea [NOT FLAGGED]
+  s_inv_supply_csv#3 wrong_value: 'Olive Oil Extra Virgin 6/1 GAL' amount=1 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#3 wrong_value: 'Kosher Salt 12/3 LB' amount=2 unit=case [NOT FLAGGED]
+  s_inv_supply_csv#3 wrong_value: 'Black Peppercorns Whole 5 LB' amount=1 unit=ea [NOT FLAGGED]
+  s_inv_supply_csv#3 wrong_value: 'Canola Oil 35 LB' amount=3 unit=ea [NOT FLAGGED]
+
+================================================================================================
+  [FAIL] accuracy >= 98.0%
+  [FAIL] 95% interval low end >= 98.0%
+  [FAIL] zero unflagged errors
+  [FAIL] no failed or missing job
+RESULT: FAIL

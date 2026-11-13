@@ -1,0 +1,85 @@
+Nexus extraction test: open set, 130 documents x 3 runs  (results: out/staging-2026-11-13)
+================================================================================================
+Line accuracy         58.15%   (95% interval 45.2-69.7)   bar: >= 98.0%, interval low end >= 98.0%
+Unflagged errors        802     bar: 0     (wrong or invented lines shown with no review flag)
+Failed/missing jobs      84     bar: 0
+Lines: 5013 expected, 3385 read exactly right, 1275 missed, 808 wrong/invented (6 of them flagged)
+Duplicate lines (a second line for an ingredient already matched; not scored): 47
+Lines a person must check: 2.9% of extracted lines   |   time per document: median 12.9 s, 95th percentile 51 s
+
+By document kind (accuracy / wrong / unflagged / missed / documents)
+  Word / text           58.68% / 741 / 735 / 684 /  72
+  Excel workbooks       46.75% /  24 /  24 / 591 /  24
+  handwritten cards     88.43% /   7 /   7 /   0 /   3
+  scans and photos      85.45% /  15 /  15 /   0 /   9
+  invoices              76.67% /  21 /  21 /   0 /  12
+  not the stated type  returned nothing in 24 of 27 jobs; 0 lines returned (0 unflagged)
+  invoice headers: number right in 36 of 36 jobs, date right in 36 of 36
+
+Long document n_saucier (reported separately): 0.0% of 840 printed amounts found, 0 wrong lines (0 unflagged)
+
+Documents with the most wrong or missed lines (all runs)
+  h_chard                            wrong/invented   0 (unflagged 0)   missed 399
+  h_vc_event                         wrong/invented   0 (unflagged 0)   missed 192
+  n_cut_sauces                       wrong/invented 156 (unflagged 156)   missed   0
+  bnb_event                          wrong/invented 144 (unflagged 144)   missed   0
+  collard                            wrong/invented  49 (unflagged 49)   missed   0
+  s_mustard_sauce                    wrong/invented   0 (unflagged 0)   missed  48
+  n_loup                             wrong/invented  47 (unflagged 47)   missed   0
+  n_blood_orange                     wrong/invented   0 (unflagged 0)   missed  42
+  h_roe                              wrong/invented   0 (unflagged 0)   missed  42
+  n_corn_fritters_xls                wrong/invented   0 (unflagged 0)   missed  39
+  s_remoulade                        wrong/invented   0 (unflagged 0)   missed  36
+  s_romesco                          wrong/invented   0 (unflagged 0)   missed  33
+  s_fried_chicken                    wrong/invented  33 (unflagged 33)   missed   0
+  n_wing_sauce                       wrong/invented   0 (unflagged 0)   missed  33
+  n_falafel                          wrong/invented   0 (unflagged 0)   missed  33
+
+Failed or missing jobs
+  h_kanpachi run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_kanpachi run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_kanpachi run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_leek run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_roe run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_vc_event run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  h_chard run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_trap_blank_template run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_corn_fritters_xls run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_caesar run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_falafel run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_fatty_raisins run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_cider_glaze run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_pad_thai run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 2: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_blood_orange run 3: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+  n_wing_sauce run 1: POST /api/documents -> HTTP 400: {"error":{"code":"FILE_TYPE_UNSUPPORTED","message":"Unsupported fil
+
+================================================================================================
+  [FAIL] accuracy >= 98.0%
+  [FAIL] 95% interval low end >= 98.0%
+  [FAIL] zero unflagged errors
+  [FAIL] no failed or missing job
+RESULT: FAIL
