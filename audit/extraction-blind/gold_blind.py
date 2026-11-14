@@ -55,7 +55,7 @@ R["b_gumbo"] = dict(recipes=1, lines=[
     (["chicken"], N, N, "opt"),  # printed "1 @ 4 2 #"
     (["chicken stock"], 1, "gal", ""), (["andouille sausage"], 2, "lb", ""), (["tomato paste"], 0.75, "cup", ""),
     (["creole spices", "blackening spices"], N, N, ""), (["bay leaves"], N, N, ""), (["thyme"], N, N, ""),
-    (["file powder"], N, N, ""), (["hot sauce"], N, N, ""), (["salt"], N, N, ""), (["pepper"], N, N, "opt"),
+    (["file powder"], N, N, ""), (["hot sauce"], N, N, "choice"), (["salt"], N, N, ""), (["pepper"], N, N, "opt"),
     (["sugar"], N, N, ""), (["green onions"], 1, "cup", ""), (["parsley chopped", "parsley"], N, N, "")], unlisted=["rice"])
 
 BLIND["b_corn_salad"] = _c("2017-06-12_Recipe_Corn-Salad.docx")
@@ -65,7 +65,7 @@ R["b_corn_salad"] = dict(recipes=(1, 2), lines=[
     (["shallot"], 0.5, "ea", ""), (["tarragon leaves", "tarragon"], 0.5, "cup", ""), (["corn"], 8, ("ear", "ea"), ""),
     (["heirloom tomatoes"], 10, "ea", ""), (["red onion"], 1, "ea", ""), (["chives"], 0.25, "cup", ""),
     (["salt"], N, N, ""), (["pepper"], N, N, "opt"), (["goat cheese"], 6, "oz", ""),
-    (["bacon"], N, N, "opt"), (["prosciutto"], N, N, "opt"), (["vinaigrette"], N, N, "opt")], unlisted=[])
+    (["bacon"], N, N, "opt choice"), (["prosciutto"], N, N, "opt choice"), (["vinaigrette"], N, N, "opt")], unlisted=[])
 
 BLIND["b_asian_pesto"] = _c("Asian_Pesto.doc")
 R["b_asian_pesto"] = dict(recipes=1, lines=[
@@ -101,8 +101,8 @@ R["b_turkey_brine"] = dict(recipes=1, lines=[
 
 BLIND["b_shaking_beef"] = _c("2016-02-08_Recipe_Shaking-Beef.docx")
 R["b_shaking_beef"] = dict(recipes=1, lines=[
-    (["boneless beef sirloin", "beef sirloin", "beef", "fillet", "rib eye"], 2, "lb", ""), (["garlic cloves", "garlic"], 10, ("ea", "clove"), ""),
-    (["shallot"], 1, "ea", ""), (["maggi seasoning or soy sauce", "maggi seasoning", "soy sauce"], 1, "tbsp", ""), (["sugar"], 2, "tbsp", ""),
+    (["boneless beef sirloin", "beef sirloin", "beef", "fillet", "rib eye"], 2, "lb", "choice"), (["garlic cloves", "garlic"], 10, ("ea", "clove"), ""),
+    (["shallot"], 1, "ea", ""), (["maggi seasoning or soy sauce", "maggi seasoning", "soy sauce"], 1, "tbsp", "choice"), (["sugar"], 2, "tbsp", ""),
     (["fish sauce"], 0.25, "cup", ""), (["sea salt"], 1, "tsp", ""), (["black pepper"], 2, "tbsp", "")], unlisted=["cornstarch"])
 
 BLIND["b_pico_de_gallo"] = _c("Pico_De_Gallo.doc")

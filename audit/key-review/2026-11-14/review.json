@@ -8,8 +8,8 @@
   "documents": 149,
   "documents_fully_certified": 126,
   "key_lines": 1545,
-  "key_lines_certified": 1498,
-  "disputes": 64,
+  "key_lines_certified": 1499,
+  "disputes": 63,
   "not_reviewed": []
  },
  "cases": {
@@ -302,8 +302,8 @@
     },
     {
      "key": "passion fruit puree - 3 tsp",
-     "optional": false,
-     "certified": false
+     "optional": true,
+     "certified": true
     },
     {
      "key": "lime juice - 2 tsp",
@@ -343,7 +343,7 @@
    ],
    "disputes": [
     {
-     "id": "pavlova_pdf#1",
+     "id": "pavlova_pdf#bcd252",
      "case": "pavlova_pdf",
      "kind": "value",
      "key": "egg whites - 12 ea",
@@ -358,7 +358,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#2",
+     "id": "pavlova_pdf#579034",
      "case": "pavlova_pdf",
      "kind": "absent",
      "key": "cream of tartar - 1 tsp",
@@ -373,7 +373,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#3",
+     "id": "pavlova_pdf#bb785d",
      "case": "pavlova_pdf",
      "kind": "value",
      "key": "sugar - 550 g",
@@ -388,7 +388,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#4",
+     "id": "pavlova_pdf#e38ef5",
      "case": "pavlova_pdf",
      "kind": "value",
      "key": "corn starch - 2 tbsp",
@@ -402,7 +402,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#5",
+     "id": "pavlova_pdf#26ac58",
      "case": "pavlova_pdf",
      "kind": "value",
      "key": "vanilla - 2 tsp",
@@ -417,7 +417,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#6",
+     "id": "pavlova_pdf#5712f1",
      "case": "pavlova_pdf",
      "kind": "value",
      "key": "cubed mangoes - 4 cup",
@@ -432,21 +432,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#7",
-     "case": "pavlova_pdf",
-     "kind": "value",
-     "key": "passion fruit puree - 3 tsp",
-     "readings": {
-      "claude": "passion fruit puree - 3 tbsp",
-      "gemini": null,
-      "openai": null
-     },
-     "agree": [
-      "gemini"
-     ]
-    },
-    {
-     "id": "pavlova_pdf#8",
+     "id": "pavlova_pdf#ebcc2d",
      "case": "pavlova_pdf",
      "kind": "absent",
      "key": "lime juice - 2 tsp",
@@ -461,7 +447,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#9",
+     "id": "pavlova_pdf#bfaba0",
      "case": "pavlova_pdf",
      "kind": "absent",
      "key": "whipped cream - 3 cup",
@@ -476,7 +462,7 @@
      ]
     },
     {
-     "id": "pavlova_pdf#10",
+     "id": "pavlova_pdf#ec9b1b",
      "case": "pavlova_pdf",
      "kind": "extra",
      "key": null,
@@ -488,7 +474,7 @@
      "agree": []
     },
     {
-     "id": "pavlova_pdf#11",
+     "id": "pavlova_pdf#8d67cf",
      "case": "pavlova_pdf",
      "kind": "extra",
      "key": null,
@@ -500,7 +486,7 @@
      "agree": []
     },
     {
-     "id": "pavlova_pdf#12",
+     "id": "pavlova_pdf#da4847",
      "case": "pavlova_pdf",
      "kind": "extra",
      "key": null,
@@ -743,7 +729,7 @@
    ],
    "disputes": [
     {
-     "id": "synthetic_invoice#1",
+     "id": "synthetic_invoice#a4ccff",
      "case": "synthetic_invoice",
      "kind": "value",
      "key": "beef tenderloin psmo - 41.6 lb at 12.89 or 1 case at 536.22",
@@ -999,7 +985,7 @@
    ],
    "disputes": [
     {
-     "id": "h_roe#1",
+     "id": "h_roe#708a71",
      "case": "h_roe",
      "kind": "value",
      "key": "active dry yeast - 0.333333 tsp",
@@ -1014,7 +1000,7 @@
      ]
     },
     {
-     "id": "h_roe#2",
+     "id": "h_roe#a99b38",
      "case": "h_roe",
      "kind": "value",
      "key": "warm milk - 0.333333 cup",
@@ -1029,7 +1015,7 @@
      ]
     },
     {
-     "id": "h_roe#3",
+     "id": "h_roe#aa9051",
      "case": "h_roe",
      "kind": "value",
      "key": "clarified butter - 0.666667 cup",
@@ -1044,7 +1030,7 @@
      ]
     },
     {
-     "id": "h_roe#4",
+     "id": "h_roe#c4e7a3",
      "case": "h_roe",
      "kind": "value",
      "key": "chives - 0.333333 bunch",
@@ -1137,7 +1123,7 @@
    ],
    "disputes": [
     {
-     "id": "h2_distributor_invoice#1",
+     "id": "h2_distributor_invoice#90d5e1",
      "case": "h2_distributor_invoice",
      "kind": "value",
      "key": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
@@ -1149,7 +1135,7 @@
      "agree": []
     },
     {
-     "id": "h2_distributor_invoice#2",
+     "id": "h2_distributor_invoice#ff1c6b",
      "case": "h2_distributor_invoice",
      "kind": "value",
      "key": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
@@ -1198,7 +1184,7 @@
    ],
    "disputes": [
     {
-     "id": "h3_produce_photo#1",
+     "id": "h3_produce_photo#8180c7",
      "case": "h3_produce_photo",
      "kind": "absent",
      "key": "heirloom tomatoes - 12 lb at 3.4",
@@ -1213,7 +1199,7 @@
      ]
     },
     {
-     "id": "h3_produce_photo#2",
+     "id": "h3_produce_photo#f47963",
      "case": "h3_produce_photo",
      "kind": "absent",
      "key": "romaine hearts - 2 case at 34.5",
@@ -1228,7 +1214,7 @@
      ]
     },
     {
-     "id": "h3_produce_photo#3",
+     "id": "h3_produce_photo#ebe7f6",
      "case": "h3_produce_photo",
      "kind": "absent",
      "key": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
@@ -1243,7 +1229,7 @@
      ]
     },
     {
-     "id": "h3_produce_photo#4",
+     "id": "h3_produce_photo#80faf1",
      "case": "h3_produce_photo",
      "kind": "absent",
      "key": "meyer lemons - 1 case at 48",
@@ -1258,7 +1244,7 @@
      ]
     },
     {
-     "id": "h3_produce_photo#5",
+     "id": "h3_produce_photo#31d452",
      "case": "h3_produce_photo",
      "kind": "absent",
      "key": "shallots - 10 lb at 2.25",
@@ -1273,7 +1259,7 @@
      ]
     },
     {
-     "id": "h3_produce_photo#6",
+     "id": "h3_produce_photo#d0e9a2",
      "case": "h3_produce_photo",
      "kind": "header",
      "key": "number VF-50392, date 2026-10-07",
@@ -2982,7 +2968,7 @@
    ],
    "disputes": [
     {
-     "id": "n_tikka#1",
+     "id": "n_tikka#11d9b5",
      "case": "n_tikka",
      "kind": "extra",
      "key": null,
@@ -4104,7 +4090,7 @@
    ],
    "disputes": [
     {
-     "id": "n_scampi#1",
+     "id": "n_scampi#e5bcb7",
      "case": "n_scampi",
      "kind": "value",
      "key": "garlic - 4 clove",
@@ -4327,7 +4313,7 @@
    ],
    "disputes": [
     {
-     "id": "n_cocktails#1",
+     "id": "n_cocktails#617881",
      "case": "n_cocktails",
      "kind": "extra",
      "key": null,
@@ -4339,7 +4325,7 @@
      "agree": []
     },
     {
-     "id": "n_cocktails#2",
+     "id": "n_cocktails#e95083",
      "case": "n_cocktails",
      "kind": "extra",
      "key": null,
@@ -4519,7 +4505,7 @@
    ],
    "disputes": [
     {
-     "id": "n_caesar#1",
+     "id": "n_caesar#d10be9",
      "case": "n_caesar",
      "kind": "extra",
      "key": null,
@@ -5559,7 +5545,7 @@
    ],
    "disputes": [
     {
-     "id": "n_seafood#1",
+     "id": "n_seafood#96d49b",
      "case": "n_seafood",
      "kind": "absent",
      "key": "japanese cucumbers - 4 ea",
@@ -5574,7 +5560,7 @@
      ]
     },
     {
-     "id": "n_seafood#2",
+     "id": "n_seafood#769404",
      "case": "n_seafood",
      "kind": "absent",
      "key": "whole wild striped bass - 1 ea",
@@ -5589,7 +5575,7 @@
      ]
     },
     {
-     "id": "n_seafood#3",
+     "id": "n_seafood#bf357c",
      "case": "n_seafood",
      "kind": "extra",
      "key": null,
@@ -5705,7 +5691,7 @@
    ],
    "disputes": [
     {
-     "id": "s_balsamic_vinaigrette#1",
+     "id": "s_balsamic_vinaigrette#d88bb8",
      "case": "s_balsamic_vinaigrette",
      "kind": "value",
      "key": "olive oil - 30 tsp (total of a printed sum)",
@@ -6370,7 +6356,7 @@
    ],
    "disputes": [
     {
-     "id": "s_pesto_arugula#1",
+     "id": "s_pesto_arugula#9fc9d6",
      "case": "s_pesto_arugula",
      "kind": "extra",
      "key": null,
@@ -6455,7 +6441,7 @@
    ],
    "disputes": [
     {
-     "id": "s_cognac_sauce#1",
+     "id": "s_cognac_sauce#aeb420",
      "case": "s_cognac_sauce",
      "kind": "value",
      "key": "mushrooms - 3 lb",
@@ -6470,7 +6456,7 @@
      ]
     },
     {
-     "id": "s_cognac_sauce#2",
+     "id": "s_cognac_sauce#7335a3",
      "case": "s_cognac_sauce",
      "kind": "value",
      "key": "butter - 1 lb",
@@ -6904,7 +6890,7 @@
    ],
    "disputes": [
     {
-     "id": "s_potato_puree#1",
+     "id": "s_potato_puree#847532",
      "case": "s_potato_puree",
      "kind": "value",
      "key": "peeled yukon gold potatoes - 10 lb",
@@ -7711,7 +7697,7 @@
    ],
    "disputes": [
     {
-     "id": "s_photo_miso_label#1",
+     "id": "s_photo_miso_label#bfc16c",
      "case": "s_photo_miso_label",
      "kind": "extra",
      "key": null,
@@ -7847,7 +7833,7 @@
    ],
    "disputes": [
     {
-     "id": "s_inv_farm_photo#1",
+     "id": "s_inv_farm_photo#3f5a44",
      "case": "s_inv_farm_photo",
      "kind": "absent",
      "key": "baby kale - 4 case at 13.5",
@@ -7862,7 +7848,7 @@
      ]
     },
     {
-     "id": "s_inv_farm_photo#2",
+     "id": "s_inv_farm_photo#518ea0",
      "case": "s_inv_farm_photo",
      "kind": "absent",
      "key": "carrots rainbow bunch - 12 bunch at 2.1 or 12 bu at 2.1",
@@ -7877,7 +7863,7 @@
      ]
     },
     {
-     "id": "s_inv_farm_photo#3",
+     "id": "s_inv_farm_photo#59a0eb",
      "case": "s_inv_farm_photo",
      "kind": "absent",
      "key": "strawberries flat - 2 flat at 26",
@@ -7892,7 +7878,7 @@
      ]
     },
     {
-     "id": "s_inv_farm_photo#4",
+     "id": "s_inv_farm_photo#259a7c",
      "case": "s_inv_farm_photo",
      "kind": "absent",
      "key": "yukon gold potatoes - 50 lb at 0.78",
@@ -7907,7 +7893,7 @@
      ]
     },
     {
-     "id": "s_inv_farm_photo#5",
+     "id": "s_inv_farm_photo#ce2915",
      "case": "s_inv_farm_photo",
      "kind": "header",
      "key": "number GL-7720, date 2026-10-23",
@@ -8043,7 +8029,7 @@
    ],
    "disputes": [
     {
-     "id": "b_chocolate_chip_cookies#1",
+     "id": "b_chocolate_chip_cookies#0d1383",
      "case": "b_chocolate_chip_cookies",
      "kind": "extra",
      "key": null,
@@ -8117,7 +8103,7 @@
    ],
    "disputes": [
     {
-     "id": "b_corn_bread#1",
+     "id": "b_corn_bread#b9a9ae",
      "case": "b_corn_bread",
      "kind": "value",
      "key": "butter - 4 lb",
@@ -8132,7 +8118,7 @@
      ]
     },
     {
-     "id": "b_corn_bread#2",
+     "id": "b_corn_bread#0b3fea",
      "case": "b_corn_bread",
      "kind": "value",
      "key": "sugar - 4 lb",
@@ -8147,7 +8133,7 @@
      ]
     },
     {
-     "id": "b_corn_bread#3",
+     "id": "b_corn_bread#08c95b",
      "case": "b_corn_bread",
      "kind": "value",
      "key": "p. milk - 1 lb",
@@ -8162,7 +8148,7 @@
      ]
     },
     {
-     "id": "b_corn_bread#4",
+     "id": "b_corn_bread#bdd9d8",
      "case": "b_corn_bread",
      "kind": "value",
      "key": "corn meal - 40 oz (total of a printed sum)",
@@ -8438,7 +8424,7 @@
    ],
    "disputes": [
     {
-     "id": "b_gumbo#1",
+     "id": "b_gumbo#1dd787",
      "case": "b_gumbo",
      "kind": "value",
      "key": "flour - 1 lb",
@@ -8453,7 +8439,7 @@
      ]
     },
     {
-     "id": "b_gumbo#2",
+     "id": "b_gumbo#b3dde2",
      "case": "b_gumbo",
      "kind": "value",
      "key": "butter - 1 lb",
@@ -8468,7 +8454,7 @@
      ]
     },
     {
-     "id": "b_gumbo#3",
+     "id": "b_gumbo#08e9f0",
      "case": "b_gumbo",
      "kind": "value",
      "key": "andouille sausage - 2 lb",
@@ -8835,7 +8821,7 @@
    ],
    "disputes": [
     {
-     "id": "b_turkey_brine#1",
+     "id": "b_turkey_brine#6ac550",
      "case": "b_turkey_brine",
      "kind": "value",
      "key": "white onions - 8 ea",
@@ -8849,7 +8835,7 @@
      ]
     },
     {
-     "id": "b_turkey_brine#2",
+     "id": "b_turkey_brine#283759",
      "case": "b_turkey_brine",
      "kind": "value",
      "key": "carrots - 2 ea",
@@ -8910,7 +8896,7 @@
    ],
    "disputes": [
     {
-     "id": "b_shaking_beef#1",
+     "id": "b_shaking_beef#abc9ca",
      "case": "b_shaking_beef",
      "kind": "extra",
      "key": null,
@@ -8922,7 +8908,7 @@
      "agree": []
     },
     {
-     "id": "b_shaking_beef#2",
+     "id": "b_shaking_beef#ef4c4e",
      "case": "b_shaking_beef",
      "kind": "extra",
      "key": null,
@@ -8934,7 +8920,7 @@
      "agree": []
     },
     {
-     "id": "b_shaking_beef#3",
+     "id": "b_shaking_beef#c79154",
      "case": "b_shaking_beef",
      "kind": "extra",
      "key": null,
@@ -9309,7 +9295,7 @@
    ],
    "disputes": [
     {
-     "id": "b_inv_meat#1",
+     "id": "b_inv_meat#ff5411",
      "case": "b_inv_meat",
      "kind": "value",
      "key": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
@@ -9321,7 +9307,7 @@
      "agree": []
     },
     {
-     "id": "b_inv_meat#2",
+     "id": "b_inv_meat#6339c0",
      "case": "b_inv_meat",
      "kind": "value",
      "key": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
@@ -9386,7 +9372,7 @@
    ],
    "disputes": [
     {
-     "id": "b_inv_mushroom_photo#1",
+     "id": "b_inv_mushroom_photo#c5c37a",
      "case": "b_inv_mushroom_photo",
      "kind": "absent",
      "key": "shiitake mushrooms - 6 lb at 9.25",
@@ -9401,7 +9387,7 @@
      ]
     },
     {
-     "id": "b_inv_mushroom_photo#2",
+     "id": "b_inv_mushroom_photo#c80dc0",
      "case": "b_inv_mushroom_photo",
      "kind": "absent",
      "key": "oyster mushrooms - 3 case at 21",
@@ -9416,7 +9402,7 @@
      ]
     },
     {
-     "id": "b_inv_mushroom_photo#3",
+     "id": "b_inv_mushroom_photo#f8fbda",
      "case": "b_inv_mushroom_photo",
      "kind": "absent",
      "key": "king trumpet - 4.5 lb at 11.4",
@@ -9431,7 +9417,7 @@
      ]
     },
     {
-     "id": "b_inv_mushroom_photo#4",
+     "id": "b_inv_mushroom_photo#92a2a9",
      "case": "b_inv_mushroom_photo",
      "kind": "absent",
      "key": "maitake clusters - 2 lb at 14.75",
@@ -9446,7 +9432,7 @@
      ]
     },
     {
-     "id": "b_inv_mushroom_photo#5",
+     "id": "b_inv_mushroom_photo#01e016",
      "case": "b_inv_mushroom_photo",
      "kind": "header",
      "key": "number HM-3391, date 2026-10-28",

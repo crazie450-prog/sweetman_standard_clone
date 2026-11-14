@@ -1,28 +1,28 @@
 {
- "pavlova_pdf#1": {
-  "id": "pavlova_pdf#1",
+ "pavlova_pdf#bcd252": {
+  "id": "pavlova_pdf#bcd252",
   "case": "pavlova_pdf",
   "kind": "value",
   "key": "egg whites - 12 ea",
   "options": [
    {
     "letter": "A",
-    "reading": "large egg whites - 3",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "egg whites - 12 ea",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "large egg whites - 3",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "egg whites - 12 ea",
   "printed_line": "12 egg whites",
   "quote_in_file_text": null,
@@ -31,30 +31,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#2": {
-  "id": "pavlova_pdf#2",
+ "pavlova_pdf#579034": {
+  "id": "pavlova_pdf#579034",
   "case": "pavlova_pdf",
   "kind": "absent",
   "key": "cream of tartar - 1 tsp",
   "options": [
    {
     "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "cream of tartar - 1 tsp",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "no such line: the document does not print this as an ingredient or invoice row",
   "printed_line": "",
   "quote_in_file_text": null,
@@ -62,32 +62,33 @@
   "reason": "The handwritten recipe does not list cream of tartar as an ingredient.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort medium)",
-  "objection": "The card reads \"1 tsp cream of tartar ($0.10)\". The key and two of three readers have it; the ruling model could not read this small rotated photo."
+  "objection": "The card reads \"1 tsp cream of tartar ($0.10)\". The key and two of three readers have it; the ruling model could not read this small rotated photo.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "pavlova_pdf#3": {
-  "id": "pavlova_pdf#3",
+ "pavlova_pdf#bb785d": {
+  "id": "pavlova_pdf#bb785d",
   "case": "pavlova_pdf",
   "kind": "value",
   "key": "sugar - 550 g",
   "options": [
    {
     "letter": "A",
-    "reading": "powdered sugar - 2 tbsp",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "sugar - 550 g",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "powdered sugar - 2 tbsp",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "sugar - 550 g",
   "printed_line": "550g sugar",
   "quote_in_file_text": null,
@@ -96,17 +97,18 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#4": {
-  "id": "pavlova_pdf#4",
+ "pavlova_pdf#e38ef5": {
+  "id": "pavlova_pdf#e38ef5",
   "case": "pavlova_pdf",
   "kind": "value",
   "key": "corn starch - 2 tbsp",
   "options": [
    {
     "letter": "A",
-    "reading": "cornstarch - 1 tsp",
+    "reading": "corn starch - 2 tbsp",
     "held_by": [
-     "openai"
+     "key",
+     "gemini"
     ]
    },
    {
@@ -118,10 +120,9 @@
    },
    {
     "letter": "C",
-    "reading": "corn starch - 2 tbsp",
+    "reading": "cornstarch - 1 tsp",
     "held_by": [
-     "key",
-     "gemini"
+     "openai"
     ]
    }
   ],
@@ -133,32 +134,33 @@
   "reason": "The handwritten corn starch line uses the abbreviation \u201ctbsl\u201d and specifies 2.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort medium)",
-  "objection": "The card reads \"2 Tbls corn starch\": Tbls is tablespoons, which is what the key says."
+  "objection": "The card reads \"2 Tbls corn starch\": Tbls is tablespoons, which is what the key says.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "pavlova_pdf#5": {
-  "id": "pavlova_pdf#5",
+ "pavlova_pdf#26ac58": {
+  "id": "pavlova_pdf#26ac58",
   "case": "pavlova_pdf",
   "kind": "value",
   "key": "vanilla - 2 tsp",
   "options": [
    {
     "letter": "A",
+    "reading": "vanilla extract - 0.5 tsp",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "vanilla - 2 tsp",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "vanilla extract - 0.5 tsp",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "vanilla - 2 tsp",
   "printed_line": "2 tsp vanilla",
   "quote_in_file_text": null,
@@ -167,8 +169,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#6": {
-  "id": "pavlova_pdf#6",
+ "pavlova_pdf#5712f1": {
+  "id": "pavlova_pdf#5712f1",
   "case": "pavlova_pdf",
   "kind": "value",
   "key": "cubed mangoes - 4 cup",
@@ -199,69 +201,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#7": {
-  "id": "pavlova_pdf#7",
-  "case": "pavlova_pdf",
-  "kind": "value",
-  "key": "passion fruit puree - 3 tsp",
-  "options": [
-   {
-    "letter": "A",
-    "reading": "passion fruit puree - 3 tbsp",
-    "held_by": [
-     "claude"
-    ]
-   },
-   {
-    "letter": "B",
-    "reading": "passion fruit puree - 3 tsp",
-    "held_by": [
-     "key",
-     "gemini"
-    ]
-   },
-   {
-    "letter": "C",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
-   }
-  ],
-  "choice": "A",
-  "ruled_reading": "passion fruit puree - 3 tbsp",
-  "printed_line": "3 tbsp passion fruit puree",
-  "quote_in_file_text": null,
-  "ambiguous": false,
-  "reason": "The Mango Mix section lists 3 tablespoons of passion fruit puree.",
-  "outcome": "key changes",
-  "ruled_by": "gpt-6.1-sol (effort medium)",
-  "objection": "I read \"3 tsp\", written the same way as \"2 tsp lime juice\" on the next line; one reader agrees, one reader and the ruling model read tbsp. If you cannot tell either, the line should be marked not scored."
- },
- "pavlova_pdf#8": {
-  "id": "pavlova_pdf#8",
+ "pavlova_pdf#ebcc2d": {
+  "id": "pavlova_pdf#ebcc2d",
   "case": "pavlova_pdf",
   "kind": "absent",
   "key": "lime juice - 2 tsp",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "lime juice - 2 tsp",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "no such line: the document does not print this as an ingredient or invoice row",
   "printed_line": "",
   "quote_in_file_text": null,
@@ -269,32 +232,33 @@
   "reason": "The handwritten ingredient lists do not include a lime juice line.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort medium)",
-  "objection": "The card reads \"2 tsp lime juice ($0.15)\". The key and two of three readers have it; the ruling model could not read this small rotated photo."
+  "objection": "The card reads \"2 tsp lime juice ($0.15)\". The key and two of three readers have it; the ruling model could not read this small rotated photo.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "pavlova_pdf#9": {
-  "id": "pavlova_pdf#9",
+ "pavlova_pdf#bfaba0": {
+  "id": "pavlova_pdf#bfaba0",
   "case": "pavlova_pdf",
   "kind": "absent",
   "key": "whipped cream - 3 cup",
   "options": [
    {
     "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "whipped cream - 3 cup",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "whipped cream - 3 cup",
   "printed_line": "3 cup whip cream",
   "quote_in_file_text": null,
@@ -303,15 +267,47 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#10": {
-  "id": "pavlova_pdf#10",
+ "pavlova_pdf#ec9b1b": {
+  "id": "pavlova_pdf#ec9b1b",
   "case": "pavlova_pdf",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "key",
+     "claude",
+     "gemini"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "caster sugar - 0.75 cup",
+    "held_by": [
+     "openai"
+    ]
+   }
+  ],
+  "choice": "A",
+  "ruled_reading": "no such line: the document does not print this as an ingredient or invoice row",
+  "printed_line": "",
+  "quote_in_file_text": null,
+  "ambiguous": false,
+  "reason": "The document does not list three-quarters of a cup of caster sugar as an ingredient.",
+  "outcome": "key stands",
+  "ruled_by": "gpt-6.1-sol (effort medium)"
+ },
+ "pavlova_pdf#8d67cf": {
+  "id": "pavlova_pdf#8d67cf",
+  "case": "pavlova_pdf",
+  "kind": "extra",
+  "key": null,
+  "options": [
+   {
+    "letter": "A",
+    "reading": "white vinegar - 1 tsp",
     "held_by": [
      "openai"
     ]
@@ -331,44 +327,12 @@
   "printed_line": "",
   "quote_in_file_text": null,
   "ambiguous": false,
-  "reason": "The document does not list three-quarters of a cup of caster sugar as an ingredient.",
-  "outcome": "key stands",
-  "ruled_by": "gpt-6.1-sol (effort medium)"
- },
- "pavlova_pdf#11": {
-  "id": "pavlova_pdf#11",
-  "case": "pavlova_pdf",
-  "kind": "extra",
-  "key": null,
-  "options": [
-   {
-    "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "key",
-     "claude",
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
-    "reading": "white vinegar - 1 tsp",
-    "held_by": [
-     "openai"
-    ]
-   }
-  ],
-  "choice": "A",
-  "ruled_reading": "no such line: the document does not print this as an ingredient or invoice row",
-  "printed_line": "",
-  "quote_in_file_text": null,
-  "ambiguous": false,
   "reason": "The document does not list white vinegar as an ingredient.",
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "pavlova_pdf#12": {
-  "id": "pavlova_pdf#12",
+ "pavlova_pdf#da4847": {
+  "id": "pavlova_pdf#da4847",
   "case": "pavlova_pdf",
   "kind": "extra",
   "key": null,
@@ -399,8 +363,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort medium)"
  },
- "synthetic_invoice#1": {
-  "id": "synthetic_invoice#1",
+ "synthetic_invoice#a4ccff": {
+  "id": "synthetic_invoice#a4ccff",
   "case": "synthetic_invoice",
   "kind": "value",
   "key": "beef tenderloin psmo - 41.6 lb at 12.89 or 1 case at 536.22",
@@ -431,30 +395,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h_roe#1": {
-  "id": "h_roe#1",
+ "h_roe#708a71": {
+  "id": "h_roe#708a71",
   "case": "h_roe",
   "kind": "value",
   "key": "active dry yeast - 0.333333 tsp",
   "options": [
    {
     "letter": "A",
+    "reading": "active dry yeast - 0.125 tsp",
+    "held_by": [
+     "gemini"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "active dry yeast - 0.333333 tsp",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "active dry yeast - 0.125 tsp",
-    "held_by": [
-     "gemini"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "active dry yeast - 0.333333 tsp",
   "printed_line": "\u2153 tsp active dry yeast",
   "quote_in_file_text": true,
@@ -463,8 +427,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h_roe#2": {
-  "id": "h_roe#2",
+ "h_roe#a99b38": {
+  "id": "h_roe#a99b38",
   "case": "h_roe",
   "kind": "value",
   "key": "warm milk - 0.333333 cup",
@@ -495,8 +459,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h_roe#3": {
-  "id": "h_roe#3",
+ "h_roe#aa9051": {
+  "id": "h_roe#aa9051",
   "case": "h_roe",
   "kind": "value",
   "key": "clarified butter - 0.666667 cup",
@@ -527,30 +491,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h_roe#4": {
-  "id": "h_roe#4",
+ "h_roe#c4e7a3": {
+  "id": "h_roe#c4e7a3",
   "case": "h_roe",
   "kind": "value",
   "key": "chives - 0.333333 bunch",
   "options": [
    {
     "letter": "A",
-    "reading": "chives, thinly sliced - 0.2 bunch",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "chives - 0.333333 bunch",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "chives, thinly sliced - 0.2 bunch",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "chives - 0.333333 bunch",
   "printed_line": "\u2153 bunch chives, thinly sliced",
   "quote_in_file_text": true,
@@ -559,14 +523,21 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h2_distributor_invoice#1": {
-  "id": "h2_distributor_invoice#1",
+ "h2_distributor_invoice#90d5e1": {
+  "id": "h2_distributor_invoice#90d5e1",
   "case": "h2_distributor_invoice",
   "kind": "value",
   "key": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
   "options": [
    {
     "letter": "A",
+    "reading": "chicken breast bnls sknls\ncatch weight 20.0 lb - 1 case at 3.19",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "chicken breast bnls sknls - 1 case at 3.19",
     "held_by": [
      "claude",
@@ -574,21 +545,14 @@
     ]
    },
    {
-    "letter": "B",
+    "letter": "C",
     "reading": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
     "held_by": [
      "key"
     ]
-   },
-   {
-    "letter": "C",
-    "reading": "chicken breast bnls sknls\ncatch weight 20.0 lb - 1 case at 3.19",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "B",
+  "choice": "C",
   "ruled_reading": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
   "printed_line": "1     1     CS   4/5 LB         PACKER      CHICKEN BREAST BNLS SKNLS    553120     3.19/LB           63.80\n                                            CATCH WEIGHT 20.0 LB",
   "quote_in_file_text": true,
@@ -597,36 +561,36 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h2_distributor_invoice#2": {
-  "id": "h2_distributor_invoice#2",
+ "h2_distributor_invoice#ff1c6b": {
+  "id": "h2_distributor_invoice#ff1c6b",
   "case": "h2_distributor_invoice",
   "kind": "value",
   "key": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
   "options": [
    {
     "letter": "A",
-    "reading": "pork belly skin-on - 1 case at 4.25",
-    "held_by": [
-     "claude",
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "pork belly skin-on\ncatch weight 14.4 lb - 1 case at 4.25",
     "held_by": [
      "openai"
     ]
    },
    {
-    "letter": "C",
+    "letter": "B",
     "reading": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
     "held_by": [
      "key"
     ]
+   },
+   {
+    "letter": "C",
+    "reading": "pork belly skin-on - 1 case at 4.25",
+    "held_by": [
+     "claude",
+     "gemini"
+    ]
    }
   ],
-  "choice": "C",
+  "choice": "B",
   "ruled_reading": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
   "printed_line": "1     1     CS   1/14 LB AVG    BUTCHER     PORK BELLY SKIN-ON           609112     4.25/LB           61.20\n                                            CATCH WEIGHT 14.4 LB",
   "quote_in_file_text": true,
@@ -635,30 +599,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#1": {
-  "id": "h3_produce_photo#1",
+ "h3_produce_photo#8180c7": {
+  "id": "h3_produce_photo#8180c7",
   "case": "h3_produce_photo",
   "kind": "absent",
   "key": "heirloom tomatoes - 12 lb at 3.4",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "heirloom tomatoes - 12 lb at 3.4",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "heirloom tomatoes - 12 lb at 3.4",
   "printed_line": "Heirloom Tomatoes 12 LB 3.40 40.80",
   "quote_in_file_text": null,
@@ -667,8 +631,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#2": {
-  "id": "h3_produce_photo#2",
+ "h3_produce_photo#f47963": {
+  "id": "h3_produce_photo#f47963",
   "case": "h3_produce_photo",
   "kind": "absent",
   "key": "romaine hearts - 2 case at 34.5",
@@ -699,30 +663,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#3": {
-  "id": "h3_produce_photo#3",
+ "h3_produce_photo#ebe7f6": {
+  "id": "h3_produce_photo#ebe7f6",
   "case": "h3_produce_photo",
   "kind": "absent",
   "key": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
   "printed_line": "Italian Parsley 6 BU 1.15 6.90",
   "quote_in_file_text": null,
@@ -731,30 +695,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#4": {
-  "id": "h3_produce_photo#4",
+ "h3_produce_photo#80faf1": {
+  "id": "h3_produce_photo#80faf1",
   "case": "h3_produce_photo",
   "kind": "absent",
   "key": "meyer lemons - 1 case at 48",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "meyer lemons - 1 case at 48",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "meyer lemons - 1 case at 48",
   "printed_line": "Meyer Lemons 1 CS 48.00 48.00",
   "quote_in_file_text": null,
@@ -763,8 +727,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#5": {
-  "id": "h3_produce_photo#5",
+ "h3_produce_photo#31d452": {
+  "id": "h3_produce_photo#31d452",
   "case": "h3_produce_photo",
   "kind": "absent",
   "key": "shallots - 10 lb at 2.25",
@@ -795,30 +759,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "h3_produce_photo#6": {
-  "id": "h3_produce_photo#6",
+ "h3_produce_photo#d0e9a2": {
+  "id": "h3_produce_photo#d0e9a2",
   "case": "h3_produce_photo",
   "kind": "header",
   "key": "number VF-50392, date 2026-10-07",
   "options": [
    {
     "letter": "A",
-    "reading": "number none, date none",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "number vf-50392, date 2026-10-07",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "number none, date none",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "number vf-50392, date 2026-10-07",
   "printed_line": "Ticket # VF-50392 Date 10/07/2026",
   "quote_in_file_text": null,
@@ -827,30 +791,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "n_tikka#1": {
-  "id": "n_tikka#1",
+ "n_tikka#11d9b5": {
+  "id": "n_tikka#11d9b5",
   "case": "n_tikka",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "curry leaves - 3",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "curry leaves - 3",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "curry leaves - 3",
   "printed_line": "3 curry leaves or bay leaves",
   "quote_in_file_text": true,
@@ -858,10 +822,11 @@
   "reason": "The masala ingredients list includes 3 curry leaves, with bay leaves offered as an alternative.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "n_scampi#1": {
-  "id": "n_scampi#1",
+ "n_scampi#e5bcb7": {
+  "id": "n_scampi#e5bcb7",
   "case": "n_scampi",
   "kind": "value",
   "key": "garlic - 4 clove",
@@ -891,32 +856,33 @@
   "reason": "The printed line specifies four large cloves of garlic, finely chopped, as stated most completely in option A.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "Same amount. The key reads \"cloves\" as the unit; the chosen reading leaves it in the name with no unit."
+  "objection": "Same amount. The key reads \"cloves\" as the unit; the chosen reading leaves it in the name with no unit.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "n_cocktails#1": {
-  "id": "n_cocktails#1",
+ "n_cocktails#617881": {
+  "id": "n_cocktails#617881",
   "case": "n_cocktails",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "blanco (silver) tequila - 1 bottle",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "blanco (silver) tequila - 1 bottle",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "blanco (silver) tequila - 1 bottle",
   "printed_line": "\u2022 1 bottle (750 milliliters) vodka or blanco (silver) tequila",
   "quote_in_file_text": true,
@@ -924,17 +890,52 @@
   "reason": "The ingredient line on page 1 lists blanco (silver) tequila as an alternative to vodka, with the same one-bottle amount.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "n_cocktails#2": {
-  "id": "n_cocktails#2",
+ "n_cocktails#e95083": {
+  "id": "n_cocktails#e95083",
   "case": "n_cocktails",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "key",
+     "claude",
+     "gemini"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "fresh passion fruit puree, strained - 0.5 cup",
+    "held_by": [
+     "openai"
+    ]
+   }
+  ],
+  "choice": "B",
+  "ruled_reading": "fresh passion fruit puree, strained - 0.5 cup",
+  "printed_line": "\u2022 \u00bd cup fresh passion fruit puree, strained, or guava juice",
+  "quote_in_file_text": true,
+  "ambiguous": false,
+  "reason": "The ingredient line on page 4 specifies \u00bd cup of strained fresh passion fruit puree, with guava juice as an alternative.",
+  "outcome": "key changes",
+  "ruled_by": "gpt-6.1-sol (effort high)",
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
+ },
+ "n_caesar#d10be9": {
+  "id": "n_caesar#d10be9",
+  "case": "n_caesar",
+  "kind": "extra",
+  "key": null,
+  "options": [
+   {
+    "letter": "A",
+    "reading": "vegetable - 3.5 qt",
     "held_by": [
      "openai"
     ]
@@ -950,39 +951,6 @@
    }
   ],
   "choice": "A",
-  "ruled_reading": "fresh passion fruit puree, strained - 0.5 cup",
-  "printed_line": "\u2022 \u00bd cup fresh passion fruit puree, strained, or guava juice",
-  "quote_in_file_text": true,
-  "ambiguous": false,
-  "reason": "The ingredient line on page 4 specifies \u00bd cup of strained fresh passion fruit puree, with guava juice as an alternative.",
-  "outcome": "key changes",
-  "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
- },
- "n_caesar#1": {
-  "id": "n_caesar#1",
-  "case": "n_caesar",
-  "kind": "extra",
-  "key": null,
-  "options": [
-   {
-    "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "key",
-     "claude",
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
-    "reading": "vegetable - 3.5 qt",
-    "held_by": [
-     "openai"
-    ]
-   }
-  ],
-  "choice": "B",
   "ruled_reading": "vegetable - 3.5 qt",
   "printed_line": "3 1/2qt peanut oil or vegetable",
   "quote_in_file_text": true,
@@ -990,10 +958,11 @@
   "reason": "The ingredient table lists 3\u00bd qt of peanut oil or vegetable, supporting vegetable as an alternative.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "n_seafood#1": {
-  "id": "n_seafood#1",
+ "n_seafood#96d49b": {
+  "id": "n_seafood#96d49b",
   "case": "n_seafood",
   "kind": "absent",
   "key": "japanese cucumbers - 4 ea",
@@ -1024,30 +993,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "n_seafood#2": {
-  "id": "n_seafood#2",
+ "n_seafood#769404": {
+  "id": "n_seafood#769404",
   "case": "n_seafood",
   "kind": "absent",
   "key": "whole wild striped bass - 1 ea",
   "options": [
    {
     "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "whole wild striped bass - 1 ea",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "whole wild striped bass - 1 ea",
   "printed_line": "whole wild striped bass, 2 lb, scaled and\ngutted                                                 1        ea",
   "quote_in_file_text": true,
@@ -1056,30 +1025,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "n_seafood#3": {
-  "id": "n_seafood#3",
+ "n_seafood#bf357c": {
+  "id": "n_seafood#bf357c",
   "case": "n_seafood",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "gutted - 1 ea",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "gutted - 1 ea",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "no such line: the document does not print this as an ingredient or invoice row",
   "printed_line": "",
   "quote_in_file_text": null,
@@ -1088,21 +1057,14 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_balsamic_vinaigrette#1": {
-  "id": "s_balsamic_vinaigrette#1",
+ "s_balsamic_vinaigrette#d88bb8": {
+  "id": "s_balsamic_vinaigrette#d88bb8",
   "case": "s_balsamic_vinaigrette",
   "kind": "value",
   "key": "olive oil - 30 tsp (total of a printed sum)",
   "options": [
    {
     "letter": "A",
-    "reading": "olive oil - 0.5 tbsp",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "olive oil - 0.5",
     "held_by": [
      "claude",
@@ -1110,14 +1072,21 @@
     ]
    },
    {
-    "letter": "C",
+    "letter": "B",
     "reading": "olive oil - 30 tsp",
     "held_by": [
      "key"
     ]
+   },
+   {
+    "letter": "C",
+    "reading": "olive oil - 0.5 tbsp",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "C",
+  "choice": "B",
   "ruled_reading": "olive oil - 30 tsp",
   "printed_line": "\u00bd c plus 2 Tbsp olive oil",
   "quote_in_file_text": true,
@@ -1126,17 +1095,17 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_pesto_arugula#1": {
-  "id": "s_pesto_arugula#1",
+ "s_pesto_arugula#9fc9d6": {
+  "id": "s_pesto_arugula#9fc9d6",
   "case": "s_pesto_arugula",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "s - totaste",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
-     "gemini"
+     "key"
     ]
    },
    {
@@ -1149,13 +1118,13 @@
    },
    {
     "letter": "C",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "reading": "s - totaste",
     "held_by": [
-     "key"
+     "gemini"
     ]
    }
   ],
-  "choice": "A",
+  "choice": "C",
   "ruled_reading": "s - totaste",
   "printed_line": "to taste    s & p",
   "quote_in_file_text": true,
@@ -1163,10 +1132,11 @@
   "reason": "The ingredient table on page 1 lists \u201cs & p\u201d with the amount \u201cto taste.\u201d",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "\"s & p\" is already in the key as an optional line; the readers split it into \"s\" and \"p\"."
+  "objection": "\"s & p\" is already in the key as an optional line; the readers split it into \"s\" and \"p\".",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "s_cognac_sauce#1": {
-  "id": "s_cognac_sauce#1",
+ "s_cognac_sauce#aeb420": {
+  "id": "s_cognac_sauce#aeb420",
   "case": "s_cognac_sauce",
   "kind": "value",
   "key": "mushrooms - 3 lb",
@@ -1196,32 +1166,33 @@
   "reason": "The mushrooms row prints the quantity as \u201c3 #\u201d.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "\"#\" is the kitchen sign for pounds: 3 # is 3 lb."
+  "objection": "\"#\" is the kitchen sign for pounds: 3 # is 3 lb.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "s_cognac_sauce#2": {
-  "id": "s_cognac_sauce#2",
+ "s_cognac_sauce#7335a3": {
+  "id": "s_cognac_sauce#7335a3",
   "case": "s_cognac_sauce",
   "kind": "value",
   "key": "butter - 1 lb",
   "options": [
    {
     "letter": "A",
-    "reading": "butter - 1 _#_",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "butter - 1 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "butter - 1 _#_",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "butter - 1 _#_",
   "printed_line": "1 # butter",
   "quote_in_file_text": true,
@@ -1229,32 +1200,33 @@
   "reason": "The butter row prints the quantity as \u201c1 #\u201d.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "\"#\" is the kitchen sign for pounds: 1 # is 1 lb."
+  "objection": "\"#\" is the kitchen sign for pounds: 1 # is 1 lb.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "s_potato_puree#1": {
-  "id": "s_potato_puree#1",
+ "s_potato_puree#847532": {
+  "id": "s_potato_puree#847532",
   "case": "s_potato_puree",
   "kind": "value",
   "key": "peeled yukon gold potatoes - 10 lb",
   "options": [
    {
     "letter": "A",
+    "reading": "peeled yukon gold potatoes - 10 ###",
+    "held_by": [
+     "gemini"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "peeled yukon gold potatoes - 10 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "peeled yukon gold potatoes - 10 ###",
-    "held_by": [
-     "gemini"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "peeled yukon gold potatoes - 10 lb",
   "printed_line": "10 # Peeled Yukon Gold Potatoes",
   "quote_in_file_text": true,
@@ -1263,30 +1235,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_photo_miso_label#1": {
-  "id": "s_photo_miso_label#1",
+ "s_photo_miso_label#bfc16c": {
+  "id": "s_photo_miso_label#bfc16c",
   "case": "s_photo_miso_label",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "rice vinegar - 3 tbsp",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "rice vinegar - 3 tbsp",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "rice vinegar - 3 tbsp",
   "printed_line": "4 1/2 tablespoons honey, 3 tablespoons rice vinegar or wine vinegar,",
   "quote_in_file_text": null,
@@ -1294,32 +1266,33 @@
   "reason": "The salad dressing ingredient line specifies 3 tablespoons rice vinegar or wine vinegar.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "s_inv_farm_photo#1": {
-  "id": "s_inv_farm_photo#1",
+ "s_inv_farm_photo#3f5a44": {
+  "id": "s_inv_farm_photo#3f5a44",
   "case": "s_inv_farm_photo",
   "kind": "absent",
   "key": "baby kale - 4 case at 13.5",
   "options": [
    {
     "letter": "A",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "baby kale - 4 case at 13.5",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "baby kale - 4 case at 13.5",
   "printed_line": "Baby Kale 3 LB 4 CS 13.50 54.00",
   "quote_in_file_text": null,
@@ -1328,8 +1301,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_inv_farm_photo#2": {
-  "id": "s_inv_farm_photo#2",
+ "s_inv_farm_photo#518ea0": {
+  "id": "s_inv_farm_photo#518ea0",
   "case": "s_inv_farm_photo",
   "kind": "absent",
   "key": "carrots rainbow bunch - 12 bunch at 2.1 or 12 bu at 2.1",
@@ -1360,30 +1333,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_inv_farm_photo#3": {
-  "id": "s_inv_farm_photo#3",
+ "s_inv_farm_photo#59a0eb": {
+  "id": "s_inv_farm_photo#59a0eb",
   "case": "s_inv_farm_photo",
   "kind": "absent",
   "key": "strawberries flat - 2 flat at 26",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "strawberries flat - 2 flat at 26",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "strawberries flat - 2 flat at 26",
   "printed_line": "Strawberries flat 8x1 LB 2 FLAT 26.00 52.00",
   "quote_in_file_text": null,
@@ -1392,30 +1365,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_inv_farm_photo#4": {
-  "id": "s_inv_farm_photo#4",
+ "s_inv_farm_photo#259a7c": {
+  "id": "s_inv_farm_photo#259a7c",
   "case": "s_inv_farm_photo",
   "kind": "absent",
   "key": "yukon gold potatoes - 50 lb at 0.78",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "yukon gold potatoes - 50 lb at 0.78",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "yukon gold potatoes - 50 lb at 0.78",
   "printed_line": "Yukon Gold Potatoes 50 LB 0.78 39.00",
   "quote_in_file_text": null,
@@ -1424,30 +1397,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "s_inv_farm_photo#5": {
-  "id": "s_inv_farm_photo#5",
+ "s_inv_farm_photo#ce2915": {
+  "id": "s_inv_farm_photo#ce2915",
   "case": "s_inv_farm_photo",
   "kind": "header",
   "key": "number GL-7720, date 2026-10-23",
   "options": [
    {
     "letter": "A",
+    "reading": "number none, date none",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "number gl-7720, date 2026-10-23",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "number none, date none",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "number gl-7720, date 2026-10-23",
   "printed_line": "Ticket GL-7720 Date 10/23/2026",
   "quote_in_file_text": null,
@@ -1456,8 +1429,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_chocolate_chip_cookies#1": {
-  "id": "b_chocolate_chip_cookies#1",
+ "b_chocolate_chip_cookies#0d1383": {
+  "id": "b_chocolate_chip_cookies#0d1383",
   "case": "b_chocolate_chip_cookies",
   "kind": "extra",
   "key": null,
@@ -1487,32 +1460,33 @@
   "reason": "The ingredient line lists 6 pounds of walnuts/pecans, supporting the walnuts reading.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "b_corn_bread#1": {
-  "id": "b_corn_bread#1",
+ "b_corn_bread#b9a9ae": {
+  "id": "b_corn_bread#b9a9ae",
   "case": "b_corn_bread",
   "kind": "value",
   "key": "butter - 4 lb",
   "options": [
    {
     "letter": "A",
-    "reading": "butter - 4 https://www.google.com/search?q=%23",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "butter - 4 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "butter - 4 https://www.google.com/search?q=%23",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "butter - 4 lb",
   "printed_line": "4#                      Butter",
   "quote_in_file_text": true,
@@ -1521,8 +1495,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_corn_bread#2": {
-  "id": "b_corn_bread#2",
+ "b_corn_bread#0b3fea": {
+  "id": "b_corn_bread#0b3fea",
   "case": "b_corn_bread",
   "kind": "value",
   "key": "sugar - 4 lb",
@@ -1553,30 +1527,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_corn_bread#3": {
-  "id": "b_corn_bread#3",
+ "b_corn_bread#08c95b": {
+  "id": "b_corn_bread#08c95b",
   "case": "b_corn_bread",
   "kind": "value",
   "key": "p. milk - 1 lb",
   "options": [
    {
     "letter": "A",
-    "reading": "p. milk - 1 https://www.google.com/search?q=%23",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "p. milk - 1 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "p. milk - 1 https://www.google.com/search?q=%23",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "p. milk - 1 lb",
   "printed_line": "1#                       P. Milk",
   "quote_in_file_text": true,
@@ -1585,8 +1559,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_corn_bread#4": {
-  "id": "b_corn_bread#4",
+ "b_corn_bread#bdd9d8": {
+  "id": "b_corn_bread#bdd9d8",
   "case": "b_corn_bread",
   "kind": "value",
   "key": "corn meal - 40 oz (total of a printed sum)",
@@ -1617,8 +1591,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_gumbo#1": {
-  "id": "b_gumbo#1",
+ "b_gumbo#1dd787": {
+  "id": "b_gumbo#1dd787",
   "case": "b_gumbo",
   "kind": "value",
   "key": "flour - 1 lb",
@@ -1649,30 +1623,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_gumbo#2": {
-  "id": "b_gumbo#2",
+ "b_gumbo#b3dde2": {
+  "id": "b_gumbo#b3dde2",
   "case": "b_gumbo",
   "kind": "value",
   "key": "butter - 1 lb",
   "options": [
    {
     "letter": "A",
+    "reading": "butter - 1 !",
+    "held_by": [
+     "gemini"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "butter - 1 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "butter - 1 !",
-    "held_by": [
-     "gemini"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "butter - 1 lb",
   "printed_line": "1#                  Butter",
   "quote_in_file_text": true,
@@ -1681,30 +1655,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_gumbo#3": {
-  "id": "b_gumbo#3",
+ "b_gumbo#08e9f0": {
+  "id": "b_gumbo#08e9f0",
   "case": "b_gumbo",
   "kind": "value",
   "key": "andouille sausage - 2 lb",
   "options": [
    {
     "letter": "A",
-    "reading": "andouille sausage - 2 !",
-    "held_by": [
-     "gemini"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "andouille sausage - 2 lb",
     "held_by": [
      "key",
      "claude",
      "openai"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "andouille sausage - 2 !",
+    "held_by": [
+     "gemini"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "andouille sausage - 2 lb",
   "printed_line": "2 #                  Andouille Sausage",
   "quote_in_file_text": true,
@@ -1713,30 +1687,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_turkey_brine#1": {
-  "id": "b_turkey_brine#1",
+ "b_turkey_brine#6ac550": {
+  "id": "b_turkey_brine#6ac550",
   "case": "b_turkey_brine",
   "kind": "value",
   "key": "white onions - 8 ea",
   "options": [
    {
     "letter": "A",
-    "reading": "white onions - 8 ea",
-    "held_by": [
-     "key",
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "white onions - 8 med",
     "held_by": [
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "white onions - 8 ea",
+    "held_by": [
+     "key",
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "white onions - 8 med",
   "printed_line": "8 med. white onions",
   "quote_in_file_text": true,
@@ -1744,32 +1718,33 @@
   "reason": "The line specifies 8 medium white onions.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "\"med\" is a size, not a unit. The key holds the count (8) and accepts any count unit."
+  "objection": "\"med\" is a size, not a unit. The key holds the count (8) and accepts any count unit.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "b_turkey_brine#2": {
-  "id": "b_turkey_brine#2",
+ "b_turkey_brine#283759": {
+  "id": "b_turkey_brine#283759",
   "case": "b_turkey_brine",
   "kind": "value",
   "key": "carrots - 2 ea",
   "options": [
    {
     "letter": "A",
-    "reading": "carrots - 2 ea",
-    "held_by": [
-     "key",
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "carrots - 2 med",
     "held_by": [
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "carrots - 2 ea",
+    "held_by": [
+     "key",
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "carrots - 2 med",
   "printed_line": "2 Med Carrots",
   "quote_in_file_text": true,
@@ -1777,10 +1752,11 @@
   "reason": "The line specifies 2 medium carrots.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "\"med\" is a size, not a unit. The key holds the count (2) and accepts any count unit."
+  "objection": "\"med\" is a size, not a unit. The key holds the count (2) and accepts any count unit.",
+  "owner_decision": "14 Nov 2026: the key stands."
  },
- "b_shaking_beef#1": {
-  "id": "b_shaking_beef#1",
+ "b_shaking_beef#abc9ca": {
+  "id": "b_shaking_beef#abc9ca",
   "case": "b_shaking_beef",
   "kind": "extra",
   "key": null,
@@ -1810,32 +1786,33 @@
   "reason": "The ingredient line specifies 2 pounds of boneless beef sirloin, with fillet or rib eye as alternatives.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "b_shaking_beef#2": {
-  "id": "b_shaking_beef#2",
+ "b_shaking_beef#ef4c4e": {
+  "id": "b_shaking_beef#ef4c4e",
   "case": "b_shaking_beef",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "rib eye, cut - 2 lb",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "rib eye, cut - 2 lb",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "rib eye, cut - 2 lb",
   "printed_line": "2 pounds boneless beef sirloin, fillet, or rib eye, cut",
   "quote_in_file_text": true,
@@ -1843,32 +1820,33 @@
   "reason": "Rib eye is an explicitly printed alternative in the 2-pound beef ingredient line.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "b_shaking_beef#3": {
-  "id": "b_shaking_beef#3",
+ "b_shaking_beef#c79154": {
+  "id": "b_shaking_beef#c79154",
   "case": "b_shaking_beef",
   "kind": "extra",
   "key": null,
   "options": [
    {
     "letter": "A",
-    "reading": "maggi seasoning - 1 tbsp",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "no such line: the document does not print this as an ingredient or invoice row",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "maggi seasoning - 1 tbsp",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "maggi seasoning - 1 tbsp",
   "printed_line": "1 tablespoon Maggi seasoning or soy sauce",
   "quote_in_file_text": true,
@@ -1876,44 +1854,45 @@
   "reason": "The ingredient line specifies 1 tablespoon of Maggi seasoning or soy sauce.",
   "outcome": "key changes",
   "ruled_by": "gpt-6.1-sol (effort high)",
-  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed."
+  "objection": "One printed line offers two ingredients (\"X or Y\"). One reader listed both as separate entries. The key has one line for it and accepts either name, and a second entry is not counted as an error. No key change is needed.",
+  "owner_decision": "14 Nov 2026: the key stands. A line that offers a choice (\"X or Y\") must be flagged for the chef to decide at import; the test now requires that flag."
  },
- "b_inv_meat#1": {
-  "id": "b_inv_meat#1",
+ "b_inv_meat#ff5411": {
+  "id": "b_inv_meat#ff5411",
   "case": "b_inv_meat",
   "kind": "value",
   "key": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
   "options": [
    {
     "letter": "A",
-    "reading": "beef short rib bnls choice - 1 case at 9.45",
+    "reading": "beef short rib bnls choice catch weight 31.9 lb - 1 case at 9.45",
     "held_by": [
-     "claude"
+     "gemini"
     ]
    },
    {
     "letter": "B",
-    "reading": "beef short rib bnls choice\ncatch weight 31.9 lb - 1 case at 9.45",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "C",
     "reading": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
     "held_by": [
      "key"
     ]
    },
    {
-    "letter": "D",
-    "reading": "beef short rib bnls choice catch weight 31.9 lb - 1 case at 9.45",
+    "letter": "C",
+    "reading": "beef short rib bnls choice\ncatch weight 31.9 lb - 1 case at 9.45",
     "held_by": [
-     "gemini"
+     "openai"
+    ]
+   },
+   {
+    "letter": "D",
+    "reading": "beef short rib bnls choice - 1 case at 9.45",
+    "held_by": [
+     "claude"
     ]
    }
   ],
-  "choice": "C",
+  "choice": "B",
   "ruled_reading": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
   "printed_line": "40112         BEEF SHORT RIB BNLS CHOICE               1     CS       9.45/LB          301.46\n              CATCH WEIGHT 31.9 LB",
   "quote_in_file_text": true,
@@ -1922,31 +1901,31 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_meat#2": {
-  "id": "b_inv_meat#2",
+ "b_inv_meat#6339c0": {
+  "id": "b_inv_meat#6339c0",
   "case": "b_inv_meat",
   "kind": "value",
   "key": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
   "options": [
    {
     "letter": "A",
-    "reading": "pork shoulder bone-in\ncatch weight 59.6 lb - 1 case at 2.35",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
     "held_by": [
      "key"
     ]
    },
    {
-    "letter": "C",
+    "letter": "B",
     "reading": "pork shoulder bone-in catch weight 59.6 lb - 1 case at 2.35",
     "held_by": [
      "gemini"
+    ]
+   },
+   {
+    "letter": "C",
+    "reading": "pork shoulder bone-in\ncatch weight 59.6 lb - 1 case at 2.35",
+    "held_by": [
+     "openai"
     ]
    },
    {
@@ -1957,7 +1936,7 @@
     ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
   "printed_line": "40688         PORK SHOULDER BONE-IN                    1     CS       2.35/LB          140.06\n              CATCH WEIGHT 59.6 LB",
   "quote_in_file_text": true,
@@ -1966,30 +1945,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_mushroom_photo#1": {
-  "id": "b_inv_mushroom_photo#1",
+ "b_inv_mushroom_photo#c5c37a": {
+  "id": "b_inv_mushroom_photo#c5c37a",
   "case": "b_inv_mushroom_photo",
   "kind": "absent",
   "key": "shiitake mushrooms - 6 lb at 9.25",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "shiitake mushrooms - 6 lb at 9.25",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "shiitake mushrooms - 6 lb at 9.25",
   "printed_line": "Shiitake Mushrooms 6 LB 9.25 55.50",
   "quote_in_file_text": null,
@@ -1998,30 +1977,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_mushroom_photo#2": {
-  "id": "b_inv_mushroom_photo#2",
+ "b_inv_mushroom_photo#c80dc0": {
+  "id": "b_inv_mushroom_photo#c80dc0",
   "case": "b_inv_mushroom_photo",
   "kind": "absent",
   "key": "oyster mushrooms - 3 case at 21",
   "options": [
    {
     "letter": "A",
+    "reading": "no such line: the document does not print this as an ingredient or invoice row",
+    "held_by": [
+     "openai"
+    ]
+   },
+   {
+    "letter": "B",
     "reading": "oyster mushrooms - 3 case at 21",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
-   },
-   {
-    "letter": "B",
-    "reading": "no such line: the document does not print this as an ingredient or invoice row",
-    "held_by": [
-     "openai"
-    ]
    }
   ],
-  "choice": "A",
+  "choice": "B",
   "ruled_reading": "oyster mushrooms - 3 case at 21",
   "printed_line": "Oyster Mushrooms 3 LB 3 CS 21.00 63.00",
   "quote_in_file_text": null,
@@ -2030,8 +2009,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_mushroom_photo#3": {
-  "id": "b_inv_mushroom_photo#3",
+ "b_inv_mushroom_photo#f8fbda": {
+  "id": "b_inv_mushroom_photo#f8fbda",
   "case": "b_inv_mushroom_photo",
   "kind": "absent",
   "key": "king trumpet - 4.5 lb at 11.4",
@@ -2062,8 +2041,8 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_mushroom_photo#4": {
-  "id": "b_inv_mushroom_photo#4",
+ "b_inv_mushroom_photo#92a2a9": {
+  "id": "b_inv_mushroom_photo#92a2a9",
   "case": "b_inv_mushroom_photo",
   "kind": "absent",
   "key": "maitake clusters - 2 lb at 14.75",
@@ -2094,30 +2073,30 @@
   "outcome": "key stands",
   "ruled_by": "gpt-6.1-sol (effort high)"
  },
- "b_inv_mushroom_photo#5": {
-  "id": "b_inv_mushroom_photo#5",
+ "b_inv_mushroom_photo#01e016": {
+  "id": "b_inv_mushroom_photo#01e016",
   "case": "b_inv_mushroom_photo",
   "kind": "header",
   "key": "number HM-3391, date 2026-10-28",
   "options": [
    {
     "letter": "A",
-    "reading": "number none, date none",
-    "held_by": [
-     "openai"
-    ]
-   },
-   {
-    "letter": "B",
     "reading": "number hm-3391, date 2026-10-28",
     "held_by": [
      "key",
      "claude",
      "gemini"
     ]
+   },
+   {
+    "letter": "B",
+    "reading": "number none, date none",
+    "held_by": [
+     "openai"
+    ]
    }
   ],
-  "choice": "B",
+  "choice": "A",
   "ruled_reading": "number hm-3391, date 2026-10-28",
   "printed_line": "Delivery ticket HM-3391 10/28/2026",
   "quote_in_file_text": null,
