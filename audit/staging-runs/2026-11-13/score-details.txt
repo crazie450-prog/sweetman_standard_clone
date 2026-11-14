@@ -1,16 +1,17 @@
 Nexus extraction test: open set, 130 documents x 3 runs  (results: out/staging-2026-11-13)
 ================================================================================================
 Line accuracy         58.02%   (95% interval 45.0-69.6)   bar: >= 98.0%, interval low end >= 98.0%
-Unflagged errors        799     bar: 0     (wrong or invented lines shown with no review flag)
+Unflagged errors        798     bar: 0     (wrong or invented lines shown with no review flag)
 Failed/missing jobs      84     bar: 0
-Lines: 4983 expected, 3358 read exactly right, 1275 missed, 805 wrong/invented (6 of them flagged)
+Lines: 4980 expected, 3356 read exactly right, 1275 missed, 804 wrong/invented (6 of them flagged)
+Lines offering a choice   0 of 24 flagged     bar: all     ("X or Y": the chef decides at import)
 Duplicate lines (a second line for an ingredient already matched; not scored): 47
 Lines a person must check: 2.9% of extracted lines   |   time per document: median 12.9 s, 95th percentile 51 s
 
 By document kind (accuracy / wrong / unflagged / missed / documents)
   Word / text           58.55% / 738 / 732 / 684 /  72
   Excel workbooks       46.75% /  24 /  24 / 591 /  24
-  handwritten cards     87.83% /   7 /   7 /   0 /   3
+  handwritten cards     89.19% /   6 /   6 /   0 /   3
   scans and photos      85.45% /  15 /  15 /   0 /   9
   invoices              76.67% /  21 /  21 /   0 /  12
   not the stated type  returned nothing in 24 of 27 jobs; 0 lines returned (0 unflagged)
@@ -79,13 +80,19 @@ Failed or missing jobs
 
 Every wrong, invented or missed line
   tuna#1 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  tuna#1 offers a choice but is not flagged: 'Garlic'
+  tuna#1 offers a choice but is not flagged: 'Shallots'
   tuna#2 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
+  tuna#2 offers a choice but is not flagged: 'Garlic'
+  tuna#2 offers a choice but is not flagged: 'Shallots'
   tuna#3 wrong_value: 'salt' amount=0 unit=totaste [NOT FLAGGED]  key: None None
   tuna#3 wrong_value: 'pepper' amount=0 unit=totaste [NOT FLAGGED]  key: None None
   tuna#3 wrong_value: 'Soy-Lime Vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
   tuna#3 wrong_value: 'peanut oil' amount=0 unit=tofry [NOT FLAGGED]  key: None None
   tuna#3 wrong_value: 'Fried Nori (Seaweed)' amount=0 unit=garnish [NOT FLAGGED]  key: None None
   tuna#3 wrong_value: 'Cucumber and Red Onion Salad' amount=0 unit=optional [NOT FLAGGED]  key: None None
+  tuna#3 offers a choice but is not flagged: 'Garlic'
+  tuna#3 offers a choice but is not flagged: 'Shallots'
   caramelized#1 wrong_value: 'Basic Pie Dough' amount=0 unit=None [NOT FLAGGED]  key: None None
   caramelized#1 wrong_value: 'Caramelized Onions' amount=0 unit=None [NOT FLAGGED]  key: None None
   caramelized#1 wrong_value: 'Custard' amount=0 unit=None [NOT FLAGGED]  key: None None
@@ -296,7 +303,6 @@ Every wrong, invented or missed line
   pavlova_pdf#2 wrong_value: 'corn starch' amount=2 unit=tbsl [NOT FLAGGED]  key: 2 tbsp
   pavlova_pdf#2 wrong_value: 'edible flower petals' amount=0 unit=None [NOT FLAGGED]  key: None None
   pavlova_pdf#3 wrong_value: 'Corn Starch' amount=2 unit=tbsl [NOT FLAGGED]  key: 2 tbsp
-  pavlova_pdf#3 wrong_value: 'passion fruit puree' amount=3 unit=tbsp [NOT FLAGGED]  key: 3 tsp
   pavlova_pdf#3 wrong_value: 'edible flower petals' amount=0 unit=None [NOT FLAGGED]  key: None None
   synthetic_invoice#1 wrong_value: 'BEEF TENDERLOIN PSMO CH' amount=1 unit=case [NOT FLAGGED]
   synthetic_invoice#2 wrong_value: 'BEEF TENDERLOIN PSMO CH' amount=1 unit=case [NOT FLAGGED]
@@ -419,6 +425,9 @@ Every wrong, invented or missed line
   n_polenta#3 wrong_value: 'Block Parmesan' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_polenta#3 wrong_value: 'Tuscan Olive Oil' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_polenta#3 wrong_value: 'Fresh Ground Black Pepper' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_lime_pickle#1 offers a choice but is not flagged: "PATAK'S Lime Pickle or Relish Medium Spicy"
+  n_lime_pickle#2 offers a choice but is not flagged: "PATAK'S Lime Pickle or Relish Medium Spicy"
+  n_lime_pickle#3 offers a choice but is not flagged: "PATAK'S Lime Pickle or Relish Medium Spicy"
   n_spinach_dip#1 wrong_value: 'Worcestershire' amount=0 unit=dash [NOT FLAGGED]  key: 1 dash
   n_spinach_dip#1 wrong_value: 'salt' amount=0 unit=tt [NOT FLAGGED]  key: None None
   n_spinach_dip#1 wrong_value: 'pepper' amount=0 unit=tt [NOT FLAGGED]  key: None None
@@ -453,6 +462,7 @@ Every wrong, invented or missed line
   n_tikka#1 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
   n_tikka#1 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
   n_tikka#1 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#1 offers a choice but is not flagged: 'curry leaves or bay leaves'
   n_tikka#2 invented_amount: 'chicken marinade' amount=0 unit=None [NOT FLAGGED]
   n_tikka#2 invented_amount: 'masala' amount=0 unit=None [NOT FLAGGED]
   n_tikka#2 wrong_value: 'garlic ginger onion lime puree (¼ c. each garlic, ' amount=0 unit=cup [NOT FLAGGED]  key: 1 cup
@@ -461,6 +471,7 @@ Every wrong, invented or missed line
   n_tikka#2 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
   n_tikka#2 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
   n_tikka#2 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#2 offers a choice but is not flagged: 'curry leaves or bay leaves'
   n_tikka#3 invented_amount: 'chicken marinade' amount=0 unit=None [NOT FLAGGED]
   n_tikka#3 invented_amount: 'masala' amount=0 unit=None [NOT FLAGGED]
   n_tikka#3 wrong_value: 'garlic ginger onion lime puree (¼ c. each garlic, ' amount=0 unit=cup [NOT FLAGGED]  key: 1 cup
@@ -469,6 +480,7 @@ Every wrong, invented or missed line
   n_tikka#3 wrong_value: 'paprika' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
   n_tikka#3 wrong_value: 'sliced garlic' amount=0 unit=tbsp [flagged: unit tbsp cannot be converted to clove]  key: 1 tbsp
   n_tikka#3 wrong_value: 'coriander' amount=0 unit=tbsp [NOT FLAGGED]  key: 2 tbsp
+  n_tikka#3 offers a choice but is not flagged: 'curry leaves or bay leaves'
   n_crab_cake#1 wrong_value: 'sweet paprika' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
   n_crab_cake#1 wrong_value: 'Old Bay Seasoning' amount=0 unit=tsp [NOT FLAGGED]  key: 2 tsp
   n_crab_cake#2 wrong_value: 'sweet paprika' amount=0 unit=tsp [NOT FLAGGED]  key: 1 tsp
@@ -524,16 +536,19 @@ Every wrong, invented or missed line
   n_fattoush#1 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#1 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#1 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#1 offers a choice but is not flagged: 'hearts of romaine, torn roughly by hand'
   n_fattoush#1 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
   n_fattoush#2 wrong_value: 'pita bread chips' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#2 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#2 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#2 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#2 offers a choice but is not flagged: 'hearts of romaine, torn roughly by hand, or roughly six cups'
   n_fattoush#2 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
   n_fattoush#3 wrong_value: 'pita bread chips' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#3 wrong_value: 'vinaigrette' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#3 wrong_value: 'salad' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_fattoush#3 wrong_value: 'pita breads' amount=0 unit=None [NOT FLAGGED]  key: None None
+  n_fattoush#3 offers a choice but is not flagged: 'hearts of romaine, torn roughly by hand'
   n_fattoush#3 wrong_value: 'Sumac' amount=0 unit=togarnish [NOT FLAGGED]  key: None None
   n_sea_bass#1 wrong_value: 'Lemon fennel chutney' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_sea_bass#2 wrong_value: 'Lemon fennel chutney' amount=0 unit=None [NOT FLAGGED]  key: None None
@@ -577,12 +592,18 @@ Every wrong, invented or missed line
   n_cocktails#1 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
   n_cocktails#1 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_cocktails#1 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cocktails#1 offers a choice but is not flagged: 'fresh passion fruit puree, strained, or guava juice'
+  n_cocktails#1 offers a choice but is not flagged: 'vodka or blanco (silver) tequila, 750 milliliters'
   n_cocktails#2 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
+  n_cocktails#2 offers a choice but is not flagged: 'vodka or blanco (silver) tequila'
   n_cocktails#2 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_cocktails#2 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cocktails#2 offers a choice but is not flagged: 'fresh passion fruit puree, strained, or guava juice'
   n_cocktails#3 wrong_value: 'Cucumber slices' amount=0 unit=forgarnish [NOT FLAGGED]  key: None None
   n_cocktails#3 wrong_value: 'Cubed ice' amount=0 unit=None [NOT FLAGGED]  key: None None
   n_cocktails#3 wrong_value: 'Granulated sugar' amount=0 unit=forrimmingglasse [NOT FLAGGED]  key: None None
+  n_cocktails#3 offers a choice but is not flagged: 'fresh passion fruit puree, strained, or guava juice'
+  n_cocktails#3 offers a choice but is not flagged: 'vodka or blanco (silver) tequila, 750 milliliters'
   n_cut_sauces#1 invented_amount: 'Shallots' amount=0 unit=None [NOT FLAGGED]
   n_cut_sauces#1 invented_amount: 'garlic' amount=0 unit=None [NOT FLAGGED]
   n_cut_sauces#1 invented_amount: 'brandy' amount=0 unit=None [NOT FLAGGED]
@@ -871,6 +892,9 @@ Every wrong, invented or missed line
   s_scan_baby_artichokes#2 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
   s_scan_baby_artichokes#3 wrong_value: 'Salt' amount=0 unit=toseason [NOT FLAGGED]  key: None None
   s_scan_baby_artichokes#3 wrong_value: 'Pepper' amount=0 unit=toseason [NOT FLAGGED]  key: None None
+  s_photo_miso_label#1 offers a choice but is not flagged: 'rice vinegar or wine vinegar'
+  s_photo_miso_label#2 offers a choice but is not flagged: 'rice vinegar or wine vinegar'
+  s_photo_miso_label#3 offers a choice but is not flagged: 'rice vinegar or wine vinegar'
   s_inv_supply_csv#1 wrong_value: 'Olive Oil Extra Virgin 6/1 GAL' amount=1 unit=case [NOT FLAGGED]
   s_inv_supply_csv#1 wrong_value: 'Kosher Salt 12/3 LB' amount=2 unit=case [NOT FLAGGED]
   s_inv_supply_csv#1 wrong_value: 'Black Peppercorns Whole 5 LB' amount=1 unit=ea [NOT FLAGGED]
@@ -888,5 +912,6 @@ Every wrong, invented or missed line
   [FAIL] accuracy >= 98.0%
   [FAIL] 95% interval low end >= 98.0%
   [FAIL] zero unflagged errors
+  [FAIL] every line that offers a choice is flagged
   [FAIL] no failed or missing job
 RESULT: FAIL

@@ -7,4 +7,4 @@ the application commit is not known.
 - `score.txt`: output of `nexus_test.py score`. `score-details.txt`: every wrong line.
 - `results.tar.gz`: the 390 result files (re-score with `nexus_test.py score <folder>`).
 
-Result: FAIL. Line accuracy 58.02% (95% interval 45.0-69.6), 799 unflagged errors, 84 failed jobs (re-scored on 14 November after the key peer review; before it: 58.15%, 802).
+Result: FAIL. Line accuracy 58.02% (95% interval 45.0-69.6), 798 unflagged errors, 84 failed jobs, 0 of 24 choice lines flagged (scored with the final rules of 14 November: peer-reviewed keys and the choice-line check; first scoring on 13 November: 58.15%, 802).
