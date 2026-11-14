@@ -1,0 +1,28 @@
+Nexus extraction test: blind set, 25 documents x 3 runs  (results: /tmp/claude-0/-home-user/9d87922d-31f6-5df1-b91b-ae4f0736dd6f/scratchpad/clean/out/reference)
+================================================================================================
+Line accuracy         97.10%   (95% interval 93.0-100.0)   bar: >= 98.0%, interval low end >= 98.0%
+Unflagged errors          0     bar: 0     (wrong or invented lines shown with no review flag)
+Failed/missing jobs       0     bar: 0
+Lines: 612 expected, 603 read exactly right, 0 missed, 9 wrong/invented (9 of them flagged)
+Lines offering a choice  13 of 13 flagged     bar: all     ("X or Y": the chef decides at import)
+Lines a person must check: 18.0% of extracted lines   |   time per document: median 4.4 s, 95th percentile 7 s
+
+By document kind (accuracy / wrong / unflagged / missed / documents)
+  Word / text           95.52% /   9 /   0 /   0 /  12
+  Excel workbooks      100.00% /   0 /   0 /   0 /   3
+  scans and photos     100.00% /   0 /   0 /   0 /   3
+  invoices             100.00% /   0 /   0 /   0 /   5
+  not the stated type  returned nothing in 6 of 6 jobs; 0 lines returned (0 unflagged)
+  invoice headers: number right in 15 of 15 jobs, date right in 15 of 15
+
+Documents with the most wrong or missed lines (all runs)
+  b_turkey_brine                     wrong/invented   6 (unflagged 0)   missed   0
+  b_basil_aioli                      wrong/invented   3 (unflagged 0)   missed   0
+
+================================================================================================
+  [FAIL] accuracy >= 98.0%
+  [FAIL] 95% interval low end >= 98.0%
+  [pass] zero unflagged errors
+  [pass] every line that offers a choice is flagged
+  [pass] no failed or missing job
+RESULT: FAIL
