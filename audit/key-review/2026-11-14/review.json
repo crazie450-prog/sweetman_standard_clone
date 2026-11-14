@@ -1,0 +1,9530 @@
+{
+ "summary": {
+  "readers": {
+   "claude": "claude-opus-5-5",
+   "gemini": "gemini-4-argon",
+   "openai": "gpt-6.1-sol"
+  },
+  "documents": 149,
+  "documents_fully_certified": 126,
+  "key_lines": 1545,
+  "key_lines_certified": 1498,
+  "disputes": 64,
+  "not_reviewed": []
+ },
+ "cases": {
+  "brown_butter": {
+   "file": "documents/brown-butter-sauce.doc",
+   "lines": [
+    {
+     "key": "unsalted butter - 200 g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 1 pinch",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "tuna": {
+   "file": "documents/BIG EYE TUNA TARTARE ON CRISP LOTUS CUPS.doc",
+   "lines": [
+    {
+     "key": "soy sauce - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice wine vinegar - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 or 3 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 2 or 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger root - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapeno pepper - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "raw tuna - 1 lb",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "lotus root - 1 ea",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "black caviar - 1 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "fried nori - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "peanut oil for frying - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "soy-lime vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cucumber and red onion salad - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "caramelized": {
+   "file": "documents/Caramelized Onion Tartlets.doc",
+   "lines": [
+    {
+     "key": "butter - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery salt - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne pepper - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basic pie dough - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "caramelized onions - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "custard - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "caviar": {
+   "file": "documents/Caviar, Smoked Salmon, and Gravlax with Buckwheat Blini and Sour Cream.doc",
+   "lines": [
+    {
+     "key": "active dry yeast - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "warm milk - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 0.666667 or 0.67 or 0.667 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cold whole milk - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "clarified butter - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "smoked sturgeon - 4 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "smoked salmon - 4 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "gravlax - 4 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sour cream - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salmon caviar - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 0.5 bunch",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "pavlova_pdf": {
+   "file": "documents/1-Jul-2025-Diego-Salazar.pdf",
+   "lines": [
+    {
+     "key": "egg whites - 12 ea",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "cream of tartar - 1 tsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "sugar - 550 g",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "corn starch - 2 tbsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "vanilla - 2 tsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "cubed mangoes - 4 cup",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "passion fruit puree - 3 tsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "lime juice - 2 tsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "whipped cream - 3 cup",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "toasted coconut flakes - 12 tsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "edible flower petals - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pavlova - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "mango filling - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "toppings - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "pavlova_pdf#1",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "egg whites - 12 ea",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "large egg whites - 3"
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#2",
+     "case": "pavlova_pdf",
+     "kind": "absent",
+     "key": "cream of tartar - 1 tsp",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#3",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "sugar - 550 g",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "powdered sugar - 2 tbsp"
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#4",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "corn starch - 2 tbsp",
+     "readings": {
+      "claude": "Corn Starch - 2 tbsl",
+      "gemini": null,
+      "openai": "cornstarch - 1 tsp"
+     },
+     "agree": [
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#5",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "vanilla - 2 tsp",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "vanilla extract - 0.5 tsp"
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#6",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "cubed mangoes - 4 cup",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "diced mango - 0.5 cup"
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#7",
+     "case": "pavlova_pdf",
+     "kind": "value",
+     "key": "passion fruit puree - 3 tsp",
+     "readings": {
+      "claude": "passion fruit puree - 3 tbsp",
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#8",
+     "case": "pavlova_pdf",
+     "kind": "absent",
+     "key": "lime juice - 2 tsp",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#9",
+     "case": "pavlova_pdf",
+     "kind": "absent",
+     "key": "whipped cream - 3 cup",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "pavlova_pdf#10",
+     "case": "pavlova_pdf",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "caster sugar - 0.75 cup"
+     },
+     "agree": []
+    },
+    {
+     "id": "pavlova_pdf#11",
+     "case": "pavlova_pdf",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "white vinegar - 1 tsp"
+     },
+     "agree": []
+    },
+    {
+     "id": "pavlova_pdf#12",
+     "case": "pavlova_pdf",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "heavy cream - 0.75 cup"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "lasagna_pdf": {
+   "file": "documents/14-Jul-2025-Diego-Salazar.pdf",
+   "lines": [
+    {
+     "key": "lasagna sheets - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mushroom sauce - 3 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ricotta - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mozzarella - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shiitake mushrooms - 6 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 1.5 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "truffle oil - 0.5 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "morels - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fiocchi - 10 or 12 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "macho sauce - 6 or 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 3 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parm cheese - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "panca paste - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "aji amarillo paste - 32 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 1.5 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parm cheese - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "linguine_pdf": {
+   "file": "documents/15-Jul-2025-Diego-Salazar.pdf",
+   "lines": [
+    {
+     "key": "fresh linguine pasta - 12 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "clams - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 12 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter cubed - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato baby - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 2 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "invoice_pdf": {
+   "file": "documents/224676_369034.pdf",
+   "lines": [
+    {
+     "key": "bar fudge brownie - 1 case at 81.47",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cake tiramisu - 1 case at 75.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "delivery charge - 1  at 15",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "invoice_photo": {
+   "file": "documents/invoice_photo.jpg",
+   "lines": [
+    {
+     "key": "bar fudge brownie - 1 case at 81.47",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cake tiramisu - 1 case at 75.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "delivery charge - 1  at 15",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "synthetic_invoice": {
+   "file": "documents/synthetic_invoice.pdf",
+   "lines": [
+    {
+     "key": "olive oil pomace blend - 2 case at 48.5",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "beef tenderloin psmo - 41.6 lb at 12.89 or 1 case at 536.22",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "lemons fancy - 3 ea at 0.8 or 3 ea at no price",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato diced in juice - 3 case at 31.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion yellow jumbo - 10 lb at 0.62",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fuel surcharge - 1  at 4.95",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "return romaine hearts - -1 case at 32.1 or 1 case at -32.1 or -1 case at -32.1",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "synthetic_invoice#1",
+     "case": "synthetic_invoice",
+     "kind": "value",
+     "key": "beef tenderloin psmo - 41.6 lb at 12.89 or 1 case at 536.22",
+     "readings": {
+      "claude": "BEEF TENDERLOIN PSMO CH - 1 case at 12.89",
+      "gemini": "BEEF TENDERLOIN PSMO CH - 1 case at 12.89",
+      "openai": "BEEF TENDERLOIN PSMO CH - 1 case at 12.89"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "trap_invoice_as_recipe": {
+   "file": "documents/224676_369034.pdf",
+   "lines": [],
+   "disputes": []
+  },
+  "trap_recipe_as_invoice": {
+   "file": "documents/Caramelized Onion Tartlets.doc",
+   "lines": [],
+   "disputes": []
+  },
+  "h_kanpachi": {
+   "file": "documents/holdout/kanpachi.txt",
+   "lines": [
+    {
+     "key": "soy sauce - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cashew oil - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice wine vinegar - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 or 4 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 2 or 4 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger root - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapeno pepper - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "raw kanpachi - 1 lb",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "taro root - 1 ea",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "black roe - 1 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "fried nori - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cashew oil for frying - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "soy-lime vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cucumber and red onion salad - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "h_leek": {
+   "file": "documents/holdout/leek.txt",
+   "lines": [
+    {
+     "key": "butter - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "leeks - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery salt - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne pepper - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basic pie dough - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "caramelized leeks - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "custard - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "h_roe": {
+   "file": "documents/holdout/roe.txt",
+   "lines": [
+    {
+     "key": "active dry yeast - 0.333333 tsp",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "warm milk - 0.333333 cup",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "egg - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.333333 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cold whole milk - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "clarified butter - 0.666667 cup",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "smoked whitefish - 6 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "smoked steelhead - 6 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "home-cured steelhead - 6 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sour cream - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "steelhead roe - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 0.333333 bunch",
+     "optional": false,
+     "certified": false
+    }
+   ],
+   "disputes": [
+    {
+     "id": "h_roe#1",
+     "case": "h_roe",
+     "kind": "value",
+     "key": "active dry yeast - 0.333333 tsp",
+     "readings": {
+      "claude": null,
+      "gemini": "active dry yeast - 0.125 tsp",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "h_roe#2",
+     "case": "h_roe",
+     "kind": "value",
+     "key": "warm milk - 0.333333 cup",
+     "readings": {
+      "claude": null,
+      "gemini": "warm milk 110\u00b0F - 0.2 cup",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "h_roe#3",
+     "case": "h_roe",
+     "kind": "value",
+     "key": "clarified butter - 0.666667 cup",
+     "readings": {
+      "claude": null,
+      "gemini": "clarified butter - 0.4 cup",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "h_roe#4",
+     "case": "h_roe",
+     "kind": "value",
+     "key": "chives - 0.333333 bunch",
+     "readings": {
+      "claude": null,
+      "gemini": "chives, thinly sliced - 0.2 bunch",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    }
+   ]
+  },
+  "h1_template_invoice": {
+   "file": "documents/holdout/h1_template_invoice.pdf",
+   "lines": [
+    {
+     "key": "arborio rice - 6 bag at 18.4",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "san marzano tomatoes - 12 can at 7.85",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parmigiano reggiano - 4 lb at 21.5",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "delivery handling - 1  at 35",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "h2_distributor_invoice": {
+   "file": "documents/holdout/h2_distributor_invoice.pdf",
+   "lines": [
+    {
+     "key": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "beans cannellini - 2 case at 42.1",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "cream heavy 40% - 3 case at 38.95",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "flour 00 pizza - 1 case at 27.6",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil fresh bunch - 4 ea at 1.85",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mozzarella fior di latte - 1 case at 36.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vinegar red wine - 1 case at 29.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fuel surcharge - 1  at 6.5",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "h2_distributor_invoice#1",
+     "case": "h2_distributor_invoice",
+     "kind": "value",
+     "key": "chicken breast bnls sknls - 20 lb at 3.19 or 1 case at 63.8",
+     "readings": {
+      "claude": "CHICKEN BREAST BNLS SKNLS - 1 case at 3.19",
+      "gemini": "CHICKEN BREAST BNLS SKNLS - 1 case at 3.19",
+      "openai": "CHICKEN BREAST BNLS SKNLS\nCATCH WEIGHT 20.0 LB - 1 case at 3.19"
+     },
+     "agree": []
+    },
+    {
+     "id": "h2_distributor_invoice#2",
+     "case": "h2_distributor_invoice",
+     "kind": "value",
+     "key": "pork belly skin-on - 14.4 lb at 4.25 or 1 case at 61.2",
+     "readings": {
+      "claude": "PORK BELLY SKIN-ON - 1 case at 4.25",
+      "gemini": "PORK BELLY SKIN-ON - 1 case at 4.25",
+      "openai": "PORK BELLY SKIN-ON\nCATCH WEIGHT 14.4 LB - 1 case at 4.25"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "h3_produce_photo": {
+   "file": "documents/holdout/h3_produce_photo.jpg",
+   "lines": [
+    {
+     "key": "heirloom tomatoes - 12 lb at 3.4",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "romaine hearts - 2 case at 34.5",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "meyer lemons - 1 case at 48",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "shallots - 10 lb at 2.25",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "pallet crate deposit - 2 ea at 15",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "h3_produce_photo#1",
+     "case": "h3_produce_photo",
+     "kind": "absent",
+     "key": "heirloom tomatoes - 12 lb at 3.4",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "h3_produce_photo#2",
+     "case": "h3_produce_photo",
+     "kind": "absent",
+     "key": "romaine hearts - 2 case at 34.5",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "h3_produce_photo#3",
+     "case": "h3_produce_photo",
+     "kind": "absent",
+     "key": "italian parsley - 6 bunch at 1.15 or 6 bu at 1.15",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "h3_produce_photo#4",
+     "case": "h3_produce_photo",
+     "kind": "absent",
+     "key": "meyer lemons - 1 case at 48",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "h3_produce_photo#5",
+     "case": "h3_produce_photo",
+     "kind": "absent",
+     "key": "shallots - 10 lb at 2.25",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "h3_produce_photo#6",
+     "case": "h3_produce_photo",
+     "kind": "header",
+     "key": "number VF-50392, date 2026-10-07",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "number None, date None"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "h4_credit_memo": {
+   "file": "documents/holdout/h4_credit_memo.pdf",
+   "lines": [
+    {
+     "key": "romaine hearts - -1 case at 32.1 or 1 case at -32.1 or -1 case at -32.1",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato diced in juice - -2 case at 31.75 or 2 case at -31.75 or -2 case at -31.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "restocking fee - 1  at 5",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_brisket": {
+   "file": "documents/new/raw/Texas_Barbecued_Beef_Brisket.doc",
+   "lines": [
+    {
+     "key": "beef brisket - 1 or 10 or 12 ea or lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "all-south barbecue rub - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basic all-american barbecue sauce - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili powder - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro springs - 10 ea or sprig or spring",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "minced ginger - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy sauce - 8 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice wine vinegar - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown sugar - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pineapple juice - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dark rum - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "caribbean hot sauce - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "orange juice - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "allspice - 1 pinch",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_tamales": {
+   "file": "documents/new/raw/Unwrapped_Tamales.doc",
+   "lines": [
+    {
+     "key": "corn - 10 or 12 or 7 ea or ear or cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn meal - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 0.25 or 3 cup or tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jack cheese - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_loup": {
+   "file": "documents/new/raw/WILD_LOUP_DE_MER_EN_CROUTE.doc",
+   "lines": [
+    {
+     "key": "black bass - 8 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cream - 1 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "egg white - 1 ea",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "loup de mer - 4 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "fish mousse - 3 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "carrot - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "leeks - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "onion - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "celery - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "black trumpet mushrooms - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "chives - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "parsley - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "tarragon - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "dill - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "puff pastry - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "egg wash - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "beurre blanc - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "seasonal vegetables - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vegetable brunoise - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_tuna_tartare": {
+   "file": "documents/new/raw/Tuna_Tartare_with_Herb_Salad_and_Ginger_Vinaigrette.doc",
+   "lines": [
+    {
+     "key": "sushi-grade yellow fin tuna - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shiso leaves - 6 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger vinaigrette - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coarse salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "baby frisee - 1 ea or head",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chervil leaves - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley leaves - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dikon sprouts - 0.25 pkg or pack or package",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger juice - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hot red pepper sauce - 0.125 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "minced shallot - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic clove - 1 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coarse salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_tempura": {
+   "file": "documents/new/raw/Tempura_Batter.doc",
+   "lines": [
+    {
+     "key": "rice flour - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cornstarch - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ice water - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baking powder - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soda water - 5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - 2 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_hash_cakes": {
+   "file": "documents/new/raw/Corned_Beef_Hash_Cakes.doc",
+   "lines": [
+    {
+     "key": "corn beef - 7 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yukon potatoes - 5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow onion - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "nutmeg - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 99 tsp (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "leeks - 2 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bearnaise sauce - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_herb_mayo": {
+   "file": "documents/new/raw/Herb_Mayonnaise.doc",
+   "lines": [
+    {
+     "key": "mayonnaise - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chervil - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tarragon - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.5 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_white_beans": {
+   "file": "documents/new/raw/White_Beans_with_Roasted_Tomato.doc",
+   "lines": [
+    {
+     "key": "dried cannelloni beans - 1 or 2 lb or cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cipolline onion - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heirloom tomatoes - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cherry tomato - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_stir_fry": {
+   "file": "documents/new/raw/Stir_Fry_Beef.doc",
+   "lines": [
+    {
+     "key": "filet - 6 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "beef velvet - 1.5 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy superior - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mushroom soy - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn starch - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown sugar - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili goop - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili oil - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lee kum kee chili bean sauce - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "house hoisin - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice wine - 0.666667 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "double stock - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "wok sambal - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy mix - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hoisin - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sweet bean paste - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mala oil - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallion rings - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger coins - 15 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "szechuan peppercorns - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red chili flakes - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili pods - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hk garlic - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red fresno - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallion baton - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red onion julienne - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blanched budding chive - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chinese eggplant baton - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "budding chive tops - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow chive - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green aromatics - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blanched snow peas - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blanched snap peas - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fried baby spinach - 4 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_octopus": {
+   "file": "documents/new/raw/Salad_Octopus_Salad.doc",
+   "lines": [
+    {
+     "key": "cooked baby octopus tentacles - 2.5 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "octopus cooking liquid - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garbanzo beans - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "roasted baby carrots - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili flakes - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil leaves - 2 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "confit tomato - 3 ea or petal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "charmoula - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tuscan evo - 5 tsp (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon - 0.25 wedge or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baby arugula - 12 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vine ripe tomatoes - 20 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 3.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 20 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 25 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "octopus - 8 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white onions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 3 ea or stalk",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 10 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 10 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 2 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rosemary - 2 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic heads - 2 ea or head",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 1.5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "wine bottle cork - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mint - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "caraway - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "zest of 2 lemons - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juiced - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "saffron - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 1.33333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sweet paprika - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "minced yellow onion - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_raita": {
+   "file": "documents/new/raw/Raita__Green._Cilantro._Mint.doc",
+   "lines": [
+    {
+     "key": "whole milk yogurt - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "creme fraiche - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mint - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "japanese cucumbers - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red onion - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red vinegar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garam masala - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_potsticker": {
+   "file": "documents/new/raw/Pork_Potsticker_Filling.doc",
+   "lines": [
+    {
+     "key": "pork butt - 10 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken powder - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped garlic - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped ginger - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "oyster sauce - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn starch - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dried cherries - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dried apricots - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "golden raisins - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sodium nitrate - 1 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_bearnaise": {
+   "file": "documents/new/raw/Sauce_Bearnaise.doc",
+   "lines": [
+    {
+     "key": "clarified butter - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg yolks - 8 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tarragon reduction - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped tarragon - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_polenta": {
+   "file": "documents/new/raw/Polenta.doc",
+   "lines": [
+    {
+     "key": "whole milk - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 0.5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "polenta - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cooked polenta - 8 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "creme fraiche - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mascarpone - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "grated parmesan - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "block parmesan - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tuscan olive oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh ground black pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_lime_pickle": {
+   "file": "documents/new/raw/Lime_Pickle_Puree.doc",
+   "lines": [
+    {
+     "key": "patak's lime pickle - 1 jar",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 0.5 jar",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 0.5 jar",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 0.25 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_spinach_dip": {
+   "file": "documents/new/raw/Spinach_Dip.doc",
+   "lines": [
+    {
+     "key": "thick mayo - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green onion - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "spinach leaves - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sour cream - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "grated onion - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worcestershire - 1 dash",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_confit_bacon": {
+   "file": "documents/new/raw/Confit_Bacon.doc",
+   "lines": [
+    {
+     "key": "slab bacon - 1 ea or slab",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rosemary - 2 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 ea or head",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rendered duck fat - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_smoothies": {
+   "file": "documents/new/raw/Smoothies.doc",
+   "lines": [
+    {
+     "key": "fruit - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "juice - 4 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_primavera": {
+   "file": "documents/new/raw/PASTA_Primavera.docx",
+   "lines": [
+    {
+     "key": "montelbllo strozzapreti pasta - 5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallot - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 3 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crushed red chili flake - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "zucchini - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crimini mushrooms - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pomi chopped tomatoes - 26.4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow bell pepper - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "broccoli - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parmesan cheese - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil chiffonade - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil puree - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pine nuts - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_tikka": {
+   "file": "documents/new/raw/CHICKEN_Tikka_Masala.docx",
+   "lines": [
+    {
+     "key": "chicken boneless skinless thighs - 5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic ginger onion lime puree - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.25 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "ginger - 0.25 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "onion - 0.25 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 0.25 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "ground fenugreek - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin seed - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground coriander - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lite greek yogurt - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ghee - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion slices - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger sliced - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sliced garlic - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic ginger onion lime puree - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fenugreek seed - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crushed red pepper flakes - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "curry leaves - 3 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crushed tomatoes - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "n_tikka#1",
+     "case": "n_tikka",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "curry leaves - 3"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "n_crab_cake": {
+   "file": "documents/new/raw/CRAB_Cake.docx",
+   "lines": [
+    {
+     "key": "bread - 2 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sweet paprika - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "old bay seasoning - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "prepared yellow mustard - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lump crab meat - 1 lb",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_black_cod": {
+   "file": "documents/new/raw/FISH_Miso_Marinated_Black_Cod.docx",
+   "lines": [
+    {
+     "key": "mirin - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white miso paste - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dark brown sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "low-sodium soy sauce - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black cod - 4 or 16 ea or portion or oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_short_ribs": {
+   "file": "documents/new/raw/SHORT_RIBS_Boneless_Beef_Shortribs.docx",
+   "lines": [
+    {
+     "key": "boneless chuck short rib - 2.5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "canola oil - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow onions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 2 ea or rib",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 3 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato paste - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dried ground chipotle pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bordeaux wine - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worcestershire sauce - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rosemary - 3 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bonafide provisions restorative beef bone broth - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "freshly ground black pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_aioli": {
+   "file": "documents/new/raw/AIOLI_GARLIC.docx",
+   "lines": [
+    {
+     "key": "garlic - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_bordelaise": {
+   "file": "documents/new/raw/SAUCE_BORDELAISE_.docx",
+   "lines": [
+    {
+     "key": "red wine - 1 bottle",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "port - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorns - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 ea or pice or piece",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "beef scraps - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sherry vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "veal demi - 1.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 0.5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 6 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "truffle jus - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "truffle peelings - 3 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "truffle puree - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine - 10 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "port - 6 bottle",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorns - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "veal demi - 2.5 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 5 gal",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "sherry vinegar - 3 bottle",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "shallots - 3 gal",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.5 gal",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "beef scraps - 5 lb",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 2 cup",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_huckleberry": {
+   "file": "documents/new/raw/Huckleberry_Compote.docx",
+   "lines": [
+    {
+     "key": "red wine - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "port wine - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "plum wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "star anise - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cinnamon stick - 0.5 ea or stick",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "huckleberries - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.75 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_pastrami": {
+   "file": "documents/new/raw/Pastrami_Brine.docx",
+   "lines": [
+    {
+     "key": "mustard seed - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cloves - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorn - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 20 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "allspice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "juniper - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole onion - 8 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine vinegar - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 2 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "curing salt - 3 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_lentil": {
+   "file": "documents/new/raw/French_Green_Lentil_Soup.docx",
+   "lines": [
+    {
+     "key": "organic french green lentils - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow onion - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 3 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "serrano pepper - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaf - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 10 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "tomato concasse - 0.5 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_meatloaf": {
+   "file": "documents/new/raw/Turkey_Meatloaf.docx",
+   "lines": [
+    {
+     "key": "carrot - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery stalk - 1 ea or stalk",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 3 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground black pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "turkey thigh - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bread crumbs - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blackening spice - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chipotle glaze - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "ketchup - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worcestershire sauce - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chipotle paste - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "agave - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground black pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_fattoush": {
+   "file": "documents/new/raw/SALAD_FATTOUSH_SUMMER_AUGUST.docx",
+   "lines": [
+    {
+     "key": "pita bread chips - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salad - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "pita breads - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blended oil - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "freshly squeezed lemon juice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "evoo - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin seed - 0.125 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hearts of romaine - 3 or 6 ea or heart or cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sheep's milk feta cheese - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cherry tomatoes - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "english cucumber - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kalamata olives - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red onion - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mint - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sumac - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_sea_bass": {
+   "file": "documents/new/raw/FISH_Chilean_Sea_Bass_LemonFennelChutney.docx",
+   "lines": [
+    {
+     "key": "chilean sea bass portions - 8 or 48 ea or portion or oz or individual",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fine ground sea salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated garlic - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "freshly ground white pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "la tourangelle olive oil spray - 1 bottle",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon fennel chutney - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "yellow onion - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bulb fennel - 1 ea or bulb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown mustard seeds - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemons - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "golden raisins - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "champagne vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pernod - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh ground black pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 16 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_har_gow": {
+   "file": "documents/new/raw/Filling_-_Shrimp_Har_Gow_L_copy.docx",
+   "lines": [
+    {
+     "key": "shrimp - 13 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 4.5 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 10 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken powder - 1.5 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn starch - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken fat - 10 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pork fat back - 10 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_fried_chicken": {
+   "file": "documents/new/raw/2024-09-13_Recipe_Fried-Chicken-Sandwich.docx",
+   "lines": [
+    {
+     "key": "boneless skinless chicken breasts - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "buttermilk - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hot sauce - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "all-purpose flour - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cornstarch - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic powder - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion powder - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vegetable oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brioche buns - 4 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato - 4 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "iceberg lettuce leaves - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickles - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_scampi": {
+   "file": "documents/new/raw/Classic_Shrimp_Scampi.docx",
+   "lines": [
+    {
+     "key": "large shrimp - 1.25 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "freshly ground black pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "all-purpose flour - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra-virgin olive oil - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "unsalted butter - 4 or 0.5 tbsp or stick",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 4 clove",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "shallots - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dry white wine - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh lemon juice - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crushed red pepper flakes - 2 or 3 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "italian parsley - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cooked white rice - 3 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "n_scampi#1",
+     "case": "n_scampi",
+     "kind": "value",
+     "key": "garlic - 4 clove",
+     "readings": {
+      "claude": null,
+      "gemini": "large cloves garlic, finely chopped - 4",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    }
+   ]
+  },
+  "n_corn_fritters_doc": {
+   "file": "documents/new/raw/APPETIZER_CORN_FRITTERS_SUMMER_AUGUST.docx",
+   "lines": [
+    {
+     "key": "oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bisquick baking mix - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 0.666667 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn kernels - 2 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_cocktails": {
+   "file": "documents/new/raw/Cocktails_OW.docx",
+   "lines": [
+    {
+     "key": "jalapeno peppers - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vodka - 1 or 750 bottle or ml",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "simple syrup - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil leaves - 4 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "roasted-jalapeno-infused vodka - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh cucumber juice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh lime juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cucumber slices - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "large cucumber - 0.5 ea",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "mint leaves - 6 ea or leave or leaf",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "simple syrup - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "watermelon cubes - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vodka - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - 1 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "water - 1 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vodka - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green apple syrup - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cloudy apple juice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme syrup - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "elderflower cordial - 0.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cubed ice - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 2 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "superfine sugar - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 6 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "agave syrup - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "roasted-jalapeno-infused vodka - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh passion fruit puree - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kumquat - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vodka - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "n_cocktails#1",
+     "case": "n_cocktails",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "blanco (silver) tequila - 1 bottle"
+     },
+     "agree": []
+    },
+    {
+     "id": "n_cocktails#2",
+     "case": "n_cocktails",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "fresh passion fruit puree, strained - 0.5 cup"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "n_meatball": {
+   "file": "documents/new/raw/2024-11-13_Recipe_Meatball-Production.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "n_cut_sauces": {
+   "file": "documents/new/raw/CUT_Sauces.doc",
+   "lines": [],
+   "disputes": []
+  },
+  "n_trap_donuts": {
+   "file": "documents/new/raw/DONUTS_RICHES_RETHERM_GLAZE.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "n_trap_xmas_menu": {
+   "file": "documents/new/raw/Christmas_2016_Telluride_OW.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "n_trap_party_menu": {
+   "file": "documents/new/raw/Chef_Wolfgang_Party_2.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "n_trap_blank_template": {
+   "file": "documents/new/raw/Blank_Template_WPBG_recipe.xls",
+   "lines": [],
+   "disputes": []
+  },
+  "n_trap_dish_photo": {
+   "file": "documents/new/raw/BEET_CURED_HIMACHI__3855.JPG",
+   "lines": [],
+   "disputes": []
+  },
+  "n_corn_fritters_xls": {
+   "file": "documents/new/raw/Corn_Fritters.xls",
+   "lines": [
+    {
+     "key": "ears of fresh corn - 3 or 12 or 336 ea or ear or oz or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow corn meal - 224 g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 280 g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baking powder - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thick slices of bacon - 2 ea or slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 224 g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red bell pepper - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "small onion - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh chives - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_caesar": {
+   "file": "documents/new/raw/Dressing_Caesar_dressing_3-29-07.xls",
+   "lines": [
+    {
+     "key": "egg yolks - 4 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole eggs - 4 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 3.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole garlic cloves - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili flakes - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worchestershire sauce - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "anchovy filet - 12 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1.5 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parmesan cheese - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil or vegetable - 3.5 qt",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "n_caesar#1",
+     "case": "n_caesar",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "vegetable - 3.5 qt"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "n_falafel": {
+   "file": "documents/new/raw/Falafal_Batter.xls",
+   "lines": [
+    {
+     "key": "iqf fresh chickpeas - 18 or 10 cup or lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rough chopped parlsey - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rough chopped cilantro - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalepeno - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ch garlic - 6 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 6 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - 3 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 6 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corriando - 12 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baking powder - 6 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 3 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_fatty_raisins": {
+   "file": "documents/new/raw/Fatty_Raisins.xls",
+   "lines": [
+    {
+     "key": "raisins - 10 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "orange juice - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "myers rum - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 lb",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_cider_glaze": {
+   "file": "documents/new/raw/Glaze_cider.xls",
+   "lines": [
+    {
+     "key": "cider vinegar - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dark brown sugar - 12 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "demi - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 2 sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cracked black pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 1 qt",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_pad_thai": {
+   "file": "documents/new/raw/Pad_thai_sauce_2_nam_pla.xls",
+   "lines": [
+    {
+     "key": "fish sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thai green chilies - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 0.5 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_blood_orange": {
+   "file": "documents/new/raw/Sauce_Blood_orange_duck_sauce.xls",
+   "lines": [
+    {
+     "key": "blood orange juice - 0.5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coconut milk - 0.75 can",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "5- spice powder - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cinnamon - 1 ea or stick",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cloves - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cracked black pepper - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "port wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "plum wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "veal demi - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 6 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_wing_sauce": {
+   "file": "documents/new/raw/Wing_sauce_-_Garlic_Chili.xls",
+   "lines": [
+    {
+     "key": "garlic - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallot - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice wine vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili flake - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil blend - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cracked black pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "n_seafood": {
+   "file": "documents/new/raw/SEAFOOD_RECIPES_WPC_Sustainable_Seafood.xlsx",
+   "lines": [
+    {
+     "key": "yellowfin tuna sashimi - 28 slice",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellowfin tuna loin - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "avocado - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrot - 0.25 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "japanese cucumber - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red endive - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kaiware sprouts - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "beet - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickled ginger - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy-yuzu dressing - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "asian vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "yuzu zest - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green onions - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh wasabi - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sambal - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yuzu juice - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kikoman soy sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickled ginger - 0.333333 or 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger vinegar - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili oil - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "toasted sesame seeds - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "farm raised mussels - 20 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thai coconut broth - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh thai chilies - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sliced garlic - 2 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red bell pepper - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh ginger - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemongrass stalk - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thai basil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh thai chilis - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 5 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coconut milk - 5 can",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "galangal - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fish sauce - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kaffir lime leaf - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "wild salmon pieces - 8 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tandoori marinade - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickled cucumbers - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cilantro mint chutney - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "scallions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garam masala - 1 pinch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "japanese cucumbers - 4 ea",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "salt - 0.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped dill - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "caraway seed - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "turmeric - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground ginger - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground cardamon - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "nutmeg - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - 0.333333 or 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 2 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tamarind paste - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coconut milk - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shredded coconut - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 3 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fennugreek - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mint leaves - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole wild striped bass - 1 ea",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "ginger - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 30 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil for frying - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cornstarch - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ponzu sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro sprigs - 1 ea or sprig",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kikoman soy sauce - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yuzu juice - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mirin - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon - 1 cup or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemongrass stalk - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapeno - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black cod pieces - 8 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "miso marinade - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "scallions - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrot - 0.25 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "micro pea shoots - 3 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "asian vinaigrette - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame miso vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "egg yolk - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 2 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickled ginger - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red miso paste - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white sesame seeds - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger vinegar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "togarashi spice - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger vinegar - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili oil - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "toasted sesame seeds - 2 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "n_seafood#1",
+     "case": "n_seafood",
+     "kind": "absent",
+     "key": "japanese cucumbers - 4 ea",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "n_seafood#2",
+     "case": "n_seafood",
+     "kind": "absent",
+     "key": "whole wild striped bass - 1 ea",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "n_seafood#3",
+     "case": "n_seafood",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": "gutted - 1 ea",
+      "openai": null
+     },
+     "agree": []
+    }
+   ]
+  },
+  "s_whipped_cream": {
+   "file": "documents/set3/raw/Whipped_Cream.doc",
+   "lines": [
+    {
+     "key": "heavy whipping cream - 16 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_fried_chicken": {
+   "file": "documents/set3/raw/Fried_Chicken.doc",
+   "lines": [
+    {
+     "key": "buttermilk - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sage - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "duck fat - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "flour - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic powder - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion powder - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery salt - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_balsamic_vinaigrette": {
+   "file": "documents/set3/raw/Balsamic_Vinaigrette.doc",
+   "lines": [
+    {
+     "key": "olive oil - 30 tsp (total of a printed sum)",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "balsamic vinegar - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "minced shallots - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "minced marjoram - 1 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_balsamic_vinaigrette#1",
+     "case": "s_balsamic_vinaigrette",
+     "kind": "value",
+     "key": "olive oil - 30 tsp (total of a printed sum)",
+     "readings": {
+      "claude": "olive oil - 0.5",
+      "gemini": "olive oil - 0.5",
+      "openai": "olive oil - 0.5 tbsp"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "s_texas_toast": {
+   "file": "documents/set3/raw/Texas_Toast.doc",
+   "lines": [
+    {
+     "key": "italian bread - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "minced garlic - 4 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_aioli_chili": {
+   "file": "documents/set3/raw/AIOLI_CHILI_.docx",
+   "lines": [
+    {
+     "key": "mayonnaise - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sriracha - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_brioche": {
+   "file": "documents/set3/raw/BRIOCHE.doc",
+   "lines": [
+    {
+     "key": "a.p. flour - 3.33333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pastry flour - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "table salt - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yeast - 0.6 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cold water - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soft butter - 7 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_demi": {
+   "file": "documents/set3/raw/Demi.xls",
+   "lines": [
+    {
+     "key": "veal bones - 50 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion - 10 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine - 15 l",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "port wine - 5 l",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_pad_thai_1": {
+   "file": "documents/set3/raw/Pad_thai_sauce_1.xls",
+   "lines": [
+    {
+     "key": "ketchup - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tamarind paste - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "palm sugar - 2.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 0.25 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_dijonnaise": {
+   "file": "documents/set3/raw/Dijonnaise.xls",
+   "lines": [
+    {
+     "key": "mayonnaise - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole grain mustard - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_ponzu": {
+   "file": "documents/set3/raw/Ponzu_wasabi-yuzu_ponzu.xls",
+   "lines": [
+    {
+     "key": "yuzu zest - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh wasabi - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "powder wasabi paste - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yuzu juice - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickled ginger vinrgar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sesame oil - 2 tsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_brine_pork": {
+   "file": "documents/set3/raw/2025-01-03_Recipe_Brine.docx",
+   "lines": [
+    {
+     "key": "water - 5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole black pepper - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme sprigs - 3 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_cesar_dressing": {
+   "file": "documents/set3/raw/Cesar_Dressing.doc",
+   "lines": [
+    {
+     "key": "anchovy paste - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parmesan cheese - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine vinegar - 2 or 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic clove - 1 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worcestershire - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dry mustard - 0.5 tsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_russian_dressing": {
+   "file": "documents/set3/raw/Dressing_Russian_dressing.xls",
+   "lines": [
+    {
+     "key": "mayonaise - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ketchup - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "horseradish - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pickles - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion powder - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_cocktail_sauce": {
+   "file": "documents/set3/raw/Cocktail_Sauce09.doc",
+   "lines": [
+    {
+     "key": "orange juice - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juice - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ketchup - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "maggie seasoning - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "horseradish - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worcestershire sauce - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_clarified_butter": {
+   "file": "documents/set3/raw/Clarified_Butter.docx",
+   "lines": [
+    {
+     "key": "butter - 5 lb",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_cilantro_mint_chutney": {
+   "file": "documents/set3/raw/CHUTNEY_CILANTRO_MINT.docx",
+   "lines": [
+    {
+     "key": "garlic cloves - 3 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mint - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt - 4 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 1 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fenugreek - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coconut milk - 0.5 can",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_banana_cream_pie": {
+   "file": "documents/set3/raw/Banana_Cream_Pie.doc",
+   "lines": [
+    {
+     "key": "pastry cream - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "banana puree - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whipped heavy cream - 10 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heated heavy cream - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sheets of gelatin - 17 ea or sheet",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_coleslaw": {
+   "file": "documents/set3/raw/2017-06-12_Recipe_KFC-Cole-Slaw.docx",
+   "lines": [
+    {
+     "key": "savoy cabbage - 8 or 1 cup or head",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrot - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "poppy seeds - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vinegar white - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "buttermilk - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 0.5 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_beurre_monte": {
+   "file": "documents/set3/raw/BUERRE_MONTE_.docx",
+   "lines": [
+    {
+     "key": "water - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "butter - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_pesto_arugula": {
+   "file": "documents/set3/raw/Pesto_Arugula.xls",
+   "lines": [
+    {
+     "key": "olive oil - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 5 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "arugula - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili flake - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1 ea or lemon",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "s & p - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_pesto_arugula#1",
+     "case": "s_pesto_arugula",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": "s - no amount",
+      "gemini": "s - totaste",
+      "openai": "s - no amount"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "s_steak_seasoning": {
+   "file": "documents/set3/raw/2020-05-25_Recipe_Steak-Seasoning-Salt.docx",
+   "lines": [
+    {
+     "key": "sel gris - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated garlic - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated onion - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery seed - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sweet paprika - 1 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_cognac_sauce": {
+   "file": "documents/set3/raw/Cognac_sauce-_lobster.xls",
+   "lines": [
+    {
+     "key": "garlic cloves - 3 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mushrooms - 3 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "butter - 1 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "sherry - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cognac - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cream - 2 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_cognac_sauce#1",
+     "case": "s_cognac_sauce",
+     "kind": "value",
+     "key": "mushrooms - 3 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "mushrooms - 3 _#_",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "s_cognac_sauce#2",
+     "case": "s_cognac_sauce",
+     "kind": "value",
+     "key": "butter - 1 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "butter - 1 _#_",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    }
+   ]
+  },
+  "s_remoulade": {
+   "file": "documents/set3/raw/Remoulade.xls",
+   "lines": [
+    {
+     "key": "mayonnaise - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "capers - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "house made pickle - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "caper juice - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "zest from lemon - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cracked black pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_melted_leeks": {
+   "file": "documents/set3/raw/Leeks_Melted_Leeks.docx",
+   "lines": [
+    {
+     "key": "leeks - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blanching water - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 pinch",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_sherry_vinaigrette": {
+   "file": "documents/set3/raw/AGED_SHERRY_VINAIGRETTE.doc",
+   "lines": [
+    {
+     "key": "pasteurized eggs - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "aged sherry vinegar - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "canola oil - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_salmon_order": {
+   "file": "documents/set3/raw/Alaska_Salmon.docx",
+   "lines": [
+    {
+     "key": "salmon - 50 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "smoked salmon - 1 ea or side",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "oranges - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemons - 12 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "limes - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "grapefruit - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 3 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 3 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "wood chips - 5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "horseradish - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "panko - 6 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 20 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mustard seeds - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "apple cider vinegar - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown sugar - 3 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baby red beets - 50 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baby gold beets - 50 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baby heirloom carrots - 50 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dill - 2 bunch",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_goat_cheese_ranch": {
+   "file": "documents/set3/raw/Dressing_goat_cheese_ranch.xls",
+   "lines": [
+    {
+     "key": "buttermilk - 0.5 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "goat cheese - 4 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 0.5 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "marjoram - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_black_bean_deglaze": {
+   "file": "documents/set3/raw/SAUCE_BLACK_BEAN_.docx",
+   "lines": [
+    {
+     "key": "sugar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic chili sauce - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mush soy - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sake - 1.5 bottle",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fermented black bean - 0.25 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_parsnip_puree": {
+   "file": "documents/set3/raw/ParsnipPuree.doc",
+   "lines": [
+    {
+     "key": "parsnips - 5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yukon potatoes - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 18 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white pepper - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cream - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_potato_puree": {
+   "file": "documents/set3/raw/PotatoPuree.doc",
+   "lines": [
+    {
+     "key": "peeled yukon gold potatoes - 10 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "butter - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "creme fraiche - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped parsley - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_potato_puree#1",
+     "case": "s_potato_puree",
+     "kind": "value",
+     "key": "peeled yukon gold potatoes - 10 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Peeled Yukon Gold Potatoes - 10 ###",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    }
+   ]
+  },
+  "s_romesco": {
+   "file": "documents/set3/raw/Romesco.xls",
+   "lines": [
+    {
+     "key": "red bell peppers - 0.333333 pan",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yellow bell peppers - 0.333333 pan",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white onion - 0.166667 pan",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fennel seed - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "almond slivers - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white balsamic - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 3 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_apple_quince_chutney": {
+   "file": "documents/set3/raw/Apple_and_Quince_Chutney.doc",
+   "lines": [
+    {
+     "key": "quince paste - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "quince apple - 1.5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "raisins - 8 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vinegar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "grated orange zest and juice - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "fresh thyme - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh sage - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_chicken_noodle_soup": {
+   "file": "documents/set3/raw/Chicken_Noodle_Soup.docx",
+   "lines": [
+    {
+     "key": "chicken stock - 2 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrot - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crushed garlic - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peppercorns - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chickens - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sachet - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "picked chicken - 2 oz",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "cooked noodle - 1.5 oz",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_blue_cheese_sauce": {
+   "file": "documents/set3/raw/Blue_cheese_sauce.xls",
+   "lines": [
+    {
+     "key": "butter - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "flour - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole milk - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "creme fraiche - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "maytag blue cheese - 3 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_lemon_aioli": {
+   "file": "documents/set3/raw/Aioli_lemon_aioli.xls",
+   "lines": [
+    {
+     "key": "garlic - 2 clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "egg yolk - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil blend - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cool water - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "zest from one lemon - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_artichoke_puree": {
+   "file": "documents/set3/raw/ArtichokePuree.doc",
+   "lines": [
+    {
+     "key": "jumbo artichokes - 8 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 3 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_cocktail_sauce_wp": {
+   "file": "documents/set3/raw/Cocktail_sauce.xls",
+   "lines": [
+    {
+     "key": "ketchup - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "horseradish - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "worchestershire - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_mustard_sauce": {
+   "file": "documents/set3/raw/Mustard_sauce.xls",
+   "lines": [
+    {
+     "key": "shallots - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 3 sprig or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaf - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white peppercorns - 12 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white port - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brandy - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 1 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heavy cream - 0.5 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "veal demi - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "wholegrain mustard - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter - 0.25 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_lobster_stock": {
+   "file": "documents/set3/raw/scan_lobster_stock.pdf",
+   "lines": [
+    {
+     "key": "cleaned lobster heads - 30 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "diced onions - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped leeks - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 2 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato paste - 3 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley leaves - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "whole black peppercorn - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 6 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - 60 qt",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_fish_batter": {
+   "file": "documents/set3/raw/scan_sauce_p3.jpg",
+   "lines": [
+    {
+     "key": "fry flour - 8 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cold soda water - 5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_louie_dressing": {
+   "file": "documents/set3/raw/scan_sauce_p5.pdf",
+   "lines": [
+    {
+     "key": "ketchup - 1 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chili sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dill relish - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onion powder - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fine diced red onion - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_baby_artichokes": {
+   "file": "documents/set3/raw/scan_sauce_p6.jpg",
+   "lines": [
+    {
+     "key": "baby artichokes - 0.5 case",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cold water - 4 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.5 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme sprigs - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorns - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 3 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white wine - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped garlic - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped carrot - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped white onion - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped fennel - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_fingerling_potatoes": {
+   "file": "documents/set3/raw/scan_fleet_p2.pdf",
+   "lines": [
+    {
+     "key": "fingerling potatoes - 8 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh rosemary - 6 sprig or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 6 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "extra virgin olive oil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 ea",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_maui_onions": {
+   "file": "documents/set3/raw/scan_fleet_p3.jpg",
+   "lines": [
+    {
+     "key": "maui onions - 20 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "soy sauce - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 1 ea",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_scan_onion_puree": {
+   "file": "documents/set3/raw/scan_fleet_p6.jpg",
+   "lines": [
+    {
+     "key": "peeled onions - 20 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh thyme - 8 sprig or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blended olive oil - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 1 ea",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_photo_miso_label": {
+   "file": "documents/set3/raw/2017-02-05_Recipe_Miso-Dressing.pdf",
+   "lines": [
+    {
+     "key": "cold mountain miso - 4.5 tbsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "honey - 4.5 tbsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "rice vinegar or wine vinegar - 3 tbsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "mustard - 3 tbsp",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "water - 0.5 cup",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "miso - 1 tsp",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_photo_miso_label#1",
+     "case": "s_photo_miso_label",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "rice vinegar - 3 tbsp"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "s_trap_legends_menu": {
+   "file": "documents/set3/raw/2014-11-20_Menu_Legends-Dinner.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "s_trap_cioppino_history": {
+   "file": "documents/set3/raw/Cioppino_2013.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "s_inv_seafood": {
+   "file": "documents/set3/raw/inv_pacific_rim_seafood.pdf",
+   "lines": [
+    {
+     "key": "salmon fillet atlantic - 22.5 lb at 11.85",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shrimp 16/20 - 2 case at 89",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mussels pei - 3 bag at 24.5",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "halibut fillet fresh - 8.2 lb at 24.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ice packing - 1  at 12",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_inv_dairy": {
+   "file": "documents/set3/raw/inv_sierra_dairy.pdf",
+   "lines": [
+    {
+     "key": "milk whole - 6 case at 17.2",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "half & half - 2 case at 31.4",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "butter unsalted - 1 case at 118",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs large grade a - 4 case at 42.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt greek plain - 2 case at 38.6",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cream cheese - 1 case at 64.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sour cream - 3 case at 29.15",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "buttermilk - 1 case at 22.3",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "crate deposit - 8 ea at 2.5",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_inv_farm_photo": {
+   "file": "documents/set3/raw/inv_greenleaf_photo.jpg",
+   "lines": [
+    {
+     "key": "baby kale - 4 case at 13.5",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "carrots rainbow bunch - 12 bunch at 2.1 or 12 bu at 2.1",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "strawberries flat - 2 flat at 26",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "yukon gold potatoes - 50 lb at 0.78",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "delivery - 1  at 10",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "s_inv_farm_photo#1",
+     "case": "s_inv_farm_photo",
+     "kind": "absent",
+     "key": "baby kale - 4 case at 13.5",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "s_inv_farm_photo#2",
+     "case": "s_inv_farm_photo",
+     "kind": "absent",
+     "key": "carrots rainbow bunch - 12 bunch at 2.1 or 12 bu at 2.1",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "s_inv_farm_photo#3",
+     "case": "s_inv_farm_photo",
+     "kind": "absent",
+     "key": "strawberries flat - 2 flat at 26",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "s_inv_farm_photo#4",
+     "case": "s_inv_farm_photo",
+     "kind": "absent",
+     "key": "yukon gold potatoes - 50 lb at 0.78",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "s_inv_farm_photo#5",
+     "case": "s_inv_farm_photo",
+     "kind": "header",
+     "key": "number GL-7720, date 2026-10-23",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "number None, date None"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "s_inv_bakery_xlsx": {
+   "file": "documents/set3/raw/inv_bakers_mill.xlsx",
+   "lines": [
+    {
+     "key": "flour all purpose - 4 bag at 19.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar granulated - 2 bag at 34.1",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yeast instant dry - 1 case at 71.5",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chocolate chips semi-sweet - 1 case at 96.4",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vanilla extract pure - 3 ea at 28.95",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fuel surcharge - 1  at 4.75",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "s_inv_supply_csv": {
+   "file": "documents/set3/raw/inv_metro_supply.csv",
+   "lines": [
+    {
+     "key": "olive oil extra virgin - 1 case at 142",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 2 case at 31.25",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorns whole - 1 ea at 46.8",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "canola oil - 3 ea at 38.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "delivery charge - 1  at 8",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_chocolate_chip_cookies": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/CHOCOLATE_CHIP_COOKIES.doc",
+   "lines": [
+    {
+     "key": "butter - 6 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - 72 oz (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown sugar - 72 oz (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "vanilla extract - 6 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "baking soda - 8 tsp (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 24 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "flour - 120 oz (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "walnuts/pecans - 6 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chocolate chips - 9 lb",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_chocolate_chip_cookies#1",
+     "case": "b_chocolate_chip_cookies",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "Walnuts - 6 lb"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "b_corn_bread": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/CORN_BREAD.doc",
+   "lines": [
+    {
+     "key": "butter - 4 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "eggs - 48 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ap flour - 152 oz (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 4 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "p. milk - 1 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "salt - 3 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn meal - 40 oz (total of a printed sum)",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "baking powder - 9 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 1 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapenos - 2 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_corn_bread#1",
+     "case": "b_corn_bread",
+     "kind": "value",
+     "key": "butter - 4 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Butter - 4 https://www.google.com/search?q=%23",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "b_corn_bread#2",
+     "case": "b_corn_bread",
+     "kind": "value",
+     "key": "sugar - 4 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Sugar - 4 https://www.google.com/search?q=%23",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "b_corn_bread#3",
+     "case": "b_corn_bread",
+     "kind": "value",
+     "key": "p. milk - 1 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "P. Milk - 1 https://www.google.com/search?q=%23",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "b_corn_bread#4",
+     "case": "b_corn_bread",
+     "kind": "value",
+     "key": "corn meal - 40 oz (total of a printed sum)",
+     "readings": {
+      "claude": "Corn Meal - 2",
+      "gemini": "Corn Meal - 2",
+      "openai": "Corn Meal - 2"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "b_greek_dressing": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Dressing_Greek_salad_dressing.xls",
+   "lines": [
+    {
+     "key": "lemon juice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red wine vinegar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallots - 0.333333 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 2.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dill - 2.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "oregano - 2.5 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "peanut oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_hummus_tapenade": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Hummus.doc",
+   "lines": [
+    {
+     "key": "chick peas - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "tahini - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cumin seed - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "nicoise olives - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kalamata olives - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "medium garlic cloves - 5 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil oil - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_gumbo": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/GUMBO_Chicken_Sausage.doc",
+   "lines": [
+    {
+     "key": "flour - 1 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "butter - 1 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "garlic - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "onions - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bell peppers - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "celery - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 1 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "andouille sausage - 2 lb",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "tomato paste - 0.75 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "creole spices - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "file powder - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hot sauce - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green onions - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley chopped - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_gumbo#1",
+     "case": "b_gumbo",
+     "kind": "value",
+     "key": "flour - 1 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Flour - 1 !",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "b_gumbo#2",
+     "case": "b_gumbo",
+     "kind": "value",
+     "key": "butter - 1 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Butter - 1 !",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    },
+    {
+     "id": "b_gumbo#3",
+     "case": "b_gumbo",
+     "kind": "value",
+     "key": "andouille sausage - 2 lb",
+     "readings": {
+      "claude": null,
+      "gemini": "Andouille Sausage - 2 !",
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "openai"
+     ]
+    }
+   ]
+  },
+  "b_corn_salad": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/2017-06-12_Recipe_Corn-Salad.docx",
+   "lines": [
+    {
+     "key": "vinegar rice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 0.5 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "grape seed oil - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallot - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tarragon leaves - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "corn - 8 ear or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "heirloom tomatoes - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red onion - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chives - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "goat cheese - 6 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bacon - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "prosciutto - no amount",
+     "optional": true,
+     "certified": true
+    },
+    {
+     "key": "vinaigrette - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_asian_pesto": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Asian_Pesto.doc",
+   "lines": [
+    {
+     "key": "thai basil leaves - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro leaves - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 4 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "toasted pinenuts - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "olive oil - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_crepes": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/CREPES.doc",
+   "lines": [
+    {
+     "key": "all purpose flour - 0.666667 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "granulated sugar - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ground ginger - 2 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 0.25 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "milk - 54 tsp (total of a printed sum)",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "eggs - 4 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "clarified butter - 5 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_cherry_glaze": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Glaze_cherry.xls",
+   "lines": [
+    {
+     "key": "port - 1 gal or g",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dried cherry - 1 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken stock - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "balsamic - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "brown sugar - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cinnamon - 2 stick or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "clove - 10 ea",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_basil_aioli": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/AIOLI_BASIL_.docx",
+   "lines": [
+    {
+     "key": "water - 0.5 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "basil fresh - 0.5 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "o.v. blend - 2 oz",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mayonnaise - 30 oz",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_turkey_brine": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Brine_Turkey.doc",
+   "lines": [
+    {
+     "key": "water - 3 gal",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red vinegar - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coarse sea salt - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kosher salt - 1.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white onions - 8 ea",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "celery - 0.5 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "carrots - 2 ea",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "garlic cloves - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black peppercorns - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "bay leaves - 10 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "juniper - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "rosemary - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mustard seed - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cloves - 0.125 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "allspice - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - 2 cup",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_turkey_brine#1",
+     "case": "b_turkey_brine",
+     "kind": "value",
+     "key": "white onions - 8 ea",
+     "readings": {
+      "claude": "white onions - 8 med",
+      "gemini": "white onions - 8 med",
+      "openai": null
+     },
+     "agree": [
+      "openai"
+     ]
+    },
+    {
+     "id": "b_turkey_brine#2",
+     "case": "b_turkey_brine",
+     "kind": "value",
+     "key": "carrots - 2 ea",
+     "readings": {
+      "claude": "Carrots - 2 med",
+      "gemini": "Carrots - 2 med",
+      "openai": null
+     },
+     "agree": [
+      "openai"
+     ]
+    }
+   ]
+  },
+  "b_shaking_beef": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/2016-02-08_Recipe_Shaking-Beef.docx",
+   "lines": [
+    {
+     "key": "boneless beef sirloin - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic cloves - 10 ea or clove",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shallot - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "maggi seasoning or soy sauce - 1 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fish sauce - 0.25 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sea salt - 1 tsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper - 2 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_shaking_beef#1",
+     "case": "b_shaking_beef",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "boneless beef sirloin - 2 lb"
+     },
+     "agree": []
+    },
+    {
+     "id": "b_shaking_beef#2",
+     "case": "b_shaking_beef",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "rib eye, cut - 2 lb"
+     },
+     "agree": []
+    },
+    {
+     "id": "b_shaking_beef#3",
+     "case": "b_shaking_beef",
+     "kind": "extra",
+     "key": null,
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "Maggi seasoning - 1 tbsp"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "b_pico_de_gallo": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Pico_De_Gallo.doc",
+   "lines": [
+    {
+     "key": "roma tomatoes - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapeno - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "red onion - 0.5 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lime juiced - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_carrot_mary": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Carrot_mary_base.xls",
+   "lines": [
+    {
+     "key": "red onion - 2 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "kerby cucumbers - 6 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "jalapeno - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "parsley - 0.5 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "horseradish - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tabasco - 2 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "orange juice - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "tomato juice - 4 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon juice - 0.5 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fleur de sel - 3 tbsp",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_blackening_spice": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/Blackening_Spice.doc",
+   "lines": [
+    {
+     "key": "cumin - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coriander - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "black pepper corns - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fennel seed - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "mustard seed - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "paprika - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cayenne - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "garlic salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "allspice - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cloves - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fresh rosemary - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "thyme - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "oregano - no amount",
+     "optional": false,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_scan_mustard_vinaigrette": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/scan_sauce_p4.jpg",
+   "lines": [
+    {
+     "key": "grain mustard - 3 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "white balsamic vinegar - 6 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "blended olive oil - 8 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "honey - 8 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sugar - 8 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chopped chives - 8 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - no amount",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_scan_coconut_curry": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/scan_fleet_p8.pdf",
+   "lines": [
+    {
+     "key": "cream friche - 3 qt",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "dijon mustard - 1 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "green curry paste - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "curry powder - 4 tbsp",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "coconut milk - 10 can",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "ginger - 6 inch or inche or in",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lemon grass - 4 stalk or ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cilantro - 1 bunch",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pepper - 1 ea",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_scan_mashed_potatoes": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/scan_fleet_p4.jpg",
+   "lines": [
+    {
+     "key": "baking potatoes - 15 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "cubed butter - 2 lb",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "hot cream - 2 cup",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "salt - 1 ea",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "water - no amount",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_trap_dining_room_menu": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/2019-06-07_Menu_Paramount-DiningRoom.docx",
+   "lines": [],
+   "disputes": []
+  },
+  "b_trap_equipment_inventory": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/2016-03-03_Telluride-Inventory.xlsx",
+   "lines": [],
+   "disputes": []
+  },
+  "b_inv_meat": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/inv_atlantic_meat.pdf",
+   "lines": [
+    {
+     "key": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "lamb rack frenched - 2 case at 212",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "chicken thigh bnls - 2 case at 74.8",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "bacon applewood - 3 case at 61.25",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "fuel surcharge - 1  at 7.25",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_inv_meat#1",
+     "case": "b_inv_meat",
+     "kind": "value",
+     "key": "beef short rib bnls - 31.9 lb at 9.45 or 1 case at 301.46",
+     "readings": {
+      "claude": "BEEF SHORT RIB BNLS CHOICE - 1 case at 9.45",
+      "gemini": "BEEF SHORT RIB BNLS CHOICE CATCH WEIGHT 31.9 LB - 1 case at 9.45",
+      "openai": "BEEF SHORT RIB BNLS CHOICE\nCATCH WEIGHT 31.9 LB - 1 case at 9.45"
+     },
+     "agree": []
+    },
+    {
+     "id": "b_inv_meat#2",
+     "case": "b_inv_meat",
+     "kind": "value",
+     "key": "pork shoulder bone-in - 59.6 lb at 2.35 or 1 case at 140.06",
+     "readings": {
+      "claude": "PORK SHOULDER BONE-IN - 1 case at 2.35",
+      "gemini": "PORK SHOULDER BONE-IN CATCH WEIGHT 59.6 LB - 1 case at 2.35",
+      "openai": "PORK SHOULDER BONE-IN\nCATCH WEIGHT 59.6 LB - 1 case at 2.35"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "b_inv_credit": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/inv_sierra_credit.pdf",
+   "lines": [
+    {
+     "key": "eggs large grade a - -1 case at 42.75 or 1 case at -42.75 or -1 case at -42.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "yogurt greek plain - -2 case at 38.6 or 2 case at -38.6 or -2 case at -38.6",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "handling fee - 1  at 6",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_inv_mushroom_photo": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/inv_hillside_photo.jpg",
+   "lines": [
+    {
+     "key": "shiitake mushrooms - 6 lb at 9.25",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "oyster mushrooms - 3 case at 21",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "king trumpet - 4.5 lb at 11.4",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "maitake clusters - 2 lb at 14.75",
+     "optional": false,
+     "certified": false
+    },
+    {
+     "key": "box deposit - 3 ea at 1.5",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": [
+    {
+     "id": "b_inv_mushroom_photo#1",
+     "case": "b_inv_mushroom_photo",
+     "kind": "absent",
+     "key": "shiitake mushrooms - 6 lb at 9.25",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "b_inv_mushroom_photo#2",
+     "case": "b_inv_mushroom_photo",
+     "kind": "absent",
+     "key": "oyster mushrooms - 3 case at 21",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "b_inv_mushroom_photo#3",
+     "case": "b_inv_mushroom_photo",
+     "kind": "absent",
+     "key": "king trumpet - 4.5 lb at 11.4",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "b_inv_mushroom_photo#4",
+     "case": "b_inv_mushroom_photo",
+     "kind": "absent",
+     "key": "maitake clusters - 2 lb at 14.75",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": null
+     },
+     "agree": [
+      "claude",
+      "gemini"
+     ]
+    },
+    {
+     "id": "b_inv_mushroom_photo#5",
+     "case": "b_inv_mushroom_photo",
+     "kind": "header",
+     "key": "number HM-3391, date 2026-10-28",
+     "readings": {
+      "claude": null,
+      "gemini": null,
+      "openai": "number None, date None"
+     },
+     "agree": []
+    }
+   ]
+  },
+  "b_inv_import_docx": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/inv_olive_branch.docx",
+   "lines": [
+    {
+     "key": "olives castelvetrano - 2 case at 64",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "capers nonpareil - 1 case at 58.2",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "anchovy fillets in oil - 1 case at 133",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "sherry vinegar reserva - 1 case at 97.5",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "saffron spanish - 2 ea at 74",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "shipping - 1  at 18",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  },
+  "b_inv_drygoods_xlsx": {
+   "file": "../sweetman_standard_clone/audit/extraction-blind/documents/raw/inv_coastal_dry_goods.xlsx",
+   "lines": [
+    {
+     "key": "rice jasmine - 3 bag at 41.2",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "lentils green - 1 bag at 36.9",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "quinoa white - 1 bag at 68.4",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "panko breadcrumbs - 2 case at 29.75",
+     "optional": false,
+     "certified": true
+    },
+    {
+     "key": "pallet fee - 1  at 5",
+     "optional": true,
+     "certified": true
+    }
+   ],
+   "disputes": []
+  }
+ }
+}

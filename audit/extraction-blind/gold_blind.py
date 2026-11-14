@@ -101,8 +101,8 @@ R["b_turkey_brine"] = dict(recipes=1, lines=[
 
 BLIND["b_shaking_beef"] = _c("2016-02-08_Recipe_Shaking-Beef.docx")
 R["b_shaking_beef"] = dict(recipes=1, lines=[
-    (["boneless beef sirloin", "beef sirloin", "beef"], 2, "lb", ""), (["garlic cloves", "garlic"], 10, ("ea", "clove"), ""),
-    (["shallot"], 1, "ea", ""), (["maggi seasoning or soy sauce", "maggi seasoning"], 1, "tbsp", ""), (["sugar"], 2, "tbsp", ""),
+    (["boneless beef sirloin", "beef sirloin", "beef", "fillet", "rib eye"], 2, "lb", ""), (["garlic cloves", "garlic"], 10, ("ea", "clove"), ""),
+    (["shallot"], 1, "ea", ""), (["maggi seasoning or soy sauce", "maggi seasoning", "soy sauce"], 1, "tbsp", ""), (["sugar"], 2, "tbsp", ""),
     (["fish sauce"], 0.25, "cup", ""), (["sea salt"], 1, "tsp", ""), (["black pepper"], 2, "tbsp", "")], unlisted=["cornstarch"])
 
 BLIND["b_pico_de_gallo"] = _c("Pico_De_Gallo.doc")
